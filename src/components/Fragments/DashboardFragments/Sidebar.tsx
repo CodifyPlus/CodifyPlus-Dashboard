@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createStyles,
   Navbar,
@@ -110,6 +110,10 @@ const data = [
 export function Sidebar() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Home");
+  useEffect(() => {
+    setActive(window.location.pathname);
+    //window.location.reload();
+  }, []);
   const { user: currentUser } = useSelector((state: any) => state.auth);
   const handleLogout = (event: any) => {
     localStorage.removeItem("user");
@@ -118,12 +122,12 @@ export function Sidebar() {
   const links = data.map((item) => (
     <Link
       className={cx(classes.link, {
-        [classes.linkActive]: item.label === active,
+        [classes.linkActive]: item.link === active,
       })}
       to={item.link}
       key={item.label}
       onClick={(event) => {
-        setActive(item.label);
+        setActive(item.link);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />

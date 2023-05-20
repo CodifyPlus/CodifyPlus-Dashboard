@@ -93,8 +93,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-  { link: "", label: "Home", icon: IconHome },
-  { link: "", label: "Notifications", icon: IconBellRinging },
+  { link: "/dashboard/home", label: "Home", icon: IconHome },
+  {
+    link: "/dashboard/notifications",
+    label: "Notifications",
+    icon: IconBellRinging,
+  },
   { link: "", label: "Billing", icon: IconReceipt2 },
   { link: "", label: "Security", icon: IconFingerprint },
   { link: "", label: "SSH Keys", icon: IconKey },
@@ -112,20 +116,19 @@ export function Sidebar() {
   };
 
   const links = data.map((item) => (
-    <a
+    <Link
       className={cx(classes.link, {
         [classes.linkActive]: item.label === active,
       })}
-      href={item.link}
+      to={item.link}
       key={item.label}
       onClick={(event) => {
-        event.preventDefault();
         setActive(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ));
 
   if (!currentUser) {
@@ -134,7 +137,7 @@ export function Sidebar() {
 
   return (
     <Navbar height={600} width={{ sm: 330 }} p="md">
-      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs" >
+      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <Group className={classes.header} position="apart">
           <UserInfoSidebar
             {...{
@@ -148,11 +151,7 @@ export function Sidebar() {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Link
-          to="/"
-          className={classes.link}
-          
-        >
+        <Link to="/" className={classes.link}>
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Return Home</span>
         </Link>

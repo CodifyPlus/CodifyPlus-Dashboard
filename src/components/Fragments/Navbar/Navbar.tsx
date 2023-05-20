@@ -193,13 +193,13 @@ export function Navbar({ links }: HeaderResponsiveProps) {
   const otherLinks = currentUser ? (
     <Link
         key={"dashboard"}
-        to="dashboard"
+        to="dashboard/home"
         className={cx(classes.link, {
-          [classes.linkActive]: active === "/dashboard",
+          [classes.linkActive]: active === "/dashboard/home",
         })}
         onClick={(event) => {
           
-          setActive("/dashboard");
+          setActive("/dashboard/home");
           close();
         }}
       >

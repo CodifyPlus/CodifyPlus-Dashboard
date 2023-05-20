@@ -18,6 +18,8 @@ import { Login } from "./components/Screens/Login";
 import { Register } from "./components/Screens/Register";
 import { Sidebar } from "./components/Fragments/DashboardFragments/Sidebar";
 import Dashboard from "./components/Screens/Dashboard";
+import DashboardHome from "./components/Screens/DashboardHome";
+import Notifications from "./components/Screens/Notifications";
 
 export default function App() {
   //console.log(window.location.pathname)
@@ -56,7 +58,10 @@ export default function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="sidebar" element={<Sidebar />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />}>
+            <Route path="home" element={<DashboardHome/>} />
+            <Route path="notifications" element={<Notifications/>} />
+          </Route>
         </Routes>
         {window.location.pathname.toLowerCase().includes("dashboard") ? <></> : <Footer data={footerLinks.data} />}
       </MantineProvider>

@@ -2,18 +2,14 @@ import { useState } from "react";
 import {
   AppShell,
   Navbar,
-  Header,
   Footer,
-  Text,
   MediaQuery,
   Burger,
   useMantineTheme,
-  rem,
 } from "@mantine/core";
 import { Sidebar } from "../Fragments/DashboardFragments/Sidebar";
-import Logo from "../Fragments/Navbar/Logo";
 import DarkModeButton from "../Fragments/DarkModeButton/DarkModeButton";
-const PUSH_DOWN = rem(-120);
+import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
   const theme = useMantineTheme();
@@ -57,7 +53,6 @@ export default function Dashboard() {
                 />
               </MediaQuery>
 
-              <Logo />
               <div style={{ marginLeft: "auto" }}>
                 <DarkModeButton />
               </div>
@@ -65,7 +60,7 @@ export default function Dashboard() {
           </Footer>
         }
       >
-        <Text>Resize app to see responsive navbar in action</Text>
+        <Outlet/>
       </AppShell>
     </>
   );

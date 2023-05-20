@@ -15,11 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../slices/auth";
 import { clearMessage } from "../../slices/message";
 import { useForm } from "@mantine/form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export function Register() {
   const [successful, setSuccessful] = useState(false);
-  const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
 

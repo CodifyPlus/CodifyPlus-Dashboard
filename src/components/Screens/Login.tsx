@@ -41,14 +41,14 @@ export function Login() {
     dispatch(login({ username, password }))
       .unwrap()
       .then(() => {
-        navigate("/dashboard");
+        navigate("/dashboard/home");
         window.location.reload();
       })
       .catch(() => {});
   };
 
   if (isLoggedIn) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/dashboard/home" />;
   }
 
   return (

@@ -42,7 +42,7 @@ export function Register() {
   }
 
   if (isLoggedIn) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/dashboard/home" />;
   }
   const handleRegister = (formValue: any) => {
     const { username, email, password } = formValue;

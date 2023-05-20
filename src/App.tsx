@@ -18,7 +18,8 @@ import { Login } from "./components/Screens/Login";
 import { Register } from "./components/Screens/Register";
 import Dashboard from "./components/Screens/Dashboard";
 import DashboardHome from "./components/Screens/DashboardHome";
-import Notifications from "./components/Screens/Notifications";
+import { NotificationsPage } from "./components/Screens/Notifications";
+import { Notifications } from '@mantine/notifications';
 import Profile from "./components/Screens/Profile";
 import { EmptyPage } from "./components/Screens/EmptyPage";
 
@@ -48,6 +49,7 @@ export default function App() {
         withGlobalStyles
         withNormalizeCSS
       >
+        <Notifications />
         <Navbar links={links.links} />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -60,12 +62,16 @@ export default function App() {
           <Route path="register" element={<Register />} />
           <Route path="*" element={<EmptyPage />} />
           <Route path="dashboard" element={<Dashboard />}>
-            <Route path="home" element={<DashboardHome/>} />
-            <Route path="notifications" element={<Notifications/>} />
-            <Route path="profile" element={<Profile/>} />
+            <Route path="home" element={<DashboardHome />} />
+            <Route path="notifications" element={<NotificationsPage />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
-        {window.location.pathname.toLowerCase().includes("dashboard") ? <></> : <Footer data={footerLinks.data} />}
+        {window.location.pathname.toLowerCase().includes("dashboard") ? (
+          <></>
+        ) : (
+          <Footer data={footerLinks.data} />
+        )}
       </MantineProvider>
     </ColorSchemeProvider>
   );

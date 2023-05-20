@@ -1,5 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-import { createStyles, Navbar, Group, Code, getStylesRef, rem } from '@mantine/core';
+import { useCallback, useEffect, useState } from "react";
+import {
+  createStyles,
+  Navbar,
+  Group,
+  Code,
+  getStylesRef,
+  rem,
+} from "@mantine/core";
 import {
   IconBellRinging,
   IconFingerprint,
@@ -10,17 +17,20 @@ import {
   IconReceipt2,
   IconSwitchHorizontal,
   IconLogout,
-} from '@tabler/icons-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../../slices/auth';
-import EventBus from '../../../common/EventBus';
+  IconHome,
+} from "@tabler/icons-react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../slices/auth";
+import EventBus from "../../../common/EventBus";
+import { UserInfoSidebar } from "./UserInfoSidebar";
+import { Navigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   header: {
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
     borderBottom: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
   },
 
@@ -28,68 +38,83 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
     borderTop: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
   },
 
   link: {
     ...theme.fn.focusStyles(),
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
     fontSize: theme.fontSizes.sm,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[1]
+        : theme.colors.gray[7],
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     fontWeight: 500,
 
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+      color: theme.colorScheme === "dark" ? theme.white : theme.black,
 
-      [`& .${getStylesRef('icon')}`]: {
-        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      [`& .${getStylesRef("icon")}`]: {
+        color: theme.colorScheme === "dark" ? theme.white : theme.black,
       },
     },
   },
 
   linkIcon: {
-    ref: getStylesRef('icon'),
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    ref: getStylesRef("icon"),
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[2]
+        : theme.colors.gray[6],
     marginRight: theme.spacing.sm,
   },
 
   linkActive: {
-    '&, &:hover': {
-      backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
-      [`& .${getStylesRef('icon')}`]: {
-        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+    "&, &:hover": {
+      backgroundColor: theme.fn.variant({
+        variant: "light",
+        color: theme.primaryColor,
+      }).background,
+      color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
+        .color,
+      [`& .${getStylesRef("icon")}`]: {
+        color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
+          .color,
       },
     },
   },
 }));
 
 const data = [
-  { link: '', label: 'Notifications', icon: IconBellRinging },
-  { link: '', label: 'Billing', icon: IconReceipt2 },
-  { link: '', label: 'Security', icon: IconFingerprint },
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: '', label: 'Databases', icon: IconDatabaseImport },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
+  { link: "", label: "Home", icon: IconHome },
+  { link: "", label: "Notifications", icon: IconBellRinging },
+  { link: "", label: "Billing", icon: IconReceipt2 },
+  { link: "", label: "Security", icon: IconFingerprint },
+  { link: "", label: "SSH Keys", icon: IconKey },
+  { link: "", label: "Databases", icon: IconDatabaseImport },
+  { link: "", label: "Authentication", icon: Icon2fa },
+  { link: "", label: "Other Settings", icon: IconSettings },
 ];
 
 export function Sidebar() {
   const { classes, cx } = useStyles();
-  const [active, setActive] = useState('Billing');
+  const [active, setActive] = useState("Home");
   const dispatch = useDispatch();
   const { user: currentUser } = useSelector((state: any) => state.auth);
+  console.log(currentUser)
   const logOut = useCallback(() => {
     //@ts-ignore
     dispatch(logout());
     //localStorage.removeItem("user");
-    console.log(localStorage)
   }, [dispatch]);
 
   useEffect(() => {
@@ -106,7 +131,7 @@ export function Sidebar() {
     });
 
     return () => {
-        //@ts-ignore
+      //@ts-ignore
       EventBus.remove("logout");
     };
   }, [currentUser, logOut]);
@@ -118,7 +143,9 @@ export function Sidebar() {
 
   const links = data.map((item) => (
     <a
-      className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+      className={cx(classes.link, {
+        [classes.linkActive]: item.label === active,
+      })}
       href={item.link}
       key={item.label}
       onClick={(event) => {
@@ -131,17 +158,32 @@ export function Sidebar() {
     </a>
   ));
 
+  if(!currentUser){
+    return <Navigate to="/login" />
+  }
+
   return (
-    <Navbar height={700} width={{ sm: 300 }} p="md">
+    <Navbar height={700} width={{ sm: 330 }} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
+          <UserInfoSidebar
+            {...{
+              image:
+                "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80",
+              name: currentUser.username,
+              email: currentUser.email,
+            }}
+          />
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a
+          href="#"
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}
+        >
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
         </a>

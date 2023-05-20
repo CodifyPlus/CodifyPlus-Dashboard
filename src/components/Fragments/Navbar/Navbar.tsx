@@ -15,6 +15,7 @@ import DarkModeButton from "../DarkModeButton/DarkModeButton";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { IconChevronDown } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
 
 const HEADER_HEIGHT = rem(60);
 const PUSH_DOWN = rem(120);
@@ -102,7 +103,7 @@ const useStyles = createStyles((theme) => ({
   },
   linkDrop: {
     lineHeight: 1,
-    
+
     [theme.fn.smallerThan("sm")]: {
       borderRadius: 0,
       //padding: theme.spacing.md,
@@ -123,17 +124,26 @@ export function Navbar({ links }: HeaderResponsiveProps) {
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
   useEffect(() => {
     setActive(window.location.pathname);
   }, []);
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Menu.Item className={classes.linkDrop} component={Link} to={item.link}
-      onClick={(event) => {
-        setActive(item.link);
-        close();
-      }} key={item.link}>{item.label}</Menu.Item>
+      <Menu.Item
+        className={classes.linkDrop}
+        component={Link}
+        to={item.link}
+        onClick={(event) => {
+          setActive(item.link);
+          close();
+        }}
+        key={item.link}
+      >
+        {item.label}
+      </Menu.Item>
     ));
 
     if (menuItems) {
@@ -178,6 +188,50 @@ export function Navbar({ links }: HeaderResponsiveProps) {
     );
   });
 
+  const otherLinks = currentUser ? (
+    <Link
+        key={"dashboard"}
+        to="dashboard"
+        className={cx(classes.link, {
+          [classes.linkActive]: active === "/dashboard",
+        })}
+        onClick={(event) => {
+          setActive("/dashboard");
+          close();
+        }}
+      >
+        {"Dashboard"}
+      </Link>
+  ) : (
+    <>
+      <Link
+        key={"login"}
+        to="login"
+        className={cx(classes.link, {
+          [classes.linkActive]: active === "/login",
+        })}
+        onClick={(event) => {
+          setActive("/login");
+          close();
+        }}
+      >
+        {"Login"}
+      </Link>
+      <Link
+        key={"signup"}
+        to="register"
+        className={cx(classes.link, {
+          [classes.linkActive]: active === "/register",
+        })}
+        onClick={(event) => {
+          setActive("/register");
+          close();
+        }}
+      >
+        {"Signup"}
+      </Link>
+    </>
+  );
   return (
     <>
       <Header height={HEADER_HEIGHT} mb={40} className={classes.root}>
@@ -192,7 +246,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
             <Logo />
           </Link>
           <Group spacing={5} className={classes.links}>
-            {items}
+            {items}{otherLinks}
           </Group>
           <DarkModeButton></DarkModeButton>
 
@@ -209,7 +263,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
           >
             {(styles) => (
               <Paper className={classes.dropdown} withBorder style={styles}>
-                {items}
+                {items}{otherLinks}
               </Paper>
             )}
           </Transition>

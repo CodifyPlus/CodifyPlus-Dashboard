@@ -16,6 +16,8 @@ import OurProcess from "./components/Screens/OurProcess";
 import OurServices from "./components/Screens/OurServices";
 import { Login } from "./components/Screens/Login";
 import { Register } from "./components/Screens/Register";
+import { Sidebar } from "./components/Fragments/DashboardFragments/Sidebar";
+import Dashboard from "./components/Screens/Dashboard";
 
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -52,6 +54,8 @@ export default function App() {
           <Route path="our-services" element={<OurServices />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="sidebar" element={<Sidebar />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Routes>
         <Footer data={footerLinks.data} />
       </MantineProvider>

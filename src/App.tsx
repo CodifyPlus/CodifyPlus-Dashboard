@@ -14,6 +14,8 @@ import footerLinks from "./components/data/footerLinks";
 import { ContactUs } from "./components/Screens/ContactUs";
 import OurProcess from "./components/Screens/OurProcess";
 import OurServices from "./components/Screens/OurServices";
+import { Login } from "./components/Screens/Login";
+import { Register } from "./components/Screens/Register";
 
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -48,6 +50,8 @@ export default function App() {
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="our-process" element={<OurProcess />} />
           <Route path="our-services" element={<OurServices />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Routes>
         <Footer data={footerLinks.data} />
       </MantineProvider>

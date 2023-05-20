@@ -20,6 +20,7 @@ import { Sidebar } from "./components/Fragments/DashboardFragments/Sidebar";
 import Dashboard from "./components/Screens/Dashboard";
 
 export default function App() {
+  //console.log(window.location.pathname)
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
     defaultValue: "light",
@@ -57,7 +58,7 @@ export default function App() {
           <Route path="sidebar" element={<Sidebar />} />
           <Route path="dashboard" element={<Dashboard />} />
         </Routes>
-        <Footer data={footerLinks.data} />
+        {window.location.pathname.toLowerCase().includes("dashboard") ? <></> : <Footer data={footerLinks.data} />}
       </MantineProvider>
     </ColorSchemeProvider>
   );

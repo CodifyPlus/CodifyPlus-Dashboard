@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import {
   createStyles,
   Navbar,
   Group,
-  Code,
   getStylesRef,
   rem,
+  ScrollArea,
 } from "@mantine/core";
 import {
   IconBellRinging,
@@ -19,11 +19,9 @@ import {
   IconLogout,
   IconHome,
 } from "@tabler/icons-react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../slices/auth";
-import EventBus from "../../../common/EventBus";
+import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -108,37 +106,9 @@ const data = [
 export function Sidebar() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Home");
-  const dispatch = useDispatch();
   const { user: currentUser } = useSelector((state: any) => state.auth);
-  console.log(currentUser)
-  const logOut = useCallback(() => {
-    //@ts-ignore
-    dispatch(logout());
-    //localStorage.removeItem("user");
-  }, [dispatch]);
-
-  useEffect(() => {
-    // if (currentUser) {
-    //   setShowModeratorBoard(currentUser.roles.includes("ROLE_MODERATOR"));
-    //   setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
-    // } else {
-    //   setShowModeratorBoard(false);
-    //   setShowAdminBoard(false);
-    // }
-
-    EventBus.on("logout", () => {
-      logOut();
-    });
-
-    return () => {
-      //@ts-ignore
-      EventBus.remove("logout");
-    };
-  }, [currentUser, logOut]);
-
   const handleLogout = (event: any) => {
     localStorage.removeItem("user");
-    logOut();
   };
 
   const links = data.map((item) => (
@@ -158,18 +128,17 @@ export function Sidebar() {
     </a>
   ));
 
-  if(!currentUser){
-    return <Navigate to="/login" />
+  if (!currentUser) {
+    return <Navigate to="/login" />;
   }
 
   return (
-    <Navbar height={700} width={{ sm: 330 }} p="md">
-      <Navbar.Section grow>
+    <Navbar height={600} width={{ sm: 330 }} p="md">
+      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs" >
         <Group className={classes.header} position="apart">
           <UserInfoSidebar
             {...{
-              image:
-                "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80",
+              image: "https://api.dicebear.com/6.x/miniavs/svg",
               name: currentUser.username,
               email: currentUser.email,
             }}
@@ -179,14 +148,14 @@ export function Sidebar() {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a
-          href="#"
+        <Link
+          to="/"
           className={classes.link}
-          onClick={(event) => event.preventDefault()}
+          
         >
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
+          <span>Return Home</span>
+        </Link>
 
         <a href="/login" className={classes.link} onClick={handleLogout}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />

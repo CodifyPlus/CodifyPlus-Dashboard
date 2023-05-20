@@ -125,9 +125,11 @@ export function Navbar({ links }: HeaderResponsiveProps) {
   const { classes, cx } = useStyles();
 
   const { user: currentUser } = useSelector((state: any) => state.auth);
+  console.log(currentUser);
 
   useEffect(() => {
     setActive(window.location.pathname);
+    //window.location.reload();
   }, []);
 
   const items = links.map((link) => {
@@ -196,6 +198,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
           [classes.linkActive]: active === "/dashboard",
         })}
         onClick={(event) => {
+          
           setActive("/dashboard");
           close();
         }}
@@ -269,7 +272,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
           </Transition>
         </Container>
       </Header>
-      <div style={{ paddingTop: PUSH_DOWN }}></div>
+      <div style={{ marginTop: PUSH_DOWN }}></div>
     </>
   );
 }

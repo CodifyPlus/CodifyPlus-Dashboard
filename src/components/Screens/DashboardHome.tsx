@@ -1,4 +1,4 @@
-import { Grid, Skeleton, Container } from "@mantine/core";
+import { Grid, Skeleton, Container, Text, Paper } from "@mantine/core";
 import { ServiceStats } from "../Fragments/DashboardHomeFragments/ServiceStats";
 import { ServicesList } from "../Fragments/DashboardHomeFragments/ServicesList";
 import { useEffect, useState } from "react";
@@ -8,29 +8,68 @@ import EventBus from "../../common/EventBus";
 const child = <Skeleton height={140} radius="md" animate={false} />;
 
 export default function DashboardHome() {
-
-  const [content, setContent] = useState({
-    completedServices: [],
+  const [Stats, setStats] = useState({
+    completedServices: [
+      {
+        name: "",
+        icon: "",
+        status: "",
+        serviceId: "",
+      },
+    ],
     pendingServices: [],
-    processServices: [],
+    processServices: [
+      {
+        name: "",
+        icon: "",
+        status: "",
+        serviceId: "",
+      },
+    ],
   });
 
   useEffect(() => {
     UserService.getUserStats().then(
       (response) => {
-        setContent(response.data);
-        console.log("Content", content);
-        console.log("Response", response.data);
+        //setStats(response.data);
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
+        let completedServicesData = [];
+        let underProcessServicesData = [];
+        for (var i = 0; i < response.data.completedServices.length; i++) {
+          completedServicesData.push({
+            name: response.data.completedServices[i].name,
+            icon: "C",
+            status: "Completed",
+            serviceId: response.data.completedServices[i].serviceId.toString(),
+          });
+        }
+
+        for (var j = 0; j < (response.data.processServices.length); j++) {
+          underProcessServicesData.push({
+            name: response.data.processServices[j].name,
+            icon: "P",
+            status: "Under Process",
+            serviceId: response.data.completedServices[j].serviceId.toString(),
+          });
+        }
+        setStats({
+          ...response.data,
+          completedServices: completedServicesData,
+          processServices: underProcessServicesData,
+        });
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
       },
       (error) => {
-        const _content =
+        const _Stats =
           (error.response &&
             error.response.data &&
             error.response.data.message) ||
           error.message ||
           error.toString();
 
-        setContent(_content);
+        setStats(_Stats);
 
         if (error.response && error.response.status === 401) {
           //@ts-ignore
@@ -38,22 +77,23 @@ export default function DashboardHome() {
         }
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const data = [
     {
       title: "Completed Services",
-      value: content.completedServices.length,
+      value: Stats.completedServices[0].name === "" ? 0 : Stats.completedServices.length,
       diff: 100,
     },
     {
       title: "Under Process Services",
-      value: content.processServices.length,
+      value: Stats.processServices[0].name === "" ? 0 : Stats.processServices.length,
       diff: 100,
     },
     {
       title: "Pending Services",
-      value: content.pendingServices.length,
+      value: Stats.pendingServices.length,
       diff: 100,
     },
   ];
@@ -62,74 +102,24 @@ export default function DashboardHome() {
     <Container my="md">
       <Grid>
         <Grid.Col xs={12}>
-          <ServiceStats
-            data={data}
-          />
+          <ServiceStats data={data} />
         </Grid.Col>
-        <Grid.Col xs={6}><ServicesList data={[
-    {
-      "position": 6,
-      "mass": 12.011,
-      "symbol": "C",
-      "name": "Carbon"
-    },
-    {
-      "position": 7,
-      "mass": 14.007,
-      "symbol": "N",
-      "name": "Nitrogen"
-    },
-    {
-      "position": 39,
-      "mass": 88.906,
-      "symbol": "Y",
-      "name": "Yttrium"
-    },
-    {
-      "position": 56,
-      "mass": 137.33,
-      "symbol": "Ba",
-      "name": "Barium"
-    },
-    {
-      "position": 58,
-      "mass": 140.12,
-      "symbol": "Ce",
-      "name": "Cerium"
-    }
-  ]} /></Grid.Col>
-        <Grid.Col xs={6}><ServicesList data={[
-    {
-      "position": 6,
-      "mass": 12.011,
-      "symbol": "Ca",
-      "name": "Carbon"
-    },
-    {
-      "position": 7,
-      "mass": 14.007,
-      "symbol": "Na",
-      "name": "Nitrogen"
-    },
-    {
-      "position": 39,
-      "mass": 88.906,
-      "symbol": "Ya",
-      "name": "Yttrium"
-    },
-    {
-      "position": 56,
-      "mass": 137.33,
-      "symbol": "Baa",
-      "name": "Barium"
-    },
-    {
-      "position": 58,
-      "mass": 140.12,
-      "symbol": "Cea",
-      "name": "Cerium"
-    }
-  ]} /></Grid.Col>
+        <Grid.Col xs={12}>
+          <Paper shadow="md" p={20} withBorder>
+            <Text mb={10} ml={10}>
+              Under Process Services:
+            </Text>
+            <ServicesList data={Stats.processServices} />
+          </Paper>
+        </Grid.Col>
+        <Grid.Col xs={12}>
+          <Paper shadow="md" p={20} withBorder>
+            <Text mb={10} ml={10}>
+              Completed Services:
+            </Text>
+            <ServicesList data={Stats.completedServices} />
+          </Paper>
+        </Grid.Col>
         <Grid.Col xs={4}>{child}</Grid.Col>
         <Grid.Col xs={4}>{child}</Grid.Col>
         <Grid.Col xs={4}>{child}</Grid.Col>

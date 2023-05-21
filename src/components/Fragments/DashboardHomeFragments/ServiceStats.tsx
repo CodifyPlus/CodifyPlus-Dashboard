@@ -1,5 +1,5 @@
 import { createStyles, Group, Paper, Text, ThemeIcon, SimpleGrid } from '@mantine/core';
-import { IconArrowUpRight, IconArrowDownRight, IconActivity } from '@tabler/icons-react';
+import { IconActivity } from '@tabler/icons-react';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ interface StatsGridIconsProps {
 export function ServiceStats({ data }: StatsGridIconsProps) {
   const { classes } = useStyles();
   const stats = data.map((stat) => {
-    const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
+    // const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
 
     return (
       <Paper withBorder p="md" radius="md" key={stat.title}>

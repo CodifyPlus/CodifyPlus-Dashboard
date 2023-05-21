@@ -22,6 +22,8 @@ import { NotificationsPage } from "./components/Screens/Notifications";
 import { Notifications } from '@mantine/notifications';
 import Profile from "./components/Screens/Profile";
 import { EmptyPage } from "./components/Screens/EmptyPage";
+import AllServices from "./components/Screens/AllServices";
+import ServiceStatus from "./components/Screens/ServiceStatus";
 
 export default function App() {
   //console.log(window.location.pathname)
@@ -65,6 +67,10 @@ export default function App() {
             <Route path="home" element={<DashboardHome />} />
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="all-services" element={<AllServices />} />
+            <Route path="servicestatus" element={<ServiceStatus />} >
+              <Route path="*" element={<ServiceStatus/>} />
+            </Route>
           </Route>
         </Routes>
         {window.location.pathname.toLowerCase().includes("dashboard") ? (

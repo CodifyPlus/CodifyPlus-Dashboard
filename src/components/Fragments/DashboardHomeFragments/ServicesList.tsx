@@ -33,11 +33,19 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("sm")]: {
       display: "none",
     },
+    borderColor:
+    theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
+    color:
+      theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
   },
   viewButtonMobile: {
     [theme.fn.largerThan("sm")]: {
       display: "none",
     },
+    borderColor:
+    theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
+    color:
+      theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
   },
 }));
 
@@ -84,7 +92,7 @@ export function ServicesList({ data }: DndListProps) {
                 color="yellow"
                 style={{ marginLeft: "auto" }}
               >
-                View Status
+                View
               </Button>
             </div>
             <Button

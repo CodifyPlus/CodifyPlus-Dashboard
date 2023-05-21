@@ -120,11 +120,6 @@ export default function DashboardHome() {
             <ServicesList data={Stats.completedServices} />
           </Paper>
         </Grid.Col>
-        <Grid.Col xs={4}>{child}</Grid.Col>
-        <Grid.Col xs={4}>{child}</Grid.Col>
-        <Grid.Col xs={4}>{child}</Grid.Col>
-        <Grid.Col xs={6}>{child}</Grid.Col>
-        <Grid.Col xs={6}>{child}</Grid.Col>
       </Grid>
     </Container>
   );

@@ -20,7 +20,7 @@ export function ServiceStats({ data }: StatsGridIconsProps) {
     // const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
 
     return (
-      <Paper withBorder p="md" radius="md" key={stat.title}>
+      <Paper withBorder p="md" radius="md" key={stat.title} shadow='md' >
         <Group position="apart">
           <div>
             <Text c="dimmed" tt="uppercase" fw={700} fz="xs" className={classes.label}>

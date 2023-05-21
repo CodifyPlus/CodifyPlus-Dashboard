@@ -23,12 +23,21 @@ const getUserStats = () => {
   return axios.get(API_URL + "getUserStats", { headers: authHeader() })
 }
 
+const getServiceInfo = (serviceId) => {
+  return axios.get(API_URL + "getServiceInfo", {
+    headers: authHeader(), params: {
+      serviceId: serviceId
+    }
+  })
+}
+
 const userService = {
   getPublicContent,
   getUserBoard,
   getModeratorBoard,
   getAdminBoard,
   getUserStats,
+  getServiceInfo,
 };
 
 export default userService

@@ -1,11 +1,9 @@
-import { Grid, Skeleton, Container, Text, Paper } from "@mantine/core";
+import { Grid, Container, Text, Paper } from "@mantine/core";
 import { ServiceStats } from "../Fragments/DashboardHomeFragments/ServiceStats";
 import { ServicesList } from "../Fragments/DashboardHomeFragments/ServicesList";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
-
-const child = <Skeleton height={140} radius="md" animate={false} />;
 
 export default function DashboardHome() {
   const [Stats, setStats] = useState({

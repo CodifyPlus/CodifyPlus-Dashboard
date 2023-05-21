@@ -6,18 +6,14 @@ import {
   getStylesRef,
   rem,
   ScrollArea,
+  Text,
 } from "@mantine/core";
 import {
   IconBellRinging,
-  IconFingerprint,
-  IconKey,
-  IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
   IconSwitchHorizontal,
   IconLogout,
   IconHome,
+  IconUsers,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -90,6 +86,15 @@ const useStyles = createStyles((theme) => ({
       },
     },
   },
+  adminLinks: {
+    paddingTop: theme.spacing.md,
+    marginTop: theme.spacing.md,
+    borderTop: `${rem(1)} solid ${
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
+    paddingBottom: theme.spacing.md,
+    //marginBottom: `calc(${theme.spacing.md} * 1.5)`,
+  },
 }));
 
 const data = [
@@ -99,19 +104,19 @@ const data = [
     label: "Notifications",
     icon: IconBellRinging,
   },
-  { link: "", label: "Billing", icon: IconReceipt2 },
-  { link: "", label: "Security", icon: IconFingerprint },
-  { link: "", label: "SSH Keys", icon: IconKey },
-  { link: "", label: "Databases", icon: IconDatabaseImport },
-  { link: "", label: "Authentication", icon: Icon2fa },
-  { link: "", label: "Other Settings", icon: IconSettings },
+];
+
+const adminRoutes = [
+  { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
 ];
 
 export function Sidebar() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Home");
+  const [showAdminLinks, setShowAdminLinks] = useState(false);
   useEffect(() => {
     setActive(window.location.pathname);
+    setShowAdminLinks(currentUser.roles.includes("ROLE_ADMIN"));
     //window.location.reload();
   }, []);
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -120,6 +125,22 @@ export function Sidebar() {
   };
 
   const links = data.map((item) => (
+    <Link
+      className={cx(classes.link, {
+        [classes.linkActive]: item.link === active,
+      })}
+      to={item.link}
+      key={item.label}
+      onClick={(event) => {
+        setActive(item.link);
+      }}
+    >
+      <item.icon className={classes.linkIcon} stroke={1.5} />
+      <span>{item.label}</span>
+    </Link>
+  ));
+
+  const adminLinks = adminRoutes.map((item) => (
     <Link
       className={cx(classes.link, {
         [classes.linkActive]: item.link === active,
@@ -152,6 +173,11 @@ export function Sidebar() {
           />
         </Group>
         {links}
+
+        {showAdminLinks === true ? <>
+          <Text className={classes.adminLinks}>Admin Controls</Text>
+          {adminLinks}
+        </> : <></>}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>

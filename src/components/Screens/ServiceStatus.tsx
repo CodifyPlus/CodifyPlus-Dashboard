@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ServiceStatusHeading } from "../Fragments/ServiceStatusFragments/ServiceStatusHeading";
 import {
   Container,
@@ -10,40 +10,105 @@ import {
 } from "@mantine/core";
 import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
 import moment from 'moment';
+import ServiceStatusInfo from "../Fragments/ServiceStatusFragments/ServiceStatusInfo";
+import UserService from "../../services/user.service";
 const PRIMARY_COL_HEIGHT = rem(300);
 
 const timelineData = [
   {
     startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    completedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
     notification: true,
     description: "GST Service Initiated",
-    title: "Service Initiated"
+    title: "Service Initiated",
+    status: true
   },
   {
     startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    completedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
     notification: false,
     description: "Documents Were Sent to the Gov. Agency",
-    title: "Documents Sent"
+    title: "Documents Sent",
+    status: true,
   },
   {
     startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    completedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
     notification: false,
     description: "Papers were submitted to Gov.",
-    title: "Papers Submitted"
+    title: "Papers Submitted",
+    status: false,
   },
   {
     startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    completedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
     notification: true,
     description: "Service has been completed.",
-    title: "Service Completed"
+    title: "Service Completed",
+    status: false,
   }
 ];
 
+const serviceInfoData = {
+  cost: "2000",
+  status: "Under Process",
+  name: "GST Registration",
+  duration: "2 Months",
+  assignedTo: {
+    username: "coinshell",
+    email: "coinshell@gmail.com"
+  }
+};
+
 function ServiceStatus() {
+
+  const [info, setInfo] = useState({
+    cost: "",
+    status: "",
+    name: "",
+    duration: "",
+    assignedTo: {
+      userId: "",
+      username: "",
+      email: "",
+    },
+    pathway: [{
+      startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
+      notification: true,
+      description: "",
+      title: "",
+      status: true,
+  }]
+  });
+
+  const serviceId = window.location.pathname.split("/")[3];
+  console.log(serviceId);
+
+  useEffect(() => {
+    UserService.getServiceInfo(serviceId).then(
+      (response) => {
+        //setStats(response.data);
+        //console.log("Stats", Stats);
+        console.log("Response", response.data);
+        
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
+      },
+      (error) => {
+        const _Stats =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setInfo(_Stats);
+
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   const theme = useMantineTheme();
   const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - ${theme.spacing.md} / 2)`;
   return (
@@ -58,11 +123,7 @@ function ServiceStatus() {
           <ServiceStatusTimeline data={timelineData} />
           <Grid gutter="md">
             <Grid.Col>
-              <Skeleton
-                height={SECONDARY_COL_HEIGHT}
-                radius="md"
-                animate={false}
-              />
+              <ServiceStatusInfo data={serviceInfoData} />
             </Grid.Col>
             <Grid.Col span={6}>
               <Skeleton

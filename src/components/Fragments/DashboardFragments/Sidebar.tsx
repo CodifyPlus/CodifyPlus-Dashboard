@@ -116,7 +116,9 @@ export function Sidebar() {
   const [showAdminLinks, setShowAdminLinks] = useState(false);
   useEffect(() => {
     setActive(window.location.pathname);
-    setShowAdminLinks(currentUser.roles.includes("ROLE_ADMIN"));
+    if(currentUser){
+      setShowAdminLinks(currentUser.roles.includes("ROLE_ADMIN"));
+    }
     //window.location.reload();
   }, []);
   const { user: currentUser } = useSelector((state: any) => state.auth);

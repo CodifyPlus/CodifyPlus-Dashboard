@@ -120,8 +120,8 @@ export function ServicesList({ data }: DndListProps) {
       <StrictModeDroppable droppableId="dnd-list" direction="vertical">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {data[0].name === ""
-              ? "There is nothing to show. Please check back later!"
+            {data.length === 0
+              ? <Text color="grey">There is nothing to show. Please check back later!</Text>
               : items}
             {provided.placeholder}
             {datalen > 3 ? <Button

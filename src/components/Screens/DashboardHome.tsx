@@ -81,17 +81,17 @@ export default function DashboardHome() {
   const data = [
     {
       title: "Completed Services",
-      value: Stats.completedServices[0].name === "" ? 0 : Stats.completedServices.length,
+      value: Stats?.completedServices[0]?.name === "" ? 0 : Stats.completedServices.length,
       diff: 100,
     },
     {
       title: "Under Process Services",
-      value: Stats.processServices[0].name === "" ? 0 : Stats.processServices.length,
+      value: Stats?.processServices[0]?.name === "" ? 0 : Stats.processServices.length,
       diff: 100,
     },
     {
       title: "Pending Services",
-      value: Stats.pendingServices.length,
+      value: Stats?.pendingServices?.length,
       diff: 100,
     },
   ];

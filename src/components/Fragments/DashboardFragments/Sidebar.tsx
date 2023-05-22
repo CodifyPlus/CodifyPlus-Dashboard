@@ -14,6 +14,7 @@ import {
   IconLogout,
   IconHome,
   IconUsers,
+  IconUser,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -108,6 +109,7 @@ const data = [
 
 const adminRoutes = [
   { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
+  { link: "/dashboard/adduser", label: "Add User", icon: IconUser },
 ];
 
 export function Sidebar() {
@@ -117,9 +119,10 @@ export function Sidebar() {
   useEffect(() => {
     setActive(window.location.pathname);
     if(currentUser){
-      setShowAdminLinks(currentUser.roles.includes("ROLE_ADMIN"));
+      setShowAdminLinks(currentUser.role === "ADMIN");
     }
     //window.location.reload();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { user: currentUser } = useSelector((state: any) => state.auth);
   const handleLogout = (event: any) => {

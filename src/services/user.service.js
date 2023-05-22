@@ -31,6 +31,18 @@ const getServiceInfo = (serviceId) => {
   })
 }
 
+const getAllUsers = () => {
+  return axios.get(API_URL + "getAllUsers", { headers: authHeader() })
+}
+
+const changeUserRole = (newRoleAndId) => {
+  return axios.post(API_URL + "changeUserRole", newRoleAndId, { headers: authHeader() })
+}
+
+const addNewUser = (newUserData) => {
+  return axios.post(API_URL + "addNewUser", newUserData, { headers: authHeader() })
+}
+
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -38,6 +50,9 @@ const userService = {
   getAdminBoard,
   getUserStats,
   getServiceInfo,
+  getAllUsers,
+  changeUserRole,
+  addNewUser,
 };
 
 export default userService

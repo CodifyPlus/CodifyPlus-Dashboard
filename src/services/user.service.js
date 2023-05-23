@@ -47,6 +47,14 @@ const getAllServices = () => {
   return axios.get(API_URL + "getAllServices", { headers: authHeader() })
 }
 
+const getAllUsernames = () => {
+  return axios.get(API_URL + "getAllUsernames", { headers: authHeader() })
+}
+
+const getAllModerators = () => {
+  return axios.get(API_URL + "getAllModerators", { headers: authHeader() })
+}
+
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -57,7 +65,9 @@ const userService = {
   getAllUsers,
   changeUserRole,
   addNewUser,
-  getAllServices
+  getAllServices,
+  getAllUsernames,
+  getAllModerators,
 };
 
 export default userService

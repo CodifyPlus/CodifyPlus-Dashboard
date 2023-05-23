@@ -12,7 +12,7 @@ import {
   Modal,
   Select,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
@@ -20,23 +20,77 @@ import UserDetailsModal from "../../Fragments/AddUserFragments/UserDetailsModal"
 import UserService from "../../../services/user.service";
 
 export default function AddService() {
+  const [usernames, setUsernames] = useState([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+
+  const [moderators, setModerators] = useState([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+
+  useEffect(() => {
+    UserService.getAllUsernames().then(
+      (response) => {
+        setUsernames(response.data);
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
+
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+    UserService.getAllModerators().then(
+      (response) => {
+        setModerators(response.data);
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
+
+        //console.log("Stats", Stats);
+        //console.log("Response", response.data);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [successful, setSuccessful] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    username: "",
+    assignedTo: "",
+    name: "",
+    cost: "",
+    sendEmailToUser: false,
+    sendEmailToAssignee: false,
+    assignedFor: "",
+    duration: "",
   });
   const [opened, { open, close }] = useDisclosure(false);
 
   const form = useForm({
     initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      sendEmail: false,
-    },
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      assignedTo: "",
+      name: "",
+      cost: "",
+      sendEmailToUser: false,
+      sendEmailToAssignee: false,
+      assignedFor: "",
+      duration: "",
     },
   });
 
@@ -44,7 +98,7 @@ export default function AddService() {
     console.log(formValue);
     setFormData(formValue);
     setSuccessful(false);
-    UserService.addNewUser(formValue).then(
+    UserService.addNewUser().then(
       (response) => {
         console.log("Response", response.data);
         setSuccessful(true);
@@ -70,7 +124,7 @@ export default function AddService() {
     <Container size={420} my={40}>
       {
         <>
-          <Modal opened={opened} onClose={close} title="User Details" centered>
+          {/* <Modal opened={opened} onClose={close} title="User Details" centered>
             <UserDetailsModal
               data={{
                 email: formData.email,
@@ -78,7 +132,7 @@ export default function AddService() {
                 username: formData.username,
               }}
             />
-          </Modal>
+          </Modal> */}
           <Title
             align="center"
             sx={(theme) => ({
@@ -94,34 +148,46 @@ export default function AddService() {
         {!successful && (
           <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
             <Select
-              label="Username"
+              label="Assign For"
               placeholder="johndoe"
               searchable
               nothingFound="No User Found"
               maxDropdownHeight={280}
-              {...form.getInputProps("username")}
+              {...form.getInputProps("assignedFor")}
               required
-              data={[
-                { value: "react", label: "React" },
-                { value: "ng", label: "Angular" },
-                { value: "svelte", label: "Svelte" },
-                { value: "vue", label: "Vue" },
-              ]}
+              data={usernames}
             />
             <TextInput
-              label="Email"
+              label="Name"
               mt="md"
-              placeholder="you@mantine.dev"
+              placeholder="GST Registration"
               required
-              {...form.getInputProps("email")}
+              {...form.getInputProps("name")}
             />
-            <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              required
+            <TextInput
+              label="Cost"
               mt="md"
-              {...form.getInputProps("password")}
-              autoComplete="new-password"
+              placeholder="4999"
+              required
+              {...form.getInputProps("cost")}
+            />
+            <TextInput
+              label="Duration"
+              mt="md"
+              placeholder="2 Weeks"
+              required
+              {...form.getInputProps("duration")}
+            />
+            <Select
+              label="Assign To"
+              placeholder="johndoe"
+              mt="md"
+              searchable
+              nothingFound="No User Found"
+              maxDropdownHeight={280}
+              {...form.getInputProps("assignedTo")}
+              required
+              data={moderators}
             />
 
             <Group position="apart" mt="lg">
@@ -129,11 +195,17 @@ export default function AddService() {
                 icon={CheckboxIcon}
                 label="Notify User via Email?"
                 description="It would send an email to user with their service details!"
-                {...form.getInputProps("sendEmail")}
+                {...form.getInputProps("sendEmailToUser")}
+              />
+              <Checkbox
+                icon={CheckboxIcon}
+                label="Notify Assignee via Email?"
+                description="It would send an email to assignee with their assigned service details!"
+                {...form.getInputProps("sendEmailToAssignee")}
               />
             </Group>
             <Button fullWidth mt="xl" type="submit">
-              Add User
+              Add Service
             </Button>
           </form>
         )}

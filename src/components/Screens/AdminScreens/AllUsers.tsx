@@ -1,24 +1,21 @@
 import {
   Avatar,
-  Badge,
   Table,
   Group,
   Text,
   Select,
   ScrollArea,
   Menu,
-  ActionIcon,
+  Button,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
 import moment from "moment";
 import { notifications } from "@mantine/notifications";
 import {
-  IconDots,
   IconMessages,
-  IconNote,
-  IconPencil,
-  IconReportAnalytics,
+  IconProgressCheck,
+  IconServer,
   IconSettingsBolt,
   IconTrash,
 } from "@tabler/icons-react";
@@ -126,25 +123,30 @@ export function AllUsers() {
           withinPortal
         >
           <Menu.Target>
-            <ActionIcon>
-              <IconSettingsBolt size="1rem" stroke={1.5} />
-            </ActionIcon>
+            <Button
+              variant="outline"
+              color="yellow"
+              compact
+              leftIcon={<IconSettingsBolt size="1rem" stroke={1.5} />}
+            >
+              Actions
+            </Button>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>
-              Send message
+              Send Message
             </Menu.Item>
-            <Menu.Item icon={<IconNote size="1rem" stroke={1.5} />}>
-              Add note
+            <Menu.Item icon={<IconServer size="1rem" stroke={1.5} />}>
+              Add Service
             </Menu.Item>
-            <Menu.Item icon={<IconReportAnalytics size="1rem" stroke={1.5} />}>
-              Analytics
+            <Menu.Item icon={<IconProgressCheck size="1rem" stroke={1.5} />}>
+              Pending Services
             </Menu.Item>
             <Menu.Item
               icon={<IconTrash size="1rem" stroke={1.5} />}
               color="red"
             >
-              Terminate contract
+              Delete User
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>

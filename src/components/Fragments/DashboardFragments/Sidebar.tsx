@@ -15,10 +15,12 @@ import {
   IconHome,
   IconUsers,
   IconUser,
+  IconCoin,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
 import { Link, Navigate } from "react-router-dom";
+import { IconServer } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -110,6 +112,8 @@ const data = [
 const adminRoutes = [
   { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
   { link: "/dashboard/adduser", label: "Add User", icon: IconUser },
+  { link: "/dashboard/manageservices", label: "Manage Services", icon: IconServer },
+  { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
 ];
 
 export function Sidebar() {

@@ -26,6 +26,8 @@ import AllServices from "./components/Screens/AllServices";
 import ServiceStatus from "./components/Screens/ServiceStatus";
 import { AllUsers } from "./components/Screens/AdminScreens/AllUsers";
 import { AddUser } from "./components/Screens/AdminScreens/AddUser";
+import { ManageServices } from "./components/Screens/AdminScreens/ManageServices";
+import AddService from "./components/Screens/AdminScreens/AddService";
 
 export default function App() {
   //console.log(window.location.pathname)
@@ -75,6 +77,8 @@ export default function App() {
             </Route>
             <Route path="allusers" element={<AllUsers/>} ></Route>
             <Route path="adduser" element={<AddUser/>} ></Route>
+            <Route path="manageservices" element={<ManageServices/>} ></Route>
+            <Route path="addservice" element={<AddService/>} ></Route>
           </Route>
         </Routes>
         {window.location.pathname.toLowerCase().includes("dashboard") ? (

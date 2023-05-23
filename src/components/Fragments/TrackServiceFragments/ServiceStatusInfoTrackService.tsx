@@ -54,7 +54,7 @@ interface ResultProps {
   };
 }
 
-export default function ServiceStatusInfo({ data }: ResultProps) {
+export function ServiceStatusInfoTrackService({ data }: ResultProps) {
   const { classes } = useStyles();
 
   return (

@@ -53,7 +53,11 @@ const serviceInfoData = {
   assignedTo: {
     username: "coinshell",
     email: "coinshell@gmail.com"
-  }
+  },
+  assignedFor: {
+    username: "ipshita",
+    email: "ipshita@gmail.com"
+  },
 };
 
 function ServiceStatus() {
@@ -78,7 +82,7 @@ function ServiceStatus() {
   });
 
   const serviceId = window.location.pathname.split("/")[3];
-  console.log(serviceId);
+  //console.log(serviceId);
 
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(

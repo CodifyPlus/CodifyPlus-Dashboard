@@ -1,9 +1,7 @@
 import {
-    Avatar,
     Table,
     Group,
     Text,
-    Select,
     ScrollArea,
     Menu,
     Button,
@@ -11,6 +9,7 @@ import {
   import { useEffect, useState } from "react";
   import UserService from "../../../services/user.service";
 import { IconEye, IconMapPin, IconNotebook, IconPencil, IconSettingsBolt, IconTrash } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
     
   export function ManageServices() {
   
@@ -108,7 +107,7 @@ import { IconEye, IconMapPin, IconNotebook, IconPencil, IconSettingsBolt, IconTr
             <Menu.Item icon={<IconPencil size="1rem" stroke={1.5} />}>
               Edit
             </Menu.Item>
-            <Menu.Item icon={<IconMapPin size="1rem" stroke={1.5} />}>
+            <Menu.Item component={Link} to={`/dashboard/track/${item._id}`} icon={<IconMapPin size="1rem" stroke={1.5} />}>
               Track
             </Menu.Item>
             <Menu.Item icon={<IconNotebook size="1rem" stroke={1.5} />}>

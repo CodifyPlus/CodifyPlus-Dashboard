@@ -55,6 +55,10 @@ const getAllModerators = () => {
   return axios.get(API_URL + "getAllModerators", { headers: authHeader() })
 }
 
+const addNewService = (newServiceData) => {
+  return axios.post(API_URL + "addNewService", newServiceData, { headers: authHeader() })
+}
+
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -68,6 +72,7 @@ const userService = {
   getAllServices,
   getAllUsernames,
   getAllModerators,
+  addNewService,
 };
 
 export default userService

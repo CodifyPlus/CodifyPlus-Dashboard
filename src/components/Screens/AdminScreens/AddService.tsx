@@ -1,6 +1,5 @@
 import {
   TextInput,
-  PasswordInput,
   Paper,
   Title,
   Text,
@@ -16,8 +15,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import UserDetailsModal from "../../Fragments/AddUserFragments/UserDetailsModal";
 import UserService from "../../../services/user.service";
+import ServiceDetalsModal from "../../Fragments/AddServiceFragments/ServiceDetailsModal";
 
 export default function AddService() {
   const [usernames, setUsernames] = useState([
@@ -71,16 +70,8 @@ export default function AddService() {
   }, []);
 
   const [successful, setSuccessful] = useState(false);
-  const [formData, setFormData] = useState({
-    assignedTo: "",
-    name: "",
-    cost: "",
-    sendEmailToUser: false,
-    sendEmailToAssignee: false,
-    assignedFor: "",
-    duration: "",
-  });
   const [opened, { open, close }] = useDisclosure(false);
+  const [newServiceId, setNewServiceId] = useState("");
 
   const form = useForm({
     initialValues: {
@@ -96,12 +87,12 @@ export default function AddService() {
 
   const handleRegister = (formValue: any) => {
     console.log(formValue);
-    setFormData(formValue);
     setSuccessful(false);
-    UserService.addNewUser().then(
+    UserService.addNewService(formValue).then(
       (response) => {
-        console.log("Response", response.data);
+        console.log("Response", response.data._id);
         setSuccessful(true);
+        setNewServiceId(response.data);
       },
       (error) => {
         if (error.response && error.response.status === 401) {
@@ -124,15 +115,9 @@ export default function AddService() {
     <Container size={420} my={40}>
       {
         <>
-          {/* <Modal opened={opened} onClose={close} title="User Details" centered>
-            <UserDetailsModal
-              data={{
-                email: formData.email,
-                password: formData.password,
-                username: formData.username,
-              }}
-            />
-          </Modal> */}
+          <Modal opened={opened} onClose={close} title="Service has been added successfully!" centered>
+            <ServiceDetalsModal data={{_id: newServiceId}}/>
+          </Modal>
           <Title
             align="center"
             sx={(theme) => ({
@@ -211,7 +196,7 @@ export default function AddService() {
         )}
         {successful && (
           <>
-            <Text>User Added Successfully!</Text>
+            <Text>Service Added Successfully!</Text>
           </>
         )}
       </Paper>

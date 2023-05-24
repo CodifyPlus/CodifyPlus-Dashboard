@@ -37,11 +37,6 @@ export default function AddService() {
     UserService.getAllUsernames().then(
       (response) => {
         setUsernames(response.data);
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
-
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
       },
       (error) => {
         if (error.response && error.response.status === 401) {
@@ -53,11 +48,6 @@ export default function AddService() {
     UserService.getAllModerators().then(
       (response) => {
         setModerators(response.data);
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
-
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
       },
       (error) => {
         if (error.response && error.response.status === 401) {
@@ -86,11 +76,9 @@ export default function AddService() {
   });
 
   const handleRegister = (formValue: any) => {
-    console.log(formValue);
     setSuccessful(false);
     UserService.addNewService(formValue).then(
       (response) => {
-        console.log("Response", response.data._id);
         setSuccessful(true);
         setNewServiceId(response.data);
       },

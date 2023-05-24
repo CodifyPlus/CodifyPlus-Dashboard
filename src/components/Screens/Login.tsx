@@ -35,7 +35,6 @@ export function Login() {
 
   const handleLogin = (formValue: any) => {
     const { username, password } = formValue;
-    console.log(formValue)
 
     //@ts-ignore
     dispatch(login({ username, password }))

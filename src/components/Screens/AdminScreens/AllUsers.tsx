@@ -26,7 +26,6 @@ export function AllUsers() {
   const changeRole = (userId: string, newRole: string) => {
     UserService.changeUserRole({ userId, newRole }).then(
       (response) => {
-        //console.log("Response", response.data);
       },
       (error) => {
         if (error.response && error.response.status === 401) {
@@ -52,11 +51,6 @@ export function AllUsers() {
     UserService.getAllUsers().then(
       (response) => {
         setUsers(response.data);
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
-
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
       },
       (error) => {
         const _Stats =
@@ -100,7 +94,6 @@ export function AllUsers() {
       <td>
         <Select
           onChange={(value) => {
-            //console.log("I am selected!", value, item._id);
             changeRole(item._id, value!);
             notifications.show({
               title: `Role updated!`,

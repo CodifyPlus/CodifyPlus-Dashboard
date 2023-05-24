@@ -31,7 +31,6 @@ import AddService from "./components/Screens/AdminScreens/AddService";
 import { TrackService } from "./components/Screens/AdminScreens/TrackService";
 
 export default function App() {
-  //console.log(window.location.pathname)
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
     defaultValue: "light",

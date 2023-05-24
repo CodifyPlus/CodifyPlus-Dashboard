@@ -9,12 +9,16 @@ import {
   Badge,
   createStyles,
   Card,
+  Modal,
 } from "@mantine/core";
 import { ServiceStatusTimeline } from "../../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
 import moment from "moment";
 import UserService from "../../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
 import { ServiceControlsFragment } from "../../Fragments/TrackServiceFragments/ServiceControlsFragment";
+import { useDisclosure } from "@mantine/hooks";
+import { AddNoteFragment } from "../../Fragments/TrackServiceFragments/AddNoteFragment";
+import { AddTrackPointFragment } from "../../Fragments/TrackServiceFragments/AddTrackPointFragment";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -26,6 +30,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function TrackService() {
+  const [opened_addNote, { open: open_addNote, close: close_addNote }] =
+    useDisclosure(false);
+
+  const [opened_addTrack, { open: open_addTrack, close: close_addTrack }] =
+    useDisclosure(false);
 
   const { classes } = useStyles();
 
@@ -34,6 +43,13 @@ export function TrackService() {
     status: "",
     name: "",
     duration: "",
+    notes: [
+      {
+        information: "",
+        private: false,
+        createdAt: "",
+      },
+    ],
     assignedTo: {
       userId: "",
       username: "",
@@ -57,17 +73,11 @@ export function TrackService() {
   });
 
   const serviceId = window.location.pathname.split("/")[3];
-  //console.log(serviceId);
 
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
       (response) => {
-        //setStats(response.data);
-        //console.log("Stats", Stats);
-        console.log("Response", response.data);
         setInfo(response.data);
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
       },
       (error) => {
         const _Stats =
@@ -97,8 +107,40 @@ export function TrackService() {
     assignedFor: info.assignedFor,
   };
 
+  const Notes = info.notes.map((note) => {
+    return (
+      <Grid.Col span={12}>
+        <Paper shadow="sm" p="sm" withBorder>
+          <Badge>{note.createdAt}</Badge>
+          <Text mt={5}>{note.information}</Text>
+        </Paper>
+      </Grid.Col>
+    );
+  });
+
   return (
     <>
+      <Modal
+        opened={opened_addNote}
+        onClose={close_addNote}
+        title="Add Note"
+        centered
+      >
+        <AddNoteFragment
+          data={{ serviceId, closeModal: close_addNote, setInfo }}
+        />
+      </Modal>
+      <Modal
+        opened={opened_addTrack}
+        onClose={close_addTrack}
+        title="Add Track Point"
+        fullScreen
+        centered
+      >
+        <AddTrackPointFragment
+          data={{ serviceId, closeModal: close_addTrack, setInfo }}
+        />
+      </Modal>
       <Title
         mb={30}
         align="center"
@@ -121,7 +163,7 @@ export function TrackService() {
               <ServiceStatusInfoTrackService data={serviceInfoData} />
             </Grid.Col>
             <Grid.Col span={12}>
-              <ServiceControlsFragment />
+              <ServiceControlsFragment data={{ openModalAddNote: open_addNote, openModalAddTrack: open_addTrack }} />
             </Grid.Col>
           </Grid>
         </SimpleGrid>
@@ -130,16 +172,7 @@ export function TrackService() {
             <Grid.Col span={12}>
               <Text>Notes</Text>
             </Grid.Col>
-            <Grid.Col span={12}>
-              <Paper shadow="sm" p="sm" withBorder>
-                <Badge>12 days left</Badge>
-                <Text mt={5}>
-                  h for the keywords to learn more about each warning. To
-                  ignore, add // eslint-disable-next-line to the line before.
-                  WARNING in [eslint] src\components\Screens Line 65:10:{" "}
-                </Text>
-              </Paper>
-            </Grid.Col>
+            {Notes.length === 0 ? <>No Notes Found!</> : Notes}
           </Grid>
         </Card>
       </Container>

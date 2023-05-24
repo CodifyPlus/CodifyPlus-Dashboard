@@ -82,17 +82,11 @@ function ServiceStatus() {
   });
 
   const serviceId = window.location.pathname.split("/")[3];
-  //console.log(serviceId);
 
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
       (response) => {
         //setStats(response.data);
-        //console.log("Stats", Stats);
-        console.log("Response", response.data);
-        
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
       },
       (error) => {
         const _Stats =

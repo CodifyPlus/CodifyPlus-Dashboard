@@ -59,6 +59,14 @@ const addNewService = (newServiceData) => {
   return axios.post(API_URL + "addNewService", newServiceData, { headers: authHeader() })
 }
 
+const addNote = (newNoteData) => {
+  return axios.post(API_URL + "addNote", newNoteData, { headers: authHeader() })
+}
+
+const addTrack = (newTrackPointData) => {
+  return axios.post(API_URL + "addTrack", newTrackPointData, { headers: authHeader() })
+}
+
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -73,6 +81,9 @@ const userService = {
   getAllUsernames,
   getAllModerators,
   addNewService,
+  addNote,
+  addTrack,
+  
 };
 
 export default userService

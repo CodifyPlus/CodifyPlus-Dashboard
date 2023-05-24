@@ -36,11 +36,6 @@ import { Link } from "react-router-dom";
       UserService.getAllServices().then(
         (response) => {
           setServices(response.data);
-          //console.log("Stats", Stats);
-          console.log("Response", response.data);
-  
-          //console.log("Stats", Stats);
-          //console.log("Response", response.data);
         },
         (error) => {
           if (error.response && error.response.status === 401) {

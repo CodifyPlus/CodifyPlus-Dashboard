@@ -40,12 +40,10 @@ export function AddUser() {
   });
 
   const handleRegister = (formValue: any) => {
-    console.log(formValue)
     setFormData(formValue);
     setSuccessful(false);
     UserService.addNewUser(formValue).then(
         (response) => {
-          console.log("Response", response.data);
           setSuccessful(true);
         },
         (error) => {

@@ -30,8 +30,6 @@ export default function DashboardHome() {
     UserService.getUserStats().then(
       (response) => {
         //setStats(response.data);
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
         let completedServicesData = [];
         let underProcessServicesData = [];
         for (var i = 0; i < response.data.completedServices.length; i++) {
@@ -56,8 +54,6 @@ export default function DashboardHome() {
           completedServices: completedServicesData,
           processServices: underProcessServicesData,
         });
-        //console.log("Stats", Stats);
-        //console.log("Response", response.data);
       },
       (error) => {
         const _Stats =

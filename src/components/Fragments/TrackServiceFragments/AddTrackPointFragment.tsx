@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import { IconMail, IconNote, IconStatusChange } from "@tabler/icons-react";
+import { IconMail, IconStatusChange } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import { DateTimePicker } from "@mantine/dates";
 
@@ -110,7 +110,7 @@ export function AddTrackPointFragment({ data }: noteProps) {
             />
           </Group>
           <Button fullWidth mt="xl" type="submit">
-            Add Note
+            Add Track Point
           </Button>
         </form>
       )}

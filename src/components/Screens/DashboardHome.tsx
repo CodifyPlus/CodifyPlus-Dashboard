@@ -46,7 +46,7 @@ export default function DashboardHome() {
             name: response.data.processServices[j].name,
             icon: "P",
             status: "Under Process",
-            serviceId: response.data.completedServices[j].serviceId.toString(),
+            serviceId: response.data.processServices[j].serviceId.toString(),
           });
         }
         setStats({

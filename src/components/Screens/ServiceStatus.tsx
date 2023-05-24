@@ -1,84 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { ServiceStatusHeading } from "../Fragments/ServiceStatusFragments/ServiceStatusHeading";
 import {
   Container,
   Grid,
   SimpleGrid,
-  Skeleton,
-  rem,
-  useMantineTheme,
+  Title,
+  Text,
+  Paper,
+  Badge,
+  createStyles,
+  Card,
 } from "@mantine/core";
-import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
-import moment from 'moment';
-import ServiceStatusInfo from "../Fragments/ServiceStatusFragments/ServiceStatusInfo";
+import moment from "moment";
 import UserService from "../../services/user.service";
-const PRIMARY_COL_HEIGHT = rem(300);
+import { ServiceStatusInfoTrackService } from "../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
+import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
 
-const timelineData = [
-  {
-    startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    notification: true,
-    description: "GST Service Initiated",
-    title: "Service Initiated",
-    status: true
+const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
   },
-  {
-    startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    notification: false,
-    description: "Documents Were Sent to the Gov. Agency",
-    title: "Documents Sent",
-    status: true,
-  },
-  {
-    startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    notification: false,
-    description: "Papers were submitted to Gov.",
-    title: "Papers Submitted",
-    status: false,
-  },
-  {
-    startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-    notification: true,
-    description: "Service has been completed.",
-    title: "Service Completed",
-    status: false,
-  }
-];
+}));
 
-const serviceInfoData = {
-  cost: "2000",
-  status: "Under Process",
-  name: "GST Registration",
-  duration: "2 Months",
-  assignedTo: {
-    username: "coinshell",
-    email: "coinshell@gmail.com"
-  },
-  assignedFor: {
-    username: "ipshita",
-    email: "ipshita@gmail.com"
-  },
-};
-
-function ServiceStatus() {
+export default function ServiceStatus() {
+  const { classes } = useStyles();
 
   const [info, setInfo] = useState({
     cost: "",
     status: "",
     name: "",
     duration: "",
+    notes: [
+      {
+        information: "",
+        private: false,
+        createdAt: "",
+      },
+    ],
     assignedTo: {
       userId: "",
       username: "",
       email: "",
     },
-    pathway: [{
-      startedAt: moment().utcOffset('+5:30').format('DD/MM/YYYY'),
-      notification: true,
-      description: "",
-      title: "",
-      status: true,
-  }]
+    assignedFor: {
+      userId: "",
+      username: "",
+      email: "",
+    },
+    pathway: [
+      {
+        startedAt: moment().utcOffset("+5:30").format("DD/MM/YYYY"),
+        description: "",
+        title: "",
+        status: true,
+        _id: "",
+      },
+    ],
   });
 
   const serviceId = window.location.pathname.split("/")[3];
@@ -86,7 +65,7 @@ function ServiceStatus() {
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
       (response) => {
-        //setStats(response.data);
+        setInfo(response.data);
       },
       (error) => {
         const _Stats =
@@ -106,42 +85,64 @@ function ServiceStatus() {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
-  const theme = useMantineTheme();
-  const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - ${theme.spacing.md} / 2)`;
+
+  const serviceInfoData = {
+    cost: info.cost,
+    status: info.status,
+    name: info.name,
+    duration: info.duration,
+    assignedTo: info.assignedTo,
+    assignedFor: info.assignedFor,
+  };
+
+  const Notes = info.notes
+  .filter((note) => !note.private)
+  .map((note) => {
+    return (
+      <Grid.Col span={12} key={note.information}>
+        <Paper shadow="sm" p="sm" withBorder>
+          <Badge>{note.createdAt.split("T")[0]}</Badge>
+          <Text mt={5}>{note.information}</Text>
+        </Paper>
+      </Grid.Col>
+    );
+  });
+
   return (
     <>
-      <ServiceStatusHeading />
+      <Title
+        mb={30}
+        align="center"
+        sx={(theme) => ({
+          fontWeight: 900,
+        })}
+      >
+        Track Service
+      </Title>
       <Container>
         <SimpleGrid
           cols={2}
           spacing="md"
+          mb="md"
           breakpoints={[{ maxWidth: "sm", cols: 1 }]}
         >
-          <ServiceStatusTimeline data={timelineData} />
+          <ServiceStatusTimeline data={info.pathway} serviceId={serviceId} setInfo={setInfo} />
           <Grid gutter="md">
             <Grid.Col>
-              <ServiceStatusInfo data={serviceInfoData} />
+              <ServiceStatusInfoTrackService data={serviceInfoData} />
             </Grid.Col>
-            <Grid.Col span={6}>
-              <Skeleton
-                height={SECONDARY_COL_HEIGHT}
-                radius="md"
-                animate={false}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <Skeleton
-                height={SECONDARY_COL_HEIGHT}
-                radius="md"
-                animate={false}
-              />
-            </Grid.Col>
+            
           </Grid>
         </SimpleGrid>
+        <Card withBorder radius="md" className={classes.card}>
+          <Grid gutter="md" className={classes.card}>
+            <Grid.Col span={12}>
+              <Text>Notes</Text>
+            </Grid.Col>
+            {Notes.length === 0 ? <>No Notes Found!</> : Notes}
+          </Grid>
+        </Card>
       </Container>
     </>
   );
 }
-
-export default ServiceStatus;

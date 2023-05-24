@@ -16,6 +16,7 @@ import {
   IconUsers,
   IconUser,
   IconCoin,
+  IconStatusChange,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -102,6 +103,7 @@ const useStyles = createStyles((theme) => ({
 
 const data = [
   { link: "/dashboard/home", label: "Home", icon: IconHome },
+  { link: "/dashboard/allservices", label: "All Services", icon: IconStatusChange },
   {
     link: "/dashboard/notifications",
     label: "Notifications",

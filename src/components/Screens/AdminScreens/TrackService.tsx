@@ -11,7 +11,6 @@ import {
   Card,
   Modal,
 } from "@mantine/core";
-import { ServiceStatusTimeline } from "../../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
 import moment from "moment";
 import UserService from "../../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
@@ -19,6 +18,7 @@ import { ServiceControlsFragment } from "../../Fragments/TrackServiceFragments/S
 import { useDisclosure } from "@mantine/hooks";
 import { AddNoteFragment } from "../../Fragments/TrackServiceFragments/AddNoteFragment";
 import { AddTrackPointFragment } from "../../Fragments/TrackServiceFragments/AddTrackPointFragment";
+import { ServiceStatusTimelineTrack } from "../../Fragments/TrackServiceFragments/ServiceStatusTimelineTrack";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -63,11 +63,10 @@ export function TrackService() {
     pathway: [
       {
         startedAt: moment().utcOffset("+5:30").format("DD/MM/YYYY"),
-        notification: true,
         description: "",
         title: "",
         status: true,
-        index: 0,
+        _id: "",
       },
     ],
   });
@@ -111,7 +110,7 @@ export function TrackService() {
     return (
       <Grid.Col span={12}>
         <Paper shadow="sm" p="sm" withBorder>
-          <Badge>{note.createdAt}</Badge>
+          <Badge>{note.createdAt.split("T")[0]}</Badge>
           <Text mt={5}>{note.information}</Text>
         </Paper>
       </Grid.Col>
@@ -133,7 +132,7 @@ export function TrackService() {
       <Modal
         opened={opened_addTrack}
         onClose={close_addTrack}
-        title="Add Track Point"
+        title=""
         fullScreen
         centered
       >
@@ -157,7 +156,7 @@ export function TrackService() {
           mb="md"
           breakpoints={[{ maxWidth: "sm", cols: 1 }]}
         >
-          <ServiceStatusTimeline data={info.pathway} />
+          <ServiceStatusTimelineTrack data={info.pathway} serviceId={serviceId} setInfo={setInfo} />
           <Grid gutter="md">
             <Grid.Col>
               <ServiceStatusInfoTrackService data={serviceInfoData} />

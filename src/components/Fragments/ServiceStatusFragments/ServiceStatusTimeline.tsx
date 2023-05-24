@@ -1,23 +1,28 @@
 import { Timeline, Text } from "@mantine/core";
-import { Icon3dCubeSphere } from "@tabler/icons-react";
-
+import {
+  Icon3dCubeSphere,
+} from "@tabler/icons-react";
 interface dataProps {
   data: {
     title: string;
     startedAt: any;
     description: string;
     status: boolean;
-    notification: boolean;
-  }[];
+    _id: string;
+    
+  }[],
+  serviceId: string;
+  setInfo: any
 }
 
-export function ServiceStatusTimeline({ data }: dataProps) {
-    let completedServices = 0;
-    for(var i = 0; i<data.length; i++){
-        if(data[i].status === true){
-            completedServices++;
-        }
+export function ServiceStatusTimeline({ data, serviceId, setInfo }: dataProps) {
+
+  let completedServices = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].status === true) {
+      completedServices++;
     }
+  }
   const items = data.map((item, index) => {
     return (
       <Timeline.Item
@@ -29,7 +34,7 @@ export function ServiceStatusTimeline({ data }: dataProps) {
           {item.description}
         </Text>
         <Text size="xs" mt={4}>
-          {`${item.startedAt}`}
+          {item.startedAt === null ? <></> : `${item.startedAt.split("T")[0]}`}
           <br></br>
         </Text>
       </Timeline.Item>
@@ -37,7 +42,7 @@ export function ServiceStatusTimeline({ data }: dataProps) {
   });
 
   return (
-    <Timeline active={completedServices-1} bulletSize={24} lineWidth={4}>
+    <Timeline active={completedServices - 1} bulletSize={24} lineWidth={4}>
       {items}
     </Timeline>
   );

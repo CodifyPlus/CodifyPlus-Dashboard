@@ -71,7 +71,7 @@ export default function App() {
             <Route path="home" element={<DashboardHome />} />
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="all-services" element={<AllServices />} />
+            <Route path="allservices" element={<AllServices />} />
             <Route path="servicestatus" element={<ServiceStatus />} >
               <Route path="*" element={<ServiceStatus/>} />
             </Route>

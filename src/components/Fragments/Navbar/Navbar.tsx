@@ -197,7 +197,6 @@ export function Navbar({ links }: HeaderResponsiveProps) {
           [classes.linkActive]: active === "/dashboard/home",
         })}
         onClick={(event) => {
-          
           setActive("/dashboard/home");
           close();
         }}

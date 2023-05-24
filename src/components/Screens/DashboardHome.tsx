@@ -4,6 +4,8 @@ import { ServicesList } from "../Fragments/DashboardHomeFragments/ServicesList";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export default function DashboardHome() {
   const [Stats, setStats] = useState({
@@ -91,6 +93,12 @@ export default function DashboardHome() {
       diff: 100,
     },
   ];
+
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <Container my="md">

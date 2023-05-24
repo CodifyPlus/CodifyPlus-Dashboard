@@ -19,14 +19,15 @@ import {
   IconSettingsBolt,
   IconTrash,
 } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const rolesData = ["USER", "MODERATOR", "ADMIN"];
 
 export function AllUsers() {
   const changeRole = (userId: string, newRole: string) => {
     UserService.changeUserRole({ userId, newRole }).then(
-      (response) => {
-      },
+      (response) => {},
       (error) => {
         if (error.response && error.response.status === 401) {
           //@ts-ignore
@@ -146,6 +147,12 @@ export function AllUsers() {
       </td>
     </tr>
   ));
+
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <>

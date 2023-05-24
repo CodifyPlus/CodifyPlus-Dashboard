@@ -4,16 +4,24 @@ import {
   Navbar,
   Footer,
   MediaQuery,
-  Burger,
   useMantineTheme,
+  Group,
+  ActionIcon,
 } from "@mantine/core";
 import { Sidebar } from "../Fragments/DashboardFragments/Sidebar";
-import DarkModeButton from "../Fragments/DarkModeButton/DarkModeButton";
-import { Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { IconHome, IconNotification, IconProgressCheck, IconSettings, IconUser } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <>
       <div style={{ marginTop: "-120px" }}></div>
@@ -40,27 +48,28 @@ export default function Dashboard() {
         }
         footer={
           <Footer height={60} p="md">
-            <div
-              style={{ display: "flex", alignItems: "center", height: "100%" }}
-            >
-              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                <Burger
+            <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+            <Group position="center" grow>
+                {/* <Burger
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
                   size="sm"
                   color={theme.colors.gray[6]}
-                  mr="xl"
-                />
-              </MediaQuery>
+                /> */}
+                <ActionIcon component={Link} to="/dashboard/home" ><IconHome/></ActionIcon>
+                <ActionIcon component={Link} to="/dashboard/allservices"><IconProgressCheck/></ActionIcon>
+                <ActionIcon component={Link} to="/dashboard/home" ><IconUser/></ActionIcon>
+                <ActionIcon component={Link} to="/dashboard/notifications"><IconNotification/></ActionIcon>
+                <ActionIcon onClick={() => setOpened((o) => !o)}><IconSettings/></ActionIcon>
 
-              <div style={{ marginLeft: "auto" }}>
-                <DarkModeButton />
-              </div>
-            </div>
+              </Group>
+            </MediaQuery>
+
+            <div style={{ marginLeft: "auto" }}></div>
           </Footer>
         }
       >
-        <Outlet/>
+        <Outlet />
       </AppShell>
     </>
   );

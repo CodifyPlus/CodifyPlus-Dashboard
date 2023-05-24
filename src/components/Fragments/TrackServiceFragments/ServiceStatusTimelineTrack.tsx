@@ -46,7 +46,6 @@ export function ServiceStatusTimelineTrack({ data, serviceId, setInfo }: dataPro
       completedServices++;
     }
   }
-  console.log(data)
   const items = data.map((item, index) => {
     return (
       <Timeline.Item

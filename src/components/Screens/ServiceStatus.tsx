@@ -14,6 +14,8 @@ import moment from "moment";
 import UserService from "../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
 import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -107,6 +109,12 @@ export default function ServiceStatus() {
       </Grid.Col>
     );
   });
+
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <>

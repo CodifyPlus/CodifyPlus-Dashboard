@@ -19,6 +19,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { AddNoteFragment } from "../../Fragments/TrackServiceFragments/AddNoteFragment";
 import { AddTrackPointFragment } from "../../Fragments/TrackServiceFragments/AddTrackPointFragment";
 import { ServiceStatusTimelineTrack } from "../../Fragments/TrackServiceFragments/ServiceStatusTimelineTrack";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -116,6 +118,12 @@ export function TrackService() {
       </Grid.Col>
     );
   });
+
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <>

@@ -17,6 +17,8 @@ import { IconMail } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import UserDetailsModal from "../../Fragments/AddUserFragments/UserDetailsModal";
 import UserService from "../../../services/user.service";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export function AddUser() {
   const [successful, setSuccessful] = useState(false);
@@ -43,16 +45,16 @@ export function AddUser() {
     setFormData(formValue);
     setSuccessful(false);
     UserService.addNewUser(formValue).then(
-        (response) => {
-          setSuccessful(true);
-        },
-        (error) => {
-          if (error.response && error.response.status === 401) {
-            //@ts-ignore
-            EventBus.dispatch("logout");
-          }
+      (response) => {
+        setSuccessful(true);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
         }
-      );
+      }
+    );
     open();
   };
 
@@ -63,13 +65,25 @@ export function AddUser() {
       <IconMail className={className} />
     );
 
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <Container size={420} my={40}>
       {
         <>
-        <Modal opened={opened} onClose={close} title="User Details" centered>
-        <UserDetailsModal data={{email: formData.email, password: formData.password, username: formData.username}}/>
-      </Modal>
+          <Modal opened={opened} onClose={close} title="User Details" centered>
+            <UserDetailsModal
+              data={{
+                email: formData.email,
+                password: formData.password,
+                username: formData.username,
+              }}
+            />
+          </Modal>
           <Title
             align="center"
             sx={(theme) => ({
@@ -89,7 +103,6 @@ export function AddUser() {
               placeholder="johndoe"
               required
               {...form.getInputProps("username")}
-              
             />
             <TextInput
               label="Email"
@@ -97,7 +110,6 @@ export function AddUser() {
               placeholder="you@mantine.dev"
               required
               {...form.getInputProps("email")}
-              
             />
             <PasswordInput
               label="Password"

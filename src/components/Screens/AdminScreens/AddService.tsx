@@ -17,6 +17,8 @@ import { IconMail } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import UserService from "../../../services/user.service";
 import ServiceDetalsModal from "../../Fragments/AddServiceFragments/ServiceDetailsModal";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export default function AddService() {
   const [usernames, setUsernames] = useState([
@@ -99,12 +101,23 @@ export default function AddService() {
       <IconMail className={className} />
     );
 
+  const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <Container size={420} my={40}>
       {
         <>
-          <Modal opened={opened} onClose={close} title="Service has been added successfully!" centered>
-            <ServiceDetalsModal data={{_id: newServiceId}}/>
+          <Modal
+            opened={opened}
+            onClose={close}
+            title="Service has been added successfully!"
+            centered
+          >
+            <ServiceDetalsModal data={{ _id: newServiceId }} />
           </Modal>
           <Title
             align="center"

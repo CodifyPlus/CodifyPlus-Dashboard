@@ -17,6 +17,7 @@ import {
   IconUser,
   IconCoin,
   IconStatusChange,
+  IconUserBolt,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -103,7 +104,12 @@ const useStyles = createStyles((theme) => ({
 
 const data = [
   { link: "/dashboard/home", label: "Home", icon: IconHome },
-  { link: "/dashboard/allservices", label: "All Services", icon: IconStatusChange },
+  {
+    link: "/dashboard/allservices",
+    label: "All Services",
+    icon: IconStatusChange,
+  },
+  { link: "/dashboard/profile", label: "Profile", icon: IconUserBolt },
   {
     link: "/dashboard/notifications",
     label: "Notifications",
@@ -114,21 +120,25 @@ const data = [
 const adminRoutes = [
   { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
   { link: "/dashboard/adduser", label: "Add User", icon: IconUser },
-  { link: "/dashboard/manageservices", label: "Manage Services", icon: IconServer },
+  {
+    link: "/dashboard/manageservices",
+    label: "Manage Services",
+    icon: IconServer,
+  },
   { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
 ];
 
-export function Sidebar() {
+export function Sidebar({ drawerSetOpened }: any) {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Home");
   const [showAdminLinks, setShowAdminLinks] = useState(false);
   useEffect(() => {
     setActive(window.location.pathname);
-    if(currentUser){
+    if (currentUser) {
       setShowAdminLinks(currentUser.role === "ADMIN");
     }
     //window.location.reload();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { user: currentUser } = useSelector((state: any) => state.auth);
   const handleLogout = (event: any) => {
@@ -143,6 +153,7 @@ export function Sidebar() {
       to={item.link}
       key={item.label}
       onClick={(event) => {
+        drawerSetOpened(false);
         setActive(item.link);
       }}
     >
@@ -159,6 +170,7 @@ export function Sidebar() {
       to={item.link}
       key={item.label}
       onClick={(event) => {
+        drawerSetOpened(false);
         setActive(item.link);
       }}
     >
@@ -185,10 +197,14 @@ export function Sidebar() {
         </Group>
         {links}
 
-        {showAdminLinks === true ? <>
-          <Text className={classes.adminLinks}>Admin Controls</Text>
-          {adminLinks}
-        </> : <></>}
+        {showAdminLinks === true ? (
+          <>
+            <Text className={classes.adminLinks}>Admin Controls</Text>
+            {adminLinks}
+          </>
+        ) : (
+          <></>
+        )}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>

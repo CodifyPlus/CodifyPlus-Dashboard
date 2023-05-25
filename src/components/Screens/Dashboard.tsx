@@ -43,7 +43,7 @@ export default function Dashboard() {
             hidden={!opened}
             width={{ sm: 200, lg: 330 }}
           >
-            <Sidebar />
+            <Sidebar drawerSetOpened={setOpened} />
           </Navbar>
         }
         footer={
@@ -56,10 +56,10 @@ export default function Dashboard() {
                   size="sm"
                   color={theme.colors.gray[6]}
                 /> */}
-                <ActionIcon component={Link} to="/dashboard/home" ><IconHome/></ActionIcon>
-                <ActionIcon component={Link} to="/dashboard/allservices"><IconProgressCheck/></ActionIcon>
-                <ActionIcon component={Link} to="/dashboard/home" ><IconUser/></ActionIcon>
-                <ActionIcon component={Link} to="/dashboard/notifications"><IconNotification/></ActionIcon>
+                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/home" ><IconHome/></ActionIcon>
+                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/allservices"><IconProgressCheck/></ActionIcon>
+                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/profile" ><IconUser/></ActionIcon>
+                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/notifications"><IconNotification/></ActionIcon>
                 <ActionIcon onClick={() => setOpened((o) => !o)}><IconSettings/></ActionIcon>
 
               </Group>

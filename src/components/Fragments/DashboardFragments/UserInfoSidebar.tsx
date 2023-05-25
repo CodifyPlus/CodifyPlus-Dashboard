@@ -7,6 +7,7 @@ import {
     createStyles,
   } from '@mantine/core';
   import { IconChevronRight } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
   
   const useStyles = createStyles((theme) => ({
     user: {
@@ -32,7 +33,7 @@ import {
     const { classes } = useStyles();
   
     return (
-      <UnstyledButton className={classes.user} {...others}>
+      <UnstyledButton component={Link} to={`/dashboard/profile`} className={classes.user} {...others}>
         <Group>
           <Avatar src={image} radius="xl" />
   

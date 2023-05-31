@@ -1,4 +1,4 @@
-import { Grid, Container, Text, Paper } from "@mantine/core";
+import { Grid, Container, Text, Paper, Loader, Center } from "@mantine/core";
 import { ServiceStats } from "../Fragments/DashboardHomeFragments/ServiceStats";
 import { ServicesList } from "../Fragments/DashboardHomeFragments/ServicesList";
 import { useEffect, useState } from "react";
@@ -27,13 +27,17 @@ export default function DashboardHome() {
       },
     ],
   });
+  const [isLoading, setIsLoading] = useState(true); // New state variable for loading status
 
   useEffect(() => {
-    UserService.getUserStats().then(
-      (response) => {
-        //setStats(response.data);
+    setIsLoading(true); // Set loading status to true before making the API call
+
+    UserService.getUserStats()
+      .then((response) => {
+        // Process the response data
         let completedServicesData = [];
         let underProcessServicesData = [];
+
         for (var i = 0; i < response.data.completedServices.length; i++) {
           completedServicesData.push({
             name: response.data.completedServices[i].name,
@@ -43,7 +47,7 @@ export default function DashboardHome() {
           });
         }
 
-        for (var j = 0; j < (response.data.processServices.length); j++) {
+        for (var j = 0; j < response.data.processServices.length; j++) {
           underProcessServicesData.push({
             name: response.data.processServices[j].name,
             icon: "P",
@@ -51,13 +55,15 @@ export default function DashboardHome() {
             serviceId: response.data.processServices[j].serviceId.toString(),
           });
         }
+
         setStats({
           ...response.data,
           completedServices: completedServicesData,
           processServices: underProcessServicesData,
         });
-      },
-      (error) => {
+        setIsLoading(false); // Set loading status to false after the data is fetched
+      })
+      .catch((error) => {
         const _Stats =
           (error.response &&
             error.response.data &&
@@ -71,8 +77,9 @@ export default function DashboardHome() {
           //@ts-ignore
           EventBus.dispatch("logout");
         }
-      }
-    );
+
+        setIsLoading(false); // Set loading status to false in case of an error
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -102,27 +109,33 @@ export default function DashboardHome() {
 
   return (
     <Container my="md">
-      <Grid>
-        <Grid.Col xs={12}>
-          <ServiceStats data={data} />
-        </Grid.Col>
-        <Grid.Col xs={12}>
-          <Paper shadow="md" p={20} withBorder>
-            <Text mb={10} ml={10}>
-              Under Process Services:
-            </Text>
-            <ServicesList data={Stats.processServices} />
-          </Paper>
-        </Grid.Col>
-        <Grid.Col xs={12}>
-          <Paper shadow="md" p={20} withBorder>
-            <Text mb={10} ml={10}>
-              Completed Services:
-            </Text>
-            <ServicesList data={Stats.completedServices} />
-          </Paper>
-        </Grid.Col>
-      </Grid>
+      {isLoading ? ( // Conditional rendering based on the loading status
+      <Center>
+        <Loader />
+      </Center>
+      ) : (
+        <Grid>
+          <Grid.Col xs={12}>
+            <ServiceStats data={data} />
+          </Grid.Col>
+          <Grid.Col xs={12}>
+            <Paper shadow="md" p={20} withBorder>
+              <Text mb={10} ml={10}>
+                Under Process Services:
+              </Text>
+              <ServicesList data={Stats.processServices} />
+            </Paper>
+          </Grid.Col>
+          <Grid.Col xs={12}>
+            <Paper shadow="md" p={20} withBorder>
+              <Text mb={10} ml={10}>
+                Completed Services:
+              </Text>
+              <ServicesList data={Stats.completedServices} />
+            </Paper>
+          </Grid.Col>
+        </Grid>
+      )}
     </Container>
   );
 }

@@ -1,4 +1,4 @@
-import { Grid, Container, Text, Paper, Title } from "@mantine/core";
+import { Grid, Container, Text, Paper, Title, Loader, Center } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
@@ -26,13 +26,17 @@ export default function AllServices() {
       },
     ],
   });
+  const [isLoading, setIsLoading] = useState(true); // New state variable for loading status
 
   useEffect(() => {
-    UserService.getUserStats().then(
-      (response) => {
-        //setStats(response.data);
+    setIsLoading(true); // Set loading status to true before making the API call
+
+    UserService.getUserStats()
+      .then((response) => {
+        // Process the response data
         let completedServicesData = [];
         let underProcessServicesData = [];
+
         for (var i = 0; i < response.data.completedServices.length; i++) {
           completedServicesData.push({
             name: response.data.completedServices[i].name,
@@ -50,13 +54,15 @@ export default function AllServices() {
             serviceId: response.data.processServices[j].serviceId.toString(),
           });
         }
+
         setStats({
           ...response.data,
           completedServices: completedServicesData,
           processServices: underProcessServicesData,
         });
-      },
-      (error) => {
+        setIsLoading(false); // Set loading status to false after the data is fetched
+      })
+      .catch((error) => {
         const _Stats =
           (error.response &&
             error.response.data &&
@@ -70,8 +76,9 @@ export default function AllServices() {
           //@ts-ignore
           EventBus.dispatch("logout");
         }
-      }
-    );
+
+        setIsLoading(false); // Set loading status to false in case of an error
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -83,32 +90,40 @@ export default function AllServices() {
 
   return (
     <Container my="md">
-      <Title
-        align="center"
-        sx={(theme) => ({
-          fontWeight: 900,
-        })}
-      >
-        All Services
-      </Title>
-      <Grid mt={30}>
-        <Grid.Col xs={12}>
-          <Paper shadow="md" p={20} withBorder>
-            <Text mb={10} ml={10}>
-              Under Process Services:
-            </Text>
-            <AllServicesListFragment data={Stats.processServices} />
-          </Paper>
-        </Grid.Col>
-        <Grid.Col xs={12}>
-          <Paper shadow="md" p={20} withBorder>
-            <Text mb={10} ml={10}>
-              Completed Services:
-            </Text>
-            <AllServicesListFragment data={Stats.completedServices} />
-          </Paper>
-        </Grid.Col>
-      </Grid>
+      {isLoading ? ( // Conditional rendering based on the loading status
+      <Center>
+        <Loader />
+      </Center>
+      ) : (
+        <>
+          <Title
+            align="center"
+            sx={(theme) => ({
+              fontWeight: 900,
+            })}
+          >
+            All Services
+          </Title>
+          <Grid mt={30}>
+            <Grid.Col xs={12}>
+              <Paper shadow="md" p={20} withBorder>
+                <Text mb={10} ml={10}>
+                  Under Process Services:
+                </Text>
+                <AllServicesListFragment data={Stats.processServices} />
+              </Paper>
+            </Grid.Col>
+            <Grid.Col xs={12}>
+              <Paper shadow="md" p={20} withBorder>
+                <Text mb={10} ml={10}>
+                  Completed Services:
+                </Text>
+                <AllServicesListFragment data={Stats.completedServices} />
+              </Paper>
+            </Grid.Col>
+          </Grid>
+        </>
+      )}
     </Container>
   );
 }

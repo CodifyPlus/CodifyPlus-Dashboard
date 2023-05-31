@@ -10,6 +10,8 @@ import {
   createStyles,
   Card,
   Modal,
+  Loader,
+  Center,
 } from "@mantine/core";
 import moment from "moment";
 import UserService from "../../../services/user.service";
@@ -74,11 +76,13 @@ export function TrackService() {
   });
 
   const serviceId = window.location.pathname.split("/")[3];
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
       (response) => {
         setInfo(response.data);
+        setIsLoading(false);
       },
       (error) => {
         const _Stats =
@@ -94,6 +98,7 @@ export function TrackService() {
           //@ts-ignore
           EventBus.dispatch("logout");
         }
+        setIsLoading(false);
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,62 +132,79 @@ export function TrackService() {
 
   return (
     <>
-      <Modal
-        opened={opened_addNote}
-        onClose={close_addNote}
-        title="Add Note"
-        centered
-      >
-        <AddNoteFragment
-          data={{ serviceId, closeModal: close_addNote, setInfo }}
-        />
-      </Modal>
-      <Modal
-        opened={opened_addTrack}
-        onClose={close_addTrack}
-        title=""
-        fullScreen
-        centered
-      >
-        <AddTrackPointFragment
-          data={{ serviceId, closeModal: close_addTrack, setInfo }}
-        />
-      </Modal>
-      <Title
-        mb={30}
-        align="center"
-        sx={(theme) => ({
-          fontWeight: 900,
-        })}
-      >
-        Track Service
-      </Title>
-      <Container>
-        <SimpleGrid
-          cols={2}
-          spacing="md"
-          mb="md"
-          breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-        >
-          <ServiceStatusTimelineTrack data={info.pathway} serviceId={serviceId} setInfo={setInfo} />
-          <Grid gutter="md">
-            <Grid.Col>
-              <ServiceStatusInfoTrackService data={serviceInfoData} />
-            </Grid.Col>
-            <Grid.Col span={12}>
-              <ServiceControlsFragment data={{ openModalAddNote: open_addNote, openModalAddTrack: open_addTrack }} />
-            </Grid.Col>
-          </Grid>
-        </SimpleGrid>
-        <Card withBorder radius="md" className={classes.card}>
-          <Grid gutter="md" className={classes.card}>
-            <Grid.Col span={12}>
-              <Text>Notes</Text>
-            </Grid.Col>
-            {Notes.length === 0 ? <>No Notes Found!</> : Notes}
-          </Grid>
-        </Card>
-      </Container>
+      {isLoading ? ( // Conditional rendering based on the loading status
+        <Center>
+          <Loader />
+        </Center>
+      ) : (
+        <>
+          <Modal
+            opened={opened_addNote}
+            onClose={close_addNote}
+            title="Add Note"
+            centered
+          >
+            <AddNoteFragment
+              data={{ serviceId, closeModal: close_addNote, setInfo }}
+            />
+          </Modal>
+          <Modal
+            opened={opened_addTrack}
+            onClose={close_addTrack}
+            title=""
+            fullScreen
+            centered
+          >
+            <AddTrackPointFragment
+              data={{ serviceId, closeModal: close_addTrack, setInfo }}
+            />
+          </Modal>
+          <Title
+            mb={30}
+            align="center"
+            sx={(theme) => ({
+              fontWeight: 900,
+            })}
+          >
+            Track Service
+          </Title>
+          <Container>
+            <SimpleGrid
+              cols={2}
+              spacing="md"
+              mb="md"
+              breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+            >
+              <ServiceStatusTimelineTrack
+                data={info.pathway}
+                serviceId={serviceId}
+                setInfo={setInfo}
+              />
+              <Grid gutter="md">
+                <Grid.Col>
+                  <ServiceStatusInfoTrackService data={serviceInfoData} />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <ServiceControlsFragment
+                    data={{
+                      openModalAddNote: open_addNote,
+                      openModalAddTrack: open_addTrack,
+                    }}
+                  />
+                </Grid.Col>
+              </Grid>
+            </SimpleGrid>
+            <Card withBorder radius="md" className={classes.card}>
+              <Grid gutter="md" className={classes.card}>
+                <Grid.Col span={12}>
+                  <Text>Notes</Text>
+                </Grid.Col>
+                {Notes.length === 0 ? <>No Notes Found!</> : Notes}
+              </Grid>
+            </Card>
+          </Container>
+        </>
+      )}
     </>
   );
 }

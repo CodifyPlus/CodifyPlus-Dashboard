@@ -7,6 +7,8 @@ import {
   ScrollArea,
   Menu,
   Button,
+  Loader,
+  Center,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -48,10 +50,13 @@ export function AllUsers() {
     },
   ]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     UserService.getAllUsers().then(
       (response) => {
         setUsers(response.data);
+        setIsLoading(false);
       },
       (error) => {
         const _Stats =
@@ -67,6 +72,7 @@ export function AllUsers() {
           //@ts-ignore
           EventBus.dispatch("logout");
         }
+        setIsLoading(false);
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,20 +162,26 @@ export function AllUsers() {
 
   return (
     <>
-      <ScrollArea>
-        <Table miw={800} verticalSpacing="sm">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Role</th>
-              <th>Created At</th>
-              <th>Process Services</th>
-              <th>Manage</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </ScrollArea>
+      {isLoading ? ( // Conditional rendering based on the loading status
+        <Center>
+          <Loader />
+        </Center>
+      ) : (
+        <ScrollArea>
+          <Table miw={800} verticalSpacing="sm">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Created At</th>
+                <th>Process Services</th>
+                <th>Manage</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </ScrollArea>
+      )}
     </>
   );
 }

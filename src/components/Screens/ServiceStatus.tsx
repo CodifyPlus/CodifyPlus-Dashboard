@@ -9,6 +9,8 @@ import {
   Badge,
   createStyles,
   Card,
+  Loader,
+  Center,
 } from "@mantine/core";
 import moment from "moment";
 import UserService from "../../services/user.service";
@@ -63,11 +65,13 @@ export default function ServiceStatus() {
   });
 
   const serviceId = window.location.pathname.split("/")[3];
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
       (response) => {
         setInfo(response.data);
+        setIsLoading(false);
       },
       (error) => {
         const _Stats =
@@ -83,6 +87,7 @@ export default function ServiceStatus() {
           //@ts-ignore
           EventBus.dispatch("logout");
         }
+        setIsLoading(false);
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,17 +103,17 @@ export default function ServiceStatus() {
   };
 
   const Notes = info.notes
-  .filter((note) => !note.private)
-  .map((note) => {
-    return (
-      <Grid.Col span={12} key={note.information}>
-        <Paper shadow="sm" p="sm" withBorder>
-          <Badge>{note.createdAt.split("T")[0]}</Badge>
-          <Text mt={5}>{note.information}</Text>
-        </Paper>
-      </Grid.Col>
-    );
-  });
+    .filter((note) => !note.private)
+    .map((note) => {
+      return (
+        <Grid.Col span={12} key={note.information}>
+          <Paper shadow="sm" p="sm" withBorder>
+            <Badge>{note.createdAt.split("T")[0]}</Badge>
+            <Text mt={5}>{note.information}</Text>
+          </Paper>
+        </Grid.Col>
+      );
+    });
 
   const { user: currentUser } = useSelector((state: any) => state.auth);
 
@@ -118,39 +123,50 @@ export default function ServiceStatus() {
 
   return (
     <>
-      <Title
-        mb={30}
-        align="center"
-        sx={(theme) => ({
-          fontWeight: 900,
-        })}
-      >
-        Track Service
-      </Title>
-      <Container>
-        <SimpleGrid
-          cols={2}
-          spacing="md"
-          mb="md"
-          breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-        >
-          <ServiceStatusTimeline data={info.pathway} serviceId={serviceId} setInfo={setInfo} />
-          <Grid gutter="md">
-            <Grid.Col>
-              <ServiceStatusInfoTrackService data={serviceInfoData} />
-            </Grid.Col>
-            
-          </Grid>
-        </SimpleGrid>
-        <Card withBorder radius="md" className={classes.card}>
-          <Grid gutter="md" className={classes.card}>
-            <Grid.Col span={12}>
-              <Text>Notes</Text>
-            </Grid.Col>
-            {Notes.length === 0 ? <>No Notes Found!</> : Notes}
-          </Grid>
-        </Card>
-      </Container>
+      {isLoading ? ( // Conditional rendering based on the loading status
+      <Center>
+        <Loader />
+      </Center>
+      ) : (
+        <>
+          <Title
+            mb={30}
+            align="center"
+            sx={(theme) => ({
+              fontWeight: 900,
+            })}
+          >
+            Track Service
+          </Title>
+          <Container>
+            <SimpleGrid
+              cols={2}
+              spacing="md"
+              mb="md"
+              breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+            >
+              <ServiceStatusTimeline
+                data={info.pathway}
+                serviceId={serviceId}
+                setInfo={setInfo}
+              />
+              <Grid gutter="md">
+                <Grid.Col>
+                  <ServiceStatusInfoTrackService data={serviceInfoData} />
+                </Grid.Col>
+              </Grid>
+            </SimpleGrid>
+            <Card withBorder radius="md" className={classes.card}>
+              <Grid gutter="md" className={classes.card}>
+                <Grid.Col span={12}>
+                  <Text>Notes</Text>
+                </Grid.Col>
+                {Notes.length === 0 ? <>No Notes Found!</> : Notes}
+              </Grid>
+            </Card>
+          </Container>
+        </>
+      )}
     </>
   );
 }

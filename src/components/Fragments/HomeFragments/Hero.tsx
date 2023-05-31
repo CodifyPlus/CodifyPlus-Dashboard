@@ -9,8 +9,10 @@ import {
     List,
     ThemeIcon,
     rem,
+    Center,
   } from '@mantine/core';
   import { IconCheck } from '@tabler/icons-react';
+  import CodifyPlusLaptop from "./CodifyPlus Mockup BGT.png";
   
   const useStyles = createStyles((theme) => ({
     inner: {
@@ -72,11 +74,10 @@ import {
           <div className={classes.inner}>
             <div className={classes.content}>
               <Title className={classes.title}>
-                Get <span className={classes.highlight}>dedicated</span> business solutions
+                An <span className={classes.highlight}>All-in-one</span> Dashboard
               </Title>
               <Text color="dimmed" mt="md">
-              Are you looking for someone to build your eCommerce website? Or your new startup's website or app?
-              Or, maybe someone to handle your IT infrastructure? You are at the right place.
+              CodifyPlus Dashboard offers the integrated experience to manage your clients on-the-fly. Anytime, any device, anywhere, in a matter of few clicks.
               </Text>
   
               <List
@@ -90,13 +91,10 @@ import {
                 }
               >
                 <List.Item>
-                  <b>Web Development</b> - Whether you need front-end design, back-end development, or a full-stack solution.
+                  <b>Track Services</b> - Track your services on the go using our web or mobile app.
                 </List.Item>
                 <List.Item>
-                  <b>App Development</b> - High-quality, user-friendly mobile apps that elevate your business and engage your audience. From concept to launch.
-                </List.Item>
-                <List.Item>
-                  <b>Company Registration</b> - Whether you need help with company formation, trademark registration, or intellectual property protection, legal drafting, etc.
+                  <b>Raise Tickets</b> - Raise any ticket or query via the dashboard and get them resolved quickly.
                 </List.Item>
                 <List.Item>
                   <b>...A lot more</b>
@@ -105,14 +103,17 @@ import {
   
               <Group mt={30}>
                 <Button radius="xl" size="md" className={classes.control}>
-                  View All Services
+                  Go to Dashboard
                 </Button>
                 <Button variant="default" radius="xl" size="md" className={classes.control}>
-                  Get Quotation
+                  Download Mobile App
                 </Button>
               </Group>
             </div>
-            <Image src={'https://ui.mantine.dev/_next/static/media/image.9a65bd94.svg'} className={classes.image} />
+            <Center maw={450}>
+
+            <Image alt='codifyplus-mobiles' src={CodifyPlusLaptop} className={classes.image} />
+            </Center>
           </div>
         </Container>
       </div>

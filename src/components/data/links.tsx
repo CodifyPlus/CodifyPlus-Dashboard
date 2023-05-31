@@ -26,10 +26,6 @@ const links = {
       //     }
       //   ]
       // },
-      {
-        "link": "/contact-us",
-        "label": "Contact"
-      },
       // {
       //   "link": "#tools",
       //   "label": "Tools",

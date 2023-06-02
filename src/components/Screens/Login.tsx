@@ -10,6 +10,7 @@ import {
   Group,
   Button,
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -43,7 +44,14 @@ export function Login() {
         navigate("/dashboard/home");
         window.location.reload();
       })
-      .catch(() => {});
+      .catch((error: any) => {
+        notifications.show({
+          title: `Login Failed!`,
+          message: `Your username or password is incorrect. Please try again!`,
+          autoClose: 3000,
+          color: "red",
+        });
+      });
   };
 
   if (isLoggedIn) {
@@ -70,7 +78,12 @@ export function Login() {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit(handleLogin)}>
-          <TextInput label="Username" placeholder="johndoe123" required {...form.getInputProps("username")}/>
+          <TextInput
+            label="Username"
+            placeholder="johndoe123"
+            required
+            {...form.getInputProps("username")}
+          />
           <PasswordInput
             label="Password"
             placeholder="Your password"

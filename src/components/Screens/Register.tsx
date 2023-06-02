@@ -16,15 +16,33 @@ import { register } from "../../slices/auth";
 import { clearMessage } from "../../slices/message";
 import { useForm } from "@mantine/form";
 import { Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 export function Register() {
   const [successful, setSuccessful] = useState(false);
-  const { isLoggedIn } = useSelector((state: any) => state.auth);
+  const { isLoggedIn } = useSelector((state: any) => {
+    return state.auth;
+  });
+  const { message } = useSelector((state: any) => {
+    return state.message;
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
+
+  useEffect(() => {
+    if(message && message.length > 0){
+      notifications.clean();
+      notifications.show({
+        title: `Register Failed!`,
+        message: message,
+        autoClose: 3000,
+        color: "red",
+      });
+    }
+  }, [message]);
 
   const form = useForm({
     initialValues: {
@@ -36,7 +54,7 @@ export function Register() {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
-  
+
   if (successful) {
     return <Navigate to="/login" />;
   }
@@ -57,6 +75,8 @@ export function Register() {
       })
       .catch(() => {
         setSuccessful(false);
+        // TODO: Add Register Messages Logic.
+        //console.log(message)
       });
   };
 

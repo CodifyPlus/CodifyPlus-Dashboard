@@ -1,4 +1,13 @@
-import { Table, Group, Text, ScrollArea, Menu, Button, Loader, Center } from "@mantine/core";
+import {
+  Table,
+  Group,
+  Text,
+  ScrollArea,
+  Menu,
+  Button,
+  Loader,
+  Center,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
 import {
@@ -34,6 +43,22 @@ export function ManageServices() {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [stateUpdate, setStateUpdate] = useState(false);
+
+  const handleDelete = (serviceId: string) => {
+    UserService.deleteService({ serviceId }).then(
+      (response) => {
+        setStateUpdate(!stateUpdate);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+  };
+
   useEffect(() => {
     UserService.getAllServices().then(
       (response) => {
@@ -49,7 +74,7 @@ export function ManageServices() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [stateUpdate]);
 
   const rows = services.map((item) => (
     <tr key={item._id}>
@@ -115,6 +140,9 @@ export function ManageServices() {
               Send Note
             </Menu.Item>
             <Menu.Item
+              onClick={() => {
+                handleDelete(item._id);
+              }}
               icon={<IconTrash size="1rem" stroke={1.5} />}
               color="red"
             >
@@ -135,9 +163,9 @@ export function ManageServices() {
   return (
     <>
       {isLoading ? ( // Conditional rendering based on the loading status
-      <Center>
-        <Loader />
-      </Center>
+        <Center>
+          <Loader />
+        </Center>
       ) : (
         <ScrollArea>
           <Table miw={800} verticalSpacing="sm">

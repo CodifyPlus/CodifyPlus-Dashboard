@@ -50,6 +50,22 @@ export function AllUsers() {
     },
   ]);
 
+  const [stateUpdate, setStateUpdate] = useState(false);
+
+  const handleDelete = (userId: string) => {
+    UserService.deleteUser({ userId }).then(
+      (response) => {
+        setStateUpdate(!stateUpdate);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+  };
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -76,7 +92,7 @@ export function AllUsers() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [stateUpdate]);
 
   const rows = users.map((item) => (
     <tr key={item.username}>
@@ -143,6 +159,7 @@ export function AllUsers() {
               Pending Services
             </Menu.Item>
             <Menu.Item
+              onClick={() => {handleDelete(item._id)}}
               icon={<IconTrash size="1rem" stroke={1.5} />}
               color="red"
             >

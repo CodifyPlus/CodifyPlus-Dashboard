@@ -54,6 +54,17 @@ const editTrackStatus = (updatedTrackPoint) => {
   return axios.post(API_URL + "editTrackStatus", updatedTrackPoint, { headers: authHeader() })
 }
 
+const markAsCompleted = (updatedService) => {
+  return axios.post(API_URL + "markAsCompleted", updatedService, { headers: authHeader() })
+}
+
+const deleteUser = (userId) => {
+  return axios.post(API_URL + "deleteUser", userId, { headers: authHeader() })
+}
+const deleteService = (serviceId) => {
+  return axios.post(API_URL + "deleteService", serviceId, { headers: authHeader() })
+}
+
 const userService = {
   getUserStats,
   getServiceInfo,
@@ -67,6 +78,9 @@ const userService = {
   addNote,
   addTrack,
   editTrackStatus,
+  markAsCompleted,
+  deleteService,
+  deleteUser,
 };
 
 export default userService

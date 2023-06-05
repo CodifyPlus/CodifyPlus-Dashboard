@@ -189,6 +189,8 @@ export function TrackService() {
                     data={{
                       openModalAddNote: open_addNote,
                       openModalAddTrack: open_addTrack,
+                      setInfo,
+                      serviceId: serviceId,
                     }}
                   />
                 </Grid.Col>

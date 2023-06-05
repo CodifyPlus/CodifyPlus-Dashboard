@@ -7,6 +7,7 @@ import {
   Button,
   Loader,
   Center,
+  TextInput,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -15,6 +16,7 @@ import {
   IconMapPin,
   IconNotebook,
   IconPencil,
+  IconSearch,
   IconSettingsBolt,
   IconTrash,
 } from "@tabler/icons-react";
@@ -41,6 +43,27 @@ export function ManageServices() {
     },
   ]);
 
+  const [filterData, setFilterData] = useState([
+    {
+      cost: "",
+      name: "",
+      status: "",
+      _id: "",
+      assignedTo: {
+        userId: "",
+        username: "",
+        email: "",
+      },
+      assignedFor: {
+        userId: "",
+        username: "",
+        email: "",
+      },
+    },
+  ]);
+
+  const [search, setSearch] = useState("");
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [stateUpdate, setStateUpdate] = useState(false);
@@ -59,10 +82,38 @@ export function ManageServices() {
     );
   };
 
+  const handleSearchChange = (event: any) => {
+    setSearch(event.currentTarget.value);
+  };
+
+  useEffect(() => {
+    const filteredServices = services.filter(
+      (service: any) =>
+        service.name.toLowerCase().includes(search.toLowerCase()) ||
+        service.status.toLowerCase().includes(search.toLowerCase()) ||
+        service.cost.includes(search.toLowerCase()) ||
+        service.assignedTo.username
+          .toLowerCase()
+          .includes(search.toLowerCase()) ||
+        service.assignedTo.email
+          .toLowerCase()
+          .includes(search.toLowerCase()) ||
+        service.assignedFor.username
+          .toLowerCase()
+          .includes(search.toLowerCase()) ||
+        service.assignedFor.email
+          .toLowerCase()
+          .includes(search.toLowerCase())
+    );
+    setFilterData(filteredServices);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+
   useEffect(() => {
     UserService.getAllServices().then(
       (response) => {
-        setServices(response.data);
+        const allServices = response.data;
+        setServices(allServices);
         setIsLoading(false);
       },
       (error) => {
@@ -76,7 +127,7 @@ export function ManageServices() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateUpdate]);
 
-  const rows = services.map((item) => (
+  const rows = filterData.map((item) => (
     <tr key={item._id}>
       <td>{item.name}</td>
       <td>{item.status}</td>
@@ -168,6 +219,13 @@ export function ManageServices() {
         </Center>
       ) : (
         <ScrollArea>
+          <TextInput
+            placeholder="Search by any field"
+            mb="md"
+            icon={<IconSearch size="0.9rem" stroke={1.5} />}
+            value={search}
+            onChange={handleSearchChange}
+          />
           <Table miw={800} verticalSpacing="sm">
             <thead>
               <tr>

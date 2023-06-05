@@ -62,7 +62,7 @@ export function ManageServices() {
     },
   ]);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("a");
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -114,6 +114,7 @@ export function ManageServices() {
       (response) => {
         const allServices = response.data;
         setServices(allServices);
+        setSearch("");
         setIsLoading(false);
       },
       (error) => {

@@ -65,6 +65,18 @@ const deleteService = (serviceId) => {
   return axios.post(API_URL + "deleteService", serviceId, { headers: authHeader() })
 }
 
+const getAllNotifications = (username) => {
+  return axios.get(API_URL + "getAllNotifications", {
+    headers: authHeader(), params: {
+      username: username
+    }
+  })
+}
+
+const sendNotification = (newNotificationData) => {
+  return axios.post(API_URL + "sendNotification", newNotificationData, { headers: authHeader() })
+}
+
 const userService = {
   getUserStats,
   getServiceInfo,
@@ -81,6 +93,8 @@ const userService = {
   markAsCompleted,
   deleteService,
   deleteUser,
+  getAllNotifications,
+  sendNotification,
 };
 
 export default userService

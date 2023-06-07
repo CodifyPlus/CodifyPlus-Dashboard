@@ -9,6 +9,7 @@ import {
   Button,
   Loader,
   Center,
+  Modal,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -23,6 +24,8 @@ import {
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { SendNotificationFragment } from "../../Fragments/AllUsersFragments/SendNotificationFragment";
+import { useDisclosure } from "@mantine/hooks";
 
 const rolesData = ["USER", "MODERATOR", "ADMIN"];
 
@@ -51,6 +54,11 @@ export function AllUsers() {
   ]);
 
   const [stateUpdate, setStateUpdate] = useState(false);
+
+  const [
+    opened_sendNotification,
+    { open: open_sendNotification, close: close_sendNotification },
+  ] = useDisclosure(false);
 
   const handleDelete = (userId: string) => {
     UserService.deleteUser({ userId }).then(
@@ -148,9 +156,27 @@ export function AllUsers() {
               Actions
             </Button>
           </Menu.Target>
+          <Modal
+            opened={opened_sendNotification}
+            onClose={close_sendNotification}
+            title={`Send Notification`}
+            centered
+          >
+            <SendNotificationFragment
+              data={{
+                username: item.username,
+                closeModal: close_sendNotification,
+              }}
+            />
+          </Modal>
           <Menu.Dropdown>
-            <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>
-              Send Message
+            <Menu.Item
+              onClick={() => {
+                open_sendNotification();
+              }}
+              icon={<IconMessages size="1rem" stroke={1.5} />}
+            >
+              Send Notification
             </Menu.Item>
             <Menu.Item icon={<IconServer size="1rem" stroke={1.5} />}>
               Add Service
@@ -159,7 +185,9 @@ export function AllUsers() {
               Pending Services
             </Menu.Item>
             <Menu.Item
-              onClick={() => {handleDelete(item._id)}}
+              onClick={() => {
+                handleDelete(item._id);
+              }}
               icon={<IconTrash size="1rem" stroke={1.5} />}
               color="red"
             >

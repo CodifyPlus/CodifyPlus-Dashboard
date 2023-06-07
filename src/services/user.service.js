@@ -77,6 +77,10 @@ const sendNotification = (newNotificationData) => {
   return axios.post(API_URL + "sendNotification", newNotificationData, { headers: authHeader() })
 }
 
+const deleteNotification = (notificationData) => {
+  return axios.post(API_URL + "deleteNotification", notificationData, { headers: authHeader() })
+}
+
 const userService = {
   getUserStats,
   getServiceInfo,
@@ -95,6 +99,7 @@ const userService = {
   deleteUser,
   getAllNotifications,
   sendNotification,
+  deleteNotification
 };
 
 export default userService

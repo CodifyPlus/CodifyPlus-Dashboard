@@ -54,6 +54,7 @@ export function AllUsers() {
   ]);
 
   const [stateUpdate, setStateUpdate] = useState(false);
+  const [notificationUsername, setNotificationUsername] = useState("");
 
   const [
     opened_sendNotification,
@@ -156,22 +157,10 @@ export function AllUsers() {
               Actions
             </Button>
           </Menu.Target>
-          <Modal
-            opened={opened_sendNotification}
-            onClose={close_sendNotification}
-            title={`Send Notification`}
-            centered
-          >
-            <SendNotificationFragment
-              data={{
-                username: item.username,
-                closeModal: close_sendNotification,
-              }}
-            />
-          </Modal>
           <Menu.Dropdown>
             <Menu.Item
               onClick={() => {
+                setNotificationUsername(item.username);
                 open_sendNotification();
               }}
               icon={<IconMessages size="1rem" stroke={1.5} />}
@@ -213,6 +202,19 @@ export function AllUsers() {
         </Center>
       ) : (
         <ScrollArea>
+          <Modal
+            opened={opened_sendNotification}
+            onClose={close_sendNotification}
+            title={`Send Notification to ${notificationUsername}`}
+            centered
+          >
+            <SendNotificationFragment
+              data={{
+                username: notificationUsername,
+                closeModal: close_sendNotification,
+              }}
+            />
+          </Modal>
           <Table miw={800} verticalSpacing="sm">
             <thead>
               <tr>

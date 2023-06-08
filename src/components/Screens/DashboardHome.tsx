@@ -35,8 +35,8 @@ export default function DashboardHome() {
     UserService.getUserStats()
       .then((response) => {
         // Process the response data
-        let completedServicesData = [];
-        let underProcessServicesData = [];
+        let completedServicesData: any = [];
+        let underProcessServicesData: any = [];
 
         for (var i = 0; i < response.data.completedServices.length; i++) {
           completedServicesData.push({

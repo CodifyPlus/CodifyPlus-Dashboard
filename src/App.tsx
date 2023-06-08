@@ -29,6 +29,7 @@ import { AddUser } from "./components/Screens/AdminScreens/AddUser";
 import { ManageServices } from "./components/Screens/AdminScreens/ManageServices";
 import AddService from "./components/Screens/AdminScreens/AddService";
 import { TrackService } from "./components/Screens/AdminScreens/TrackService";
+import { ChangePassword } from "./components/Screens/ChangePassword";
 
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="profile" element={<Profile />} />
             <Route path="allservices" element={<AllServices />} />
+            <Route path="changepassword" element={<ChangePassword />} />
             <Route path="servicestatus" element={<ServiceStatus />} >
               <Route path="*" element={<ServiceStatus/>} />
             </Route>

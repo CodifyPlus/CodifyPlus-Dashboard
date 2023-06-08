@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { UserInfoCard } from "../Fragments/ProfileFragments/UserInfoCard";
 import { useForm } from "@mantine/form";
 import UserService from "../../services/user.service";
+import { notifications } from "@mantine/notifications";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,10 @@ function Profile() {
           fullname: response.data.fullname,
           email: response.data.email,
           phone: response.data.phone,
+        });
+        notifications.show({
+          message: `Details updated! 😎`,
+          autoClose: 5000,
         });
       },
       (error) => {

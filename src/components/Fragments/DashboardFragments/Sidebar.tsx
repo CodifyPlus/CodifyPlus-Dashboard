@@ -18,6 +18,7 @@ import {
   IconCoin,
   IconStatusChange,
   IconUserBolt,
+  IconKey,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -114,6 +115,11 @@ const data = [
     link: "/dashboard/notifications",
     label: "Notifications",
     icon: IconBellRinging,
+  },
+  {
+    link: "/dashboard/changepassword",
+    label: "Change Password",
+    icon: IconKey,
   },
 ];
 

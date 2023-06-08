@@ -127,7 +127,7 @@ export function ServicesList({ data }: DndListProps) {
             {datalen > 3 ? <Button
                 component={Link}
                 mt={10}
-                to={`/dashboard/all-services`}
+                to={`/dashboard/allservices`}
                 variant="outline"
                 color="yellow"
                 style={{ marginLeft: "auto" }}

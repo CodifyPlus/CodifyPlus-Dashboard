@@ -1,4 +1,4 @@
-import { Avatar, Text, Paper } from '@mantine/core';
+import { Avatar, Text, Paper, Group } from '@mantine/core';
 
 interface UserInfoActionProps {
   avatar: string;
@@ -16,13 +16,20 @@ export function UserInfoCard({ avatar, name, email }: UserInfoActionProps) {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       })}
     >
-      <Avatar src={avatar} size={120} radius={120} mx="auto" />
-      <Text ta="center" fz="lg" weight={500} mt="md">
-        {name}
-      </Text>
-      <Text ta="center" c="dimmed" fz="sm">
-        {email}
-      </Text>
+      <Group>
+          <Avatar src={avatar} radius="xl" />
+  
+          <div style={{ flex: 1 }}>
+            <Text size="sm" weight={500}>
+              {name}
+            </Text>
+  
+            <Text color="dimmed" size="xs">
+              {email}
+            </Text>
+          </div>
+  
+        </Group>
 
       {/* <Button variant="default" fullWidth mt="md">
         Send message

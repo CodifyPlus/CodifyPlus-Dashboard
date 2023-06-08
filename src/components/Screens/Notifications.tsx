@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
-import { IconTrash } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 
 function NotificationsPage() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -79,6 +79,7 @@ function NotificationsPage() {
           <ActionIcon
             style={{ marginLeft: "auto" }}
             mt={8}
+            size={"xs"}
             variant="outline"
             color="yellow"
             title="Delete Notification"
@@ -86,7 +87,7 @@ function NotificationsPage() {
               handleDelete(notification._id, currentUser.username);
             }}
           >
-            <IconTrash size="1.1rem" />
+            <IconX size="0.7rem" />
           </ActionIcon>
           </Group>
           <Text fw={700} mt={5}>

@@ -4,6 +4,10 @@ const links = {
         "link": "/",
         "label": "Home"
       },
+      {
+        "link": "/contact-us",
+        "label": "Contact Us"
+      },
       // {
       //   "link": "#about-us",
       //   "label": "About Us",

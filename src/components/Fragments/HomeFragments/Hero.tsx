@@ -19,7 +19,7 @@ import {
       display: 'flex',
       justifyContent: 'space-between',
       
-      paddingBottom: `calc(${theme.spacing.xl} * 4)`,
+      paddingBottom: `calc(${theme.spacing.xl} * 2)`,
     },
   
     content: {

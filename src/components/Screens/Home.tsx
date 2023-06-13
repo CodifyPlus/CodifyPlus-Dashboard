@@ -4,12 +4,13 @@ import { Hero } from "../Fragments/HomeFragments/Hero";
 import { FeaturesSection } from "../Fragments/HomeFragments/Featured";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import featuredData from "../data/featuredData";
+import { BackedBy } from "../Fragments/HomeFragments/BackedBy";
 
 function Home() {
   return (
     <>
-      <Hero></Hero>
-      {/* <FeaturesSection {...featuredData} /> */}
+      <Hero/>
+      <BackedBy/>
     </>
   );
 }

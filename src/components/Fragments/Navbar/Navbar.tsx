@@ -249,7 +249,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
           <Group spacing={5} className={classes.links}>
             {items}{otherLinks}
           </Group>
-          <DarkModeButton></DarkModeButton>
+          <DarkModeButton />
 
           <Burger
             opened={opened}

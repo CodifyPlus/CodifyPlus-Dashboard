@@ -10,7 +10,6 @@ import {
 } from "@mantine/core";
 import {
   IconBellRinging,
-  IconSwitchHorizontal,
   IconLogout,
   IconHome,
   IconUsers,
@@ -19,6 +18,7 @@ import {
   IconStatusChange,
   IconUserBolt,
   IconKey,
+  IconHomeBolt,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -214,9 +214,9 @@ export function Sidebar({ drawerSetOpened }: any) {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Link to="/" className={classes.link}>
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Return Home</span>
+        <Link to="https://startupkro.com/" className={classes.link}>
+          <IconHomeBolt className={classes.linkIcon} stroke={1.5} />
+          <span>Visit Start-Up Kro</span>
         </Link>
 
         <a href="/login" className={classes.link} onClick={handleLogout}>

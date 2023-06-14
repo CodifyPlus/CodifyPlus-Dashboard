@@ -33,13 +33,11 @@ export function Register() {
   }, [dispatch]);
 
   useEffect(() => {
-    if(message && message.length > 0){
+    if (message && message.length > 0) {
       notifications.clean();
       notifications.show({
-        title: `Register Failed!`,
         message: message,
         autoClose: 3000,
-        color: "red",
       });
     }
   }, [message]);
@@ -52,6 +50,8 @@ export function Register() {
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      username: (value) => (/^[a-zA-Z0-9]+$/.test(value) ? null : "The username must be unique and should not contain spaces or symbols!"),
+      password: (value) => (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(value) ? null : "The password must contain atleast one uppercase, lowercase, symbol, and a number, and length must be more than 8 characters"),
     },
   });
 
@@ -75,8 +75,13 @@ export function Register() {
       })
       .catch(() => {
         setSuccessful(false);
-        // TODO: Add Register Messages Logic.
-        //console.log(message)
+        if (message) {
+          notifications.clean();
+          notifications.show({
+            message: message,
+            autoClose: 3000,
+          });
+        }
       });
   };
 

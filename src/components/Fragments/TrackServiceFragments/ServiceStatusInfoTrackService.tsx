@@ -63,12 +63,22 @@ export function ServiceStatusInfoTrackService({ data }: ResultProps) {
         <Title className={classes.title}>
           Name of{" "}
           <Text component="span" className={classes.highlight} inherit>
+            User :
+          </Text>
+          &nbsp;&nbsp;&nbsp;{`${data.assignedFor.username}`}
+        </Title>
+      </Card.Section>
+
+      <Card.Section pt="xs" pl="md" pr="md" pb="xs">
+        <Title className={classes.title}>
+          Name of{" "}
+          <Text component="span" className={classes.highlight} inherit>
             Service :
           </Text>
           &nbsp;&nbsp;&nbsp;{`${data.name}`}
         </Title>
       </Card.Section>
-      
+
       <Card.Section pt="xs" pl="md" pr="md" pb="xs">
         <Title className={classes.title}>
           Total{" "}

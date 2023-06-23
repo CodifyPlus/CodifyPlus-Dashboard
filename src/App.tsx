@@ -52,6 +52,7 @@ export default function App() {
         theme={{
           colorScheme,
           fontFamily: "Mulish, sans-serif",
+          primaryColor: "yellow"
         }}
         withGlobalStyles
         withNormalizeCSS

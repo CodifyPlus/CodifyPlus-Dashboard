@@ -134,14 +134,24 @@ const adminRoutes = [
   { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
 ];
 
+const moderatorRoutes = [
+  {
+    link: "/dashboard/manageservices",
+    label: "Manage Services",
+    icon: IconServer,
+  },
+];
+
 export function Sidebar({ drawerSetOpened }: any) {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Home");
   const [showAdminLinks, setShowAdminLinks] = useState(false);
+  const [showModeratorLinks, setShowModeratorLinks] = useState(false);
   useEffect(() => {
     setActive(window.location.pathname);
     if (currentUser) {
       setShowAdminLinks(currentUser.role === "ADMIN");
+      setShowModeratorLinks(currentUser.role === "MODERATOR");
     }
     //window.location.reload();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,6 +195,23 @@ export function Sidebar({ drawerSetOpened }: any) {
     </Link>
   ));
 
+  const moderatorLinks = moderatorRoutes.map((item) => (
+    <Link
+      className={cx(classes.link, {
+        [classes.linkActive]: item.link === active,
+      })}
+      to={item.link}
+      key={item.label}
+      onClick={(event) => {
+        drawerSetOpened(false);
+        setActive(item.link);
+      }}
+    >
+      <item.icon className={classes.linkIcon} stroke={1.5} />
+      <span>{item.label}</span>
+    </Link>
+  ));
+
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
@@ -207,6 +234,14 @@ export function Sidebar({ drawerSetOpened }: any) {
           <>
             <Text className={classes.adminLinks}>Admin Controls</Text>
             {adminLinks}
+          </>
+        ) : (
+          <></>
+        )}
+        {showModeratorLinks === true ? (
+          <>
+            <Text className={classes.adminLinks}>Moderator Controls</Text>
+            {moderatorLinks}
           </>
         ) : (
           <></>

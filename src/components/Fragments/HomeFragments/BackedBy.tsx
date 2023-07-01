@@ -1,6 +1,7 @@
-import { Center, Container, Grid, Image, Title, createStyles, rem } from "@mantine/core";
+import { Center, Container, Grid, Image, Title, createStyles, rem, useMantineTheme } from "@mantine/core";
 import BackedByMicrosoft from "./BackedByLogos/MicrosoftForStartups.png";
-import StartupKro from "./BackedByLogos/StartupKro.png";
+import StartupKroLight from "./BackedByLogos/StartupKro.png";
+import StartupKroDark from "./BackedByLogos/StartupKroDark.png";
 import StartupIndia from "./BackedByLogos/StartupIndia.png";
 import MakeInIndia from "./BackedByLogos/MakeInIndia.png";
 
@@ -22,7 +23,7 @@ const useStyles = createStyles((theme) => ({
 
 export function BackedBy() {
   const { classes } = useStyles();
-  
+  const { colorScheme } = useMantineTheme();
   return (
     <Container>
       <Title mb={40} className={classes.title} order={2}>
@@ -37,7 +38,7 @@ export function BackedBy() {
         </Grid.Col>
         <Grid.Col span={3}>
           <Center>
-            <Image width={100} height={40} src={StartupKro}></Image>
+            <Image width={100} height={40} src={colorScheme === 'dark' ? StartupKroLight : StartupKroDark}></Image>
           </Center>
         </Grid.Col>
         <Grid.Col span={3}>

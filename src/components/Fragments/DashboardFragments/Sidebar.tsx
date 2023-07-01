@@ -136,7 +136,7 @@ const adminRoutes = [
 
 const moderatorRoutes = [
   {
-    link: "/dashboard/manageservices",
+    link: "/dashboard/mod/manageservices",
     label: "Manage Services",
     icon: IconServer,
   },

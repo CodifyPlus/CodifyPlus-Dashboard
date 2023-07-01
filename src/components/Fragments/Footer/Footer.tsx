@@ -1,6 +1,6 @@
 import { createStyles, Text, Container, ActionIcon, Group, rem } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-import Logo from '../Navbar/Logo';
+import LogoStatic from '../Navbar/LogoStatic';
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -131,7 +131,7 @@ export function Footer({ data }: FooterLinksProps) {
     <footer className={classes.footer}>
       <Container className={classes.inner}>
         <div className={classes.logo}>
-          <Logo/>
+          <LogoStatic/>
           <Text size="xs" color="dimmed" className={classes.description}>
             Business Accelerator and Toolkit
           </Text>

@@ -19,7 +19,7 @@ import { Register } from "./components/Screens/Register";
 import Dashboard from "./components/Screens/Dashboard";
 import DashboardHome from "./components/Screens/DashboardHome";
 import { NotificationsPage } from "./components/Screens/Notifications";
-import { Notifications } from '@mantine/notifications';
+import { Notifications } from "@mantine/notifications";
 import Profile from "./components/Screens/Profile";
 import { EmptyPage } from "./components/Screens/EmptyPage";
 import AllServices from "./components/Screens/AllServices";
@@ -30,6 +30,8 @@ import { ManageServices } from "./components/Screens/AdminScreens/ManageServices
 import AddService from "./components/Screens/AdminScreens/AddService";
 import { TrackService } from "./components/Screens/AdminScreens/TrackService";
 import { ChangePassword } from "./components/Screens/ChangePassword";
+import { ManageServicesMod } from "./components/Screens/ModeratorScreens/ManageServicesMod";
+import { TrackServiceMod } from "./components/Screens/ModeratorScreens/TrackServiceMod";
 
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -52,7 +54,7 @@ export default function App() {
         theme={{
           colorScheme,
           fontFamily: "Mulish, sans-serif",
-          primaryColor: "yellow"
+          primaryColor: "yellow",
         }}
         withGlobalStyles
         withNormalizeCSS
@@ -75,15 +77,19 @@ export default function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="allservices" element={<AllServices />} />
             <Route path="changepassword" element={<ChangePassword />} />
-            <Route path="servicestatus" element={<ServiceStatus />} >
-              <Route path="*" element={<ServiceStatus/>} />
+            <Route path="servicestatus" element={<ServiceStatus />}>
+              <Route path="*" element={<ServiceStatus />} />
             </Route>
-            <Route path="allusers" element={<AllUsers/>} ></Route>
-            <Route path="adduser" element={<AddUser/>} ></Route>
-            <Route path="manageservices" element={<ManageServices/>} ></Route>
-            <Route path="addservice" element={<AddService/>} ></Route>
-            <Route path="track" element={<TrackService />} >
-              <Route path="*" element={<TrackService/>} />
+            <Route path="mod/manageservices" element={<ManageServicesMod />} />
+            <Route path="mod/track" element={<TrackServiceMod />}>
+              <Route path="*" element={<TrackServiceMod />} />
+            </Route>
+            <Route path="allusers" element={<AllUsers />}></Route>
+            <Route path="adduser" element={<AddUser />}></Route>
+            <Route path="manageservices" element={<ManageServices />}></Route>
+            <Route path="addservice" element={<AddService />}></Route>
+            <Route path="track" element={<TrackService />}>
+              <Route path="*" element={<TrackService />} />
             </Route>
           </Route>
         </Routes>

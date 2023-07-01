@@ -25,7 +25,7 @@ export function ServiceStatusTimelineTrackMod({ data, serviceId, setInfo }: data
             pathwayId: id,
             serviceId: serviceId,
         }
-        UserService.editTrackStatus(objToPost).then(
+        UserService.editTrackStatusMod(objToPost).then(
           (response) => {
             setInfo(response.data);
             

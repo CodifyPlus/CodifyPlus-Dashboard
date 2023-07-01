@@ -89,12 +89,17 @@ const changePassword = (updatedPasswordData) => {
   return axios.post(API_URL + "changePassword", updatedPasswordData, { headers: authHeader() })
 }
 
+// Mod APIs
 const getAllServicesMod = (username) => {
   return axios.get(API_URL + "getAllServicesMod", {
     headers: authHeader(), params: {
       username: username
     }
   })
+}
+
+const editTrackStatusMod = (updatedTrackPoint) => {
+  return axios.post(API_URL + "editTrackStatusMod", updatedTrackPoint, { headers: authHeader() })
 }
 
 const userService = {
@@ -118,7 +123,8 @@ const userService = {
   deleteNotification,
   updateProfile,
   changePassword,
-  getAllServicesMod
+  getAllServicesMod,
+  editTrackStatusMod,
 };
 
 export default userService

@@ -89,7 +89,11 @@ const changePassword = (updatedPasswordData) => {
   return axios.post(API_URL + "changePassword", updatedPasswordData, { headers: authHeader() })
 }
 
-// Mod APIs
+const approveTrack = (updatedTrackPoint) => {
+  return axios.post(API_URL + "approveTrack", updatedTrackPoint, { headers: authHeader() })
+}
+
+// Mod API Endpoints
 const getAllServicesMod = (username) => {
   return axios.get(API_URL + "getAllServicesMod", {
     headers: authHeader(), params: {
@@ -100,6 +104,10 @@ const getAllServicesMod = (username) => {
 
 const editTrackStatusMod = (updatedTrackPoint) => {
   return axios.post(API_URL + "editTrackStatusMod", updatedTrackPoint, { headers: authHeader() })
+}
+
+const addTrackMod = (newTrackPointData) => {
+  return axios.post(API_URL + "addTrackMod", newTrackPointData, { headers: authHeader() })
 }
 
 const userService = {
@@ -125,6 +133,8 @@ const userService = {
   changePassword,
   getAllServicesMod,
   editTrackStatusMod,
+  addTrackMod,
+  approveTrack,
 };
 
 export default userService

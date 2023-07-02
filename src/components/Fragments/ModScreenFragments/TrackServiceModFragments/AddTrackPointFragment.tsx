@@ -44,7 +44,7 @@ export function AddTrackPointFragmentMod({ data }: noteProps) {
       startedAt: formValue.startedAt,
       serviceId: data.serviceId,
     };
-    UserService.addTrack(objToPost).then(
+    UserService.addTrackMod(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();

@@ -52,6 +52,7 @@ export function TrackService() {
         information: "",
         private: false,
         createdAt: "",
+        approved: false,
       },
     ],
     assignedTo: {
@@ -71,6 +72,7 @@ export function TrackService() {
         title: "",
         status: true,
         _id: "",
+        approved: false,
       },
     ],
   });

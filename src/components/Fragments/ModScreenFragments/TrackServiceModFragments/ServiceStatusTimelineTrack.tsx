@@ -12,7 +12,7 @@ interface dataProps {
     description: string;
     status: boolean;
     _id: string;
-    
+    approved: boolean;
   }[],
   serviceId: string;
   setInfo: any
@@ -58,6 +58,15 @@ export function ServiceStatusTimelineTrackMod({ data, serviceId, setInfo }: data
         </Text>
         <Text size="xs" mt={4}>
           {item.startedAt === null ? <></> : `${item.startedAt.split("T")[0]}`}
+          <br></br>
+        </Text>
+        <Text size="xs" mt={4}>
+          Approved:{" "}
+          {item.approved === undefined
+            ? `Yes`
+            : item.approved === true
+            ? "Yes"
+            : "No"}
           <br></br>
         </Text>
         <ActionIcon

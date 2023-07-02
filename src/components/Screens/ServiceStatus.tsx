@@ -41,6 +41,7 @@ export default function ServiceStatus() {
         information: "",
         private: false,
         createdAt: "",
+        approved: false,
       },
     ],
     assignedTo: {
@@ -60,6 +61,7 @@ export default function ServiceStatus() {
         title: "",
         status: true,
         _id: "",
+        approved: false,
       },
     ],
   });

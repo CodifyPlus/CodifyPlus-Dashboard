@@ -1,6 +1,7 @@
-import { Timeline, Text, ActionIcon } from "@mantine/core";
+import { Timeline, Text, ActionIcon, Group } from "@mantine/core";
 import {
   Icon3dCubeSphere,
+  IconCheck,
   IconMapPinCheck,
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
@@ -12,33 +13,53 @@ interface dataProps {
     description: string;
     status: boolean;
     _id: string;
-    
-  }[],
+    approved: boolean;
+  }[];
   serviceId: string;
-  setInfo: any
+  setInfo: any;
 }
 
-export function ServiceStatusTimelineTrack({ data, serviceId, setInfo }: dataProps) {
-
-    const handleRegister = (id: string) => {
-        const objToPost = {
-            pathwayId: id,
-            serviceId: serviceId,
+export function ServiceStatusTimelineTrack({
+  data,
+  serviceId,
+  setInfo,
+}: dataProps) {
+  const handleRegister = (id: string) => {
+    const objToPost = {
+      pathwayId: id,
+      serviceId: serviceId,
+    };
+    UserService.editTrackStatus(objToPost).then(
+      (response) => {
+        setInfo(response.data);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
         }
-        UserService.editTrackStatus(objToPost).then(
-          (response) => {
-            setInfo(response.data);
-            
-          },
-          (error) => {
-            if (error.response && error.response.status === 401) {
-              //@ts-ignore
-              EventBus.dispatch("logout");
-            }
-          }
-        );
-      };
-    
+      }
+    );
+  };
+
+  const handleApprove = (id: string) => {
+    const objToPost = {
+        pathwayId: id,
+        serviceId: serviceId,
+    }
+    UserService.approveTrack(objToPost).then(
+      (response) => {
+        setInfo(response.data);
+        
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+  };
 
   let completedServices = 0;
   for (var i = 0; i < data.length; i++) {
@@ -60,15 +81,39 @@ export function ServiceStatusTimelineTrack({ data, serviceId, setInfo }: dataPro
           {item.startedAt === null ? <></> : `${item.startedAt.split("T")[0]}`}
           <br></br>
         </Text>
-        <ActionIcon
-          mt={8}
-          variant="outline"
-          color="yellow"
-          title="Mark as completed"
-          onClick={() => {handleRegister(item._id)}}
-        >
-          <IconMapPinCheck size="1.1rem" />
-        </ActionIcon>
+        <Text size="xs" mt={4}>
+          Approved:{" "}
+          {item.approved === undefined
+            ? `Yes`
+            : item.approved === true
+            ? "Yes"
+            : "No"}
+          <br></br>
+        </Text>
+        <Group>
+          <ActionIcon
+            mt={8}
+            variant="outline"
+            color="yellow"
+            title="Mark as completed"
+            onClick={() => {
+              handleRegister(item._id);
+            }}
+          >
+            <IconMapPinCheck size="1.1rem" />
+          </ActionIcon>
+          <ActionIcon
+            mt={8}
+            variant="outline"
+            color="yellow"
+            title="Approve Track Point"
+            onClick={() => {
+              handleApprove(item._id);
+            }}
+          >
+            <IconCheck size="1.1rem" />
+          </ActionIcon>
+        </Group>
       </Timeline.Item>
     );
   });

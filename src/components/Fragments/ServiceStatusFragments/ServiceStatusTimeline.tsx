@@ -9,7 +9,7 @@ interface dataProps {
     description: string;
     status: boolean;
     _id: string;
-    
+    approved: boolean;
   }[],
   serviceId: string;
   setInfo: any
@@ -23,7 +23,9 @@ export function ServiceStatusTimeline({ data, serviceId, setInfo }: dataProps) {
       completedServices++;
     }
   }
-  const items = data.map((item, index) => {
+  const items = data
+  .filter(item => item.approved !== false) // Filter out items with 'approved' set to false
+  .map((item, index) => {
     return (
       <Timeline.Item
         bullet={<Icon3dCubeSphere size={12} />}

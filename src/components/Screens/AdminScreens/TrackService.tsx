@@ -12,6 +12,8 @@ import {
   Modal,
   Loader,
   Center,
+  ActionIcon,
+  Group,
 } from "@mantine/core";
 import moment from "moment";
 import UserService from "../../../services/user.service";
@@ -23,6 +25,7 @@ import { AddTrackPointFragment } from "../../Fragments/TrackServiceFragments/Add
 import { ServiceStatusTimelineTrack } from "../../Fragments/TrackServiceFragments/ServiceStatusTimelineTrack";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { IconCheck } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -53,6 +56,7 @@ export function TrackService() {
         private: false,
         createdAt: "",
         approved: false,
+        _id: "",
       },
     ],
     assignedTo: {
@@ -79,6 +83,24 @@ export function TrackService() {
 
   const serviceId = window.location.pathname.split("/")[3];
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleApprove = (id: string) => {
+    const objToPost = {
+      noteId: id,
+      serviceId: serviceId,
+    };
+    UserService.approveNote(objToPost).then(
+      (response) => {
+        setInfo(response.data);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+  };
 
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
@@ -119,7 +141,31 @@ export function TrackService() {
     return (
       <Grid.Col span={12}>
         <Paper shadow="sm" p="sm" withBorder>
-          <Badge>{note.createdAt.split("T")[0]}</Badge>
+          <Group spacing="xs">
+            <Badge>{note.createdAt.split("T")[0]}</Badge>
+
+            <Badge>
+              Approved:{" "}
+              {note.approved === undefined
+                ? "Yes"
+                : note.approved === true
+                ? "Yes"
+                : "No"}
+            </Badge>
+            <ActionIcon
+            style={{ marginLeft: "auto" }}
+            mt={8}
+            size={"xs"}
+            variant="outline"
+            color="yellow"
+            title="Approve Note"
+            onClick={() => {
+              handleApprove(note._id);
+            }}
+          >
+            <IconCheck size="0.7rem" />
+          </ActionIcon>
+          </Group>
           <Text mt={5}>{note.information}</Text>
         </Paper>
       </Grid.Col>

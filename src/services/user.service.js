@@ -93,6 +93,10 @@ const approveTrack = (updatedTrackPoint) => {
   return axios.post(API_URL + "approveTrack", updatedTrackPoint, { headers: authHeader() })
 }
 
+const approveNote = (updateNoteData) => {
+  return axios.post(API_URL + "approveNote", updateNoteData, { headers: authHeader() })
+}
+
 // Mod API Endpoints
 const getAllServicesMod = (username) => {
   return axios.get(API_URL + "getAllServicesMod", {
@@ -108,6 +112,10 @@ const editTrackStatusMod = (updatedTrackPoint) => {
 
 const addTrackMod = (newTrackPointData) => {
   return axios.post(API_URL + "addTrackMod", newTrackPointData, { headers: authHeader() })
+}
+
+const addNoteMod = (newNoteData) => {
+  return axios.post(API_URL + "addNoteMod", newNoteData, { headers: authHeader() })
 }
 
 const userService = {
@@ -135,6 +143,8 @@ const userService = {
   editTrackStatusMod,
   addTrackMod,
   approveTrack,
+  addNoteMod,
+  approveNote,
 };
 
 export default userService

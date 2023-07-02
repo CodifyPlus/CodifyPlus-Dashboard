@@ -24,7 +24,6 @@ export function AddNoteFragmentMod({ data }: noteProps) {
 
   const form = useForm({
     initialValues: {
-      private: false,
       sendEmail: false,
       information: "",
     },
@@ -33,12 +32,11 @@ export function AddNoteFragmentMod({ data }: noteProps) {
   const handleRegister = (formValue: any) => {
     setSuccessful(false);
     const objToPost = {
-        private: formValue.private,
         sendEmail: formValue.sendEmail,
         information: formValue.information,
         serviceId: data.serviceId,
     }
-    UserService.addNote(objToPost).then(
+    UserService.addNoteMod(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();
@@ -74,12 +72,6 @@ export function AddNoteFragmentMod({ data }: noteProps) {
             />
 
             <Group position="apart" mt="lg">
-              <Checkbox
-                icon={CheckboxIcon}
-                label="Keep it private"
-                description="It would not show the note on user dashboard"
-                {...form.getInputProps("private")}
-              />
               <Checkbox
                 icon={CheckboxIcon}
                 label="Notify User via Email?"

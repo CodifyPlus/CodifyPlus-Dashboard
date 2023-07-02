@@ -105,7 +105,7 @@ export default function ServiceStatus() {
   };
 
   const Notes = info.notes
-    .filter((note) => !note.private)
+    .filter((note) => !note.private && note.approved)
     .map((note) => {
       return (
         <Grid.Col span={12} key={note.information}>

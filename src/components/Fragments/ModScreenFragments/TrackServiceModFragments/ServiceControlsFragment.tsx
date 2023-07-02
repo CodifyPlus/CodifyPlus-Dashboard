@@ -9,11 +9,8 @@ import {
 } from "@mantine/core";
 import {
   IconNote,
-  IconPencilPlus,
   IconMapPinBolt,
-  IconCheck,
 } from "@tabler/icons-react";
-import UserService from "../../../../services/user.service";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -66,27 +63,8 @@ export function ServiceControlsFragmentMod({ data }: serviceControlFragment) {
       color: "teal",
       openModal: data.openModalAddNote,
     },
-    { title: "Edit Details", icon: IconPencilPlus, color: "cyan" },
     { title: "Add Track Point", icon: IconMapPinBolt, color: "pink" },
-    { title: "Mark as Completed", icon: IconCheck, color: "red" },
   ];
-
-  const handleComplete = (serviceId: any) => {
-    const objToPost = {
-      serviceId: data.serviceId,
-    };
-    UserService.markAsCompleted(objToPost).then(
-      (response) => {
-        data.setInfo(response.data);
-      },
-      (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
-        }
-      }
-    );
-  };
 
   function handleClick(title: any){
     if(title === "Add Note"){
@@ -94,9 +72,6 @@ export function ServiceControlsFragmentMod({ data }: serviceControlFragment) {
     }
     else if(title === "Add Track Point"){
       data.openModalAddTrack();
-    }
-    else if(title === "Mark as Completed"){
-      handleComplete(data.serviceId);
     }
   }
 

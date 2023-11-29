@@ -10,7 +10,6 @@ import {
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const ChatMessage = (props: any) => {
@@ -73,9 +72,7 @@ const ChatMessage = (props: any) => {
         <Stack p={0} spacing={2} sx={{ maxWidth: "80%" }} align="flex-end">
           <Group position={message} align="flex-end" spacing="xs">
             <Tooltip label={label} position="right">
-              <Avatar<typeof Link>
-                component={Link}
-                to={`/user/` + sender}
+              <Avatar
                 src={"#"}
                 radius="xl"
                 hidden={message === "right" ? true : false}

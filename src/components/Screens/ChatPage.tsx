@@ -10,6 +10,7 @@ import { IconSearch, IconMessage2Bolt } from "@tabler/icons-react";
 import ChatRoom from "../Fragments/ChatFragments/ChatRoom";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
+import { useSelector } from "react-redux";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -130,6 +131,7 @@ export function ChatPage() {
   const { classes } = useStyles();
   const [chatBoxes, setChatBoxes] = useState<any>([]);
   const [selectedChatBoxId, setSelectedChatBoxId] = useState<any>(null);
+  const { user: currentUser } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     UserService.getSubscribedChatBoxes().then(
@@ -150,26 +152,31 @@ export function ChatPage() {
     icon: IconMessage2Bolt,
     label: chatBox.serviceName,
     id: chatBox._id,
+    assignedFor: chatBox.assignedFor,
     // notifications: 3
   }));
 
-  const mainLinks = links.map((link) => (
-    <UnstyledButton
-      onClick={() => setSelectedChatBoxId(link.id)}
-      key={link.label}
-      className={classes.mainLink}
-    >
-      <div className={classes.mainLinkInner}>
-        <link.icon size={20} className={classes.mainLinkIcon} stroke={1.5} />
-        <span>{link.label}</span>
-      </div>
-      {link.notifications && (
-        <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
-          {link.notifications}
-        </Badge>
-      )}
-    </UnstyledButton>
-  ));
+  const mainLinks = links.map((link) => {
+    const assignedForText =
+      currentUser.role !== "USER" ? ` - ${link.assignedFor}` : "";
+    return (
+      <UnstyledButton
+        onClick={() => setSelectedChatBoxId(link.id)}
+        key={link.label}
+        className={classes.mainLink}
+      >
+        <div className={classes.mainLinkInner}>
+          <link.icon size={20} className={classes.mainLinkIcon} stroke={1.5} />
+          <span>{`${link.label}${assignedForText}`}</span>
+        </div>
+        {link.notifications && (
+          <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
+            {link.notifications}
+          </Badge>
+        )}
+      </UnstyledButton>
+    );
+  });
 
   return (
     <>

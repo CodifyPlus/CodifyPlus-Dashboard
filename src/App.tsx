@@ -32,6 +32,7 @@ import { TrackService } from "./components/Screens/AdminScreens/TrackService";
 import { ChangePassword } from "./components/Screens/ChangePassword";
 import { ManageServicesMod } from "./components/Screens/ModeratorScreens/ManageServicesMod";
 import { TrackServiceMod } from "./components/Screens/ModeratorScreens/TrackServiceMod";
+import { ChatPage } from "./components/Screens/ChatPage";
 
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="dashboard" element={<Dashboard />}>
             <Route path="home" element={<DashboardHome />} />
             <Route path="notifications" element={<NotificationsPage />} />
+            <Route path="chat" element={<ChatPage />} />
             <Route path="profile" element={<Profile />} />
             <Route path="allservices" element={<AllServices />} />
             <Route path="changepassword" element={<ChangePassword />} />

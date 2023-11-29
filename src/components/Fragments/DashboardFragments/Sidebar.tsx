@@ -19,6 +19,7 @@ import {
   IconUserBolt,
   IconKey,
   IconHomeBolt,
+  IconMessage,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -115,6 +116,11 @@ const data = [
     link: "/dashboard/notifications",
     label: "Notifications",
     icon: IconBellRinging,
+  },
+  {
+    link: "/dashboard/chat",
+    label: "Chat",
+    icon: IconMessage,
   },
   {
     link: "/dashboard/changepassword",

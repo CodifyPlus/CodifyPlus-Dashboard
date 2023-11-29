@@ -118,6 +118,18 @@ const addNoteMod = (newNoteData) => {
   return axios.post(API_URL + "addNoteMod", newNoteData, { headers: authHeader() })
 }
 
+const getSubscribedChatBoxes = () => {
+  return axios.get(API_URL + "getSubscribedChatBoxes", { headers: authHeader() })
+}
+
+const getChatBox = (chatBoxId) => {
+  return axios.get(API_URL + "getChatBox", { headers: authHeader(), params: { chatBoxId: chatBoxId } })
+}
+
+const sendMessage = (newMessageData) => {
+  return axios.post(API_URL + "sendMessage", newMessageData, { headers: authHeader() })
+}
+
 const userService = {
   getUserStats,
   getServiceInfo,
@@ -145,6 +157,9 @@ const userService = {
   approveTrack,
   addNoteMod,
   approveNote,
+  getSubscribedChatBoxes,
+  getChatBox,
+  sendMessage,
 };
 
 export default userService

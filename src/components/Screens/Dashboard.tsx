@@ -10,7 +10,13 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "../Fragments/DashboardFragments/Sidebar";
 import { Link, Navigate, Outlet } from "react-router-dom";
-import { IconHome, IconNotification, IconProgressCheck, IconSettings, IconUser } from "@tabler/icons-react";
+import {
+  IconHome,
+  IconMessage,
+  IconNotification,
+  IconProgressCheck,
+  IconSettings,
+} from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 
 export default function Dashboard() {
@@ -49,19 +55,44 @@ export default function Dashboard() {
         footer={
           <Footer height={60} p="md">
             <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-            <Group position="center" grow>
+              <Group position="center" grow>
                 {/* <Burger
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
                   size="sm"
                   color={theme.colors.gray[6]}
                 /> */}
-                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/home" ><IconHome/></ActionIcon>
-                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/allservices"><IconProgressCheck/></ActionIcon>
-                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/profile" ><IconUser/></ActionIcon>
-                <ActionIcon onClick={() => setOpened(false)} component={Link} to="/dashboard/notifications"><IconNotification/></ActionIcon>
-                <ActionIcon onClick={() => setOpened((o) => !o)}><IconSettings/></ActionIcon>
-
+                <ActionIcon
+                  onClick={() => setOpened(false)}
+                  component={Link}
+                  to="/dashboard/home"
+                >
+                  <IconHome />
+                </ActionIcon>
+                <ActionIcon
+                  onClick={() => setOpened(false)}
+                  component={Link}
+                  to="/dashboard/allservices"
+                >
+                  <IconProgressCheck />
+                </ActionIcon>
+                <ActionIcon
+                  onClick={() => setOpened(false)}
+                  component={Link}
+                  to="/dashboard/chat"
+                >
+                  <IconMessage />
+                </ActionIcon>
+                <ActionIcon
+                  onClick={() => setOpened(false)}
+                  component={Link}
+                  to="/dashboard/notifications"
+                >
+                  <IconNotification />
+                </ActionIcon>
+                <ActionIcon onClick={() => setOpened((o) => !o)}>
+                  <IconSettings />
+                </ActionIcon>
               </Group>
             </MediaQuery>
 

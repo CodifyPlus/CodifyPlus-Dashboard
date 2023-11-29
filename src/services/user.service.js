@@ -122,6 +122,10 @@ const getSubscribedChatBoxes = () => {
   return axios.get(API_URL + "getSubscribedChatBoxes", { headers: authHeader() })
 }
 
+const adminGetSubscribedChatBoxes = () => {
+  return axios.get(API_URL + "admin/getSubscribedChatBoxes", { headers: authHeader() })
+}
+
 const getChatBox = (chatBoxId) => {
   return axios.get(API_URL + "getChatBox", { headers: authHeader(), params: { chatBoxId: chatBoxId } })
 }
@@ -160,6 +164,7 @@ const userService = {
   getSubscribedChatBoxes,
   getChatBox,
   sendMessage,
+  adminGetSubscribedChatBoxes
 };
 
 export default userService

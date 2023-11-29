@@ -134,17 +134,31 @@ export function ChatPage() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    UserService.getSubscribedChatBoxes().then(
-      (response) => {
-        setChatBoxes(response.data.chatBoxes);
-      },
-      (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+    if (currentUser.role !== "ADMIN") {
+      UserService.getSubscribedChatBoxes().then(
+        (response) => {
+          setChatBoxes(response.data.chatBoxes);
+        },
+        (error) => {
+          if (error.response && error.response.status === 401) {
+            //@ts-ignore
+            EventBus.dispatch("logout");
+          }
         }
-      }
-    );
+      );
+    } else {
+      UserService.adminGetSubscribedChatBoxes().then(
+        (response) => {
+          setChatBoxes(response.data.chatBoxes);
+        },
+        (error) => {
+          if (error.response && error.response.status === 401) {
+            //@ts-ignore
+            EventBus.dispatch("logout");
+          }
+        }
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -181,7 +195,7 @@ export function ChatPage() {
   return (
     <>
       <Grid>
-        <Grid.Col px={20} xs={4}>
+        <Grid.Col xs={4}>
           {
             <>
               <TextInput
@@ -196,9 +210,7 @@ export function ChatPage() {
             </>
           }
         </Grid.Col>
-        <Grid.Col px={20} xs={8}>
-          {<ChatRoom chatBoxId={selectedChatBoxId} />}
-        </Grid.Col>
+        <Grid.Col xs={8}>{<ChatRoom chatBoxId={selectedChatBoxId} />}</Grid.Col>
       </Grid>
     </>
   );

@@ -13,16 +13,16 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const ChatMessage = (props: any) => {
-  const { content, sender, timestamp } = props.message;
+  const { content, senderName, timestamp } = props.message;
 
   const { user: currentUser } = useSelector((state: any) => state.auth);
   let label =
-    sender === currentUser.id
+    senderName === currentUser.username
       ? "You"
       : currentUser.role === "USER"
       ? "StartupKro Team"
-      : "User";
-  const message = sender === currentUser.id ? "right" : "left";
+      : senderName;
+  const message = senderName === currentUser.username ? "right" : "left";
   let color;
   const [msgDate, setMsgDate] = useState("");
   dayjs.extend(calendar);
@@ -53,7 +53,7 @@ const ChatMessage = (props: any) => {
     }
   }
 
-  if (sender === "4d43TqC5jRMhqOM7hcitTmx4mde2") {
+  if (senderName === "bot") {
     color = "teal";
   } else {
     if (message === "right") {

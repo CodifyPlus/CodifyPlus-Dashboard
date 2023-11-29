@@ -4,12 +4,13 @@ import { IconSend } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import { useSelector } from "react-redux";
 
 const ChatBox = (props: any) => {
   const [value, setValue] = useState("");
   const [canSendMessage, setCanSendMessage] = useState(true);
   const [timeoutId, setTimeoutId] = useState<any>(undefined);
-
+  const { user: currentUser } = useSelector((state: any) => state.auth);
   const sendMessage = async () => {
     if (!canSendMessage) {
       notifications.show({
@@ -24,6 +25,7 @@ const ChatBox = (props: any) => {
     UserService.sendMessage({
       chatBoxId: props.chatBoxId,
       content: value,
+      senderName: currentUser.username,
     }).then(
       (response) => {
         setValue("");

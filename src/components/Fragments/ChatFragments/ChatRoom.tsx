@@ -22,7 +22,7 @@ const ChatRoom = ({ chatBoxId }) => {
       } catch (error: any) {
         if (error.response && error.response.status === 401) {
           //@ts-ignore
-          EventBus.dispatch('logout');
+          EventBus.dispatch("logout");
         }
       }
     };
@@ -87,7 +87,12 @@ const ChatRoom = ({ chatBoxId }) => {
           <div ref={dummy}></div>
         </ScrollArea>
       </Stack>
-      <ChatBox fn={goBot} id={id} chatBoxId={chatBoxId} setChatBox={setChatBox} />
+      <ChatBox
+        fn={goBot}
+        id={id}
+        chatBoxId={chatBoxId}
+        setChatBox={setChatBox}
+      />
     </>
   );
 };

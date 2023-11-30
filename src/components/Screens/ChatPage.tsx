@@ -5,6 +5,8 @@ import {
   Badge,
   rem,
   Grid,
+  Paper,
+  MediaQuery,
 } from "@mantine/core";
 import { IconSearch, IconMessage2Bolt } from "@tabler/icons-react";
 import ChatRoom from "../Fragments/ChatFragments/ChatRoom";
@@ -131,6 +133,7 @@ export function ChatPage() {
   const { classes } = useStyles();
   const [chatBoxes, setChatBoxes] = useState<any>([]);
   const [selectedChatBoxId, setSelectedChatBoxId] = useState<any>(null);
+  const [isSelected, setIsSelected] = useState<any>(false);
   const { user: currentUser } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
@@ -175,7 +178,10 @@ export function ChatPage() {
       currentUser.role !== "USER" ? ` - ${link.assignedFor}` : "";
     return (
       <UnstyledButton
-        onClick={() => setSelectedChatBoxId(link.id)}
+        onClick={() => {
+          setSelectedChatBoxId(link.id);
+          setIsSelected(true);
+        }}
         key={link.label}
         className={classes.mainLink}
       >
@@ -198,19 +204,47 @@ export function ChatPage() {
         <Grid.Col xs={4}>
           {
             <>
-              <TextInput
-                placeholder="Search"
-                size="xs"
-                icon={<IconSearch size="0.8rem" stroke={1.5} />}
-                rightSectionWidth={70}
-                styles={{ rightSection: { pointerEvents: "none" } }}
-                mb="sm"
-              />
-              <div className={classes.mainLinks}>{mainLinks}</div>
+              {isSelected ? (
+                <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+                  <Paper p="md" shadow="sm" withBorder>
+                    <TextInput
+                      placeholder="Search"
+                      size="xs"
+                      icon={<IconSearch size="0.8rem" stroke={1.5} />}
+                      rightSectionWidth={70}
+                      styles={{ rightSection: { pointerEvents: "none" } }}
+                      mb="sm"
+                    />
+                    <div className={classes.mainLinks}>{mainLinks}</div>
+                  </Paper>
+                </MediaQuery>
+              ) : (
+                <>
+                  <Paper p="md" shadow="sm" withBorder>
+                    <TextInput
+                      placeholder="Search"
+                      size="xs"
+                      icon={<IconSearch size="0.8rem" stroke={1.5} />}
+                      rightSectionWidth={70}
+                      styles={{ rightSection: { pointerEvents: "none" } }}
+                      mb="sm"
+                    />
+                    <div className={classes.mainLinks}>{mainLinks}</div>
+                  </Paper>
+                </>
+              )}
             </>
           }
         </Grid.Col>
-        <Grid.Col xs={8}>{<ChatRoom chatBoxId={selectedChatBoxId} />}</Grid.Col>
+        <Grid.Col xs={8}>
+          {
+            <ChatRoom
+              isSelected={isSelected}
+              setIsSelected={setIsSelected}
+              chatBoxId={selectedChatBoxId}
+            />
+          }
+        </Grid.Col>
       </Grid>
     </>
   );

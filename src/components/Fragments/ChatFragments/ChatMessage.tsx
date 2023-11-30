@@ -76,7 +76,7 @@ const ChatMessage = (props: any) => {
                 src={
                   label === "StartupKro Team"
                     ? "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkMwzKE2pXJH7csIVcROTCuU0sDgts8mWIkPI4oSl5XaZ9exQJSYiJflgVa2a0uDW1vIqMkxND4xwvjRvtaUiqCCslMhP2JkwqiLZd_kX5VdwOXsl_93tmSVTKn0VCh761MOYMWpQTFvmdFZbBXFI4ILebPaGKu4795kMnmwwcrztO-Zif1n8OBffZQLuk/s1600/WhatsApp%20Image%202023-03-18%20at%208.11.02%20PM.jpeg"
-                    : `https://api.dicebear.com/7.x/open-peeps/svg?seed=${label}`
+                    : `https://api.dicebear.com/7.x/miniavs/svg?seed=${label}`
                 }
                 radius="xl"
                 hidden={message === "right" ? true : false}

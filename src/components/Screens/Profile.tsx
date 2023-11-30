@@ -100,7 +100,7 @@ function Profile() {
           <Container size={420} my={40}>
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
               <UserInfoCard
-                avatar={`https://api.dicebear.com/7.x/miniavs/svg?seed=${currentUser.username}`}
+                avatar={`https://api.dicebear.com/7.x/miniavs/svg?seed=${currentUser.username.toUpperCase()}`}
                 email={currentUser.email}
                 name={currentUser.username}
               />

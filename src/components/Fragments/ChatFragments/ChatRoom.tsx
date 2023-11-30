@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Button,
   Center,
   Group,
   Paper,
@@ -80,13 +79,13 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
     <>
       <Paper p={4} mb={10}>
         <Group>
-          <Button
+          <ActionIcon
+          ml={10}
             onClick={() => setIsSelected(false)}
-            leftIcon={<IconArrowLeft />}
-            color="gray"
+            variant="transparent"
           >
-            Go Back
-          </Button>
+            <IconArrowLeft size="3rem" />
+          </ActionIcon>
           <Center>
             <Text size="md">{chatBox.serviceName + assignedForText}</Text>
           </Center>

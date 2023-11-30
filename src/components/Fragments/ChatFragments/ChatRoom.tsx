@@ -28,6 +28,10 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
       try {
         if (chatBoxId !== null && isSelected === true) {
           const response = await UserService.getChatBox(chatBoxId);
+          const updatedChatBox = response.data;
+
+          // Update localStorage with noOfMessages
+          updateLocalStorageChatBox(updatedChatBox);
           setChatBox(response.data);
         }
       } catch (error: any) {
@@ -51,6 +55,38 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatBoxId, isSelected]);
+
+  const updateLocalStorageChatBox = (updatedChatBox) => {
+    const storedChatBoxes = JSON.parse(
+      localStorage.getItem("chatBoxes") || "[]"
+    );
+    let found = false;
+
+    const updatedChatBoxes = storedChatBoxes.map((storedChatBox) => {
+      if (storedChatBox._id === updatedChatBox._id) {
+        found = true;
+        return {
+          _id: updatedChatBox._id,
+          noOfMessages: updatedChatBox.messages
+            ? updatedChatBox.messages.length
+            : 0,
+        };
+      }
+      return storedChatBox;
+    });
+
+    if (!found) {
+      // If the chatBox is not found, add it to localStorage
+      updatedChatBoxes.push({
+        _id: updatedChatBox._id,
+        noOfMessages: updatedChatBox.messages
+          ? updatedChatBox.messages.length
+          : 0,
+      });
+    }
+
+    localStorage.setItem("chatBoxes", JSON.stringify(updatedChatBoxes));
+  };
 
   const dummy = useRef<HTMLDivElement>(null);
   const [id, setId] = useState("");
@@ -80,7 +116,7 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
       <Paper p={4} mb={10}>
         <Group>
           <ActionIcon
-          ml={10}
+            ml={10}
             onClick={() => setIsSelected(false)}
             variant="transparent"
           >
@@ -125,6 +161,7 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
           fn={goBot}
           id={id}
           chatBoxId={chatBoxId}
+          scrollDown={goBot}
           setChatBox={setChatBox}
         />
       </Paper>

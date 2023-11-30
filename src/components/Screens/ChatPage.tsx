@@ -137,41 +137,55 @@ export function ChatPage() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    if (currentUser.role !== "ADMIN") {
-      UserService.getSubscribedChatBoxes().then(
-        (response) => {
-          setChatBoxes(response.data.chatBoxes);
-        },
-        (error) => {
-          if (error.response && error.response.status === 401) {
-            //@ts-ignore
-            EventBus.dispatch("logout");
-          }
+    const fetchChatBoxes = async () => {
+      try {
+        let response;
+
+        if (currentUser.role !== "ADMIN") {
+          response = await UserService.getSubscribedChatBoxes();
+        } else {
+          response = await UserService.adminGetSubscribedChatBoxes();
         }
-      );
-    } else {
-      UserService.adminGetSubscribedChatBoxes().then(
-        (response) => {
-          setChatBoxes(response.data.chatBoxes);
-        },
-        (error) => {
-          if (error.response && error.response.status === 401) {
-            //@ts-ignore
-            EventBus.dispatch("logout");
-          }
+
+        // Fetch chatBoxes from localStorage
+        const storedChatBoxes = JSON.parse(
+          localStorage.getItem("chatBoxes") || "[]"
+        );
+
+        const updatedChatBoxes = response.data.chatBoxes.map((chatBox) => {
+          const storedChatBox = storedChatBoxes.find(
+            (storedChatBox) => storedChatBox._id === chatBox._id
+          );
+          return {
+            ...chatBox,
+            unreadMessages:
+              chatBox.noOfMessages -
+              (storedChatBox ? storedChatBox.noOfMessages : 0),
+          };
+        });
+        setChatBoxes(updatedChatBoxes);
+      } catch (error: any) {
+        console.error(error);
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
         }
-      );
-    }
+      }
+    };
+
+    fetchChatBoxes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const links = chatBoxes.map((chatBox) => ({
-    icon: IconMessage2Bolt,
-    label: chatBox.serviceName,
-    id: chatBox._id,
-    assignedFor: chatBox.assignedFor,
-    // notifications: 3
-  }));
+  const links = chatBoxes.map((chatBox) => {
+    return {
+      icon: IconMessage2Bolt,
+      label: chatBox.serviceName,
+      id: chatBox._id,
+      assignedFor: chatBox.assignedFor,
+      notifications: chatBox.unreadMessages,
+    };
+  });
 
   const mainLinks = links.map((link) => {
     const assignedForText =
@@ -189,7 +203,7 @@ export function ChatPage() {
           <link.icon size={20} className={classes.mainLinkIcon} stroke={1.5} />
           <span>{`${link.label}${assignedForText}`}</span>
         </div>
-        {link.notifications && (
+        {link.notifications > 0 && (
           <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
             {link.notifications}
           </Badge>

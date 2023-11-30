@@ -30,7 +30,7 @@ const ChatBox = (props: any) => {
       (response) => {
         setValue("");
         props.setChatBox(response.data);
-
+        props.scrollDown();
         // Allow sending messages again after 5 seconds
         const id = setTimeout(() => {
           setCanSendMessage(true);

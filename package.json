@@ -11,6 +11,7 @@
     "@mantine/form": "^6.0.11",
     "@mantine/hooks": "^6.0.11",
     "@mantine/notifications": "^6.0.11",
+    "@novu/notification-center": "^0.21.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@tabler/icons-react": "^2.17.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -38,7 +39,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN='true' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

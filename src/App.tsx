@@ -33,8 +33,12 @@ import { ChangePassword } from "./components/Screens/ChangePassword";
 import { ManageServicesMod } from "./components/Screens/ModeratorScreens/ManageServicesMod";
 import { TrackServiceMod } from "./components/Screens/ModeratorScreens/TrackServiceMod";
 import { ChatPage } from "./components/Screens/ChatPage";
+import { NovuProvider } from "@novu/notification-center";
+import { useSelector } from "react-redux";
+import { NOVU_APP_IDENTIFIER } from "./common/Constants";
 
 export default function App() {
+  const { user: currentUser } = useSelector((state: any) => state.auth);
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
     defaultValue: "light",
@@ -61,45 +65,53 @@ export default function App() {
         withNormalizeCSS
       >
         <Notifications />
-        <Navbar links={links.links} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route index element={<Home />} />
-          <Route path="gst-calculator" element={<GSTCalculator />} />
-          <Route path="contact-us" element={<ContactUs />} />
-          <Route path="our-process" element={<OurProcess />} />
-          <Route path="our-services" element={<OurServices />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="*" element={<EmptyPage />} />
-          <Route path="dashboard" element={<Dashboard />}>
-            <Route path="home" element={<DashboardHome />} />
-            <Route path="notifications" element={<NotificationsPage />} />
-            <Route path="chat" element={<ChatPage />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="allservices" element={<AllServices />} />
-            <Route path="changepassword" element={<ChangePassword />} />
-            <Route path="servicestatus" element={<ServiceStatus />}>
-              <Route path="*" element={<ServiceStatus />} />
+        <NovuProvider
+          subscriberId={currentUser?.username}
+          applicationIdentifier={NOVU_APP_IDENTIFIER!}
+        >
+          <Navbar links={links.links} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route index element={<Home />} />
+            <Route path="gst-calculator" element={<GSTCalculator />} />
+            <Route path="contact-us" element={<ContactUs />} />
+            <Route path="our-process" element={<OurProcess />} />
+            <Route path="our-services" element={<OurServices />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="*" element={<EmptyPage />} />
+            <Route path="dashboard" element={<Dashboard />}>
+              <Route path="home" element={<DashboardHome />} />
+              <Route path="notifications" element={<NotificationsPage />} />
+              <Route path="chat" element={<ChatPage />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="allservices" element={<AllServices />} />
+              <Route path="changepassword" element={<ChangePassword />} />
+              <Route path="servicestatus" element={<ServiceStatus />}>
+                <Route path="*" element={<ServiceStatus />} />
+              </Route>
+              <Route
+                path="mod/manageservices"
+                element={<ManageServicesMod />}
+              />
+              <Route path="mod/track" element={<TrackServiceMod />}>
+                <Route path="*" element={<TrackServiceMod />} />
+              </Route>
+              <Route path="allusers" element={<AllUsers />}></Route>
+              <Route path="adduser" element={<AddUser />}></Route>
+              <Route path="manageservices" element={<ManageServices />}></Route>
+              <Route path="addservice" element={<AddService />}></Route>
+              <Route path="track" element={<TrackService />}>
+                <Route path="*" element={<TrackService />} />
+              </Route>
             </Route>
-            <Route path="mod/manageservices" element={<ManageServicesMod />} />
-            <Route path="mod/track" element={<TrackServiceMod />}>
-              <Route path="*" element={<TrackServiceMod />} />
-            </Route>
-            <Route path="allusers" element={<AllUsers />}></Route>
-            <Route path="adduser" element={<AddUser />}></Route>
-            <Route path="manageservices" element={<ManageServices />}></Route>
-            <Route path="addservice" element={<AddService />}></Route>
-            <Route path="track" element={<TrackService />}>
-              <Route path="*" element={<TrackService />} />
-            </Route>
-          </Route>
-        </Routes>
-        {window.location.pathname.toLowerCase().includes("dashboard") ? (
-          <></>
-        ) : (
-          <Footer data={footerLinks.data} />
-        )}
+          </Routes>
+          {window.location.pathname.toLowerCase().includes("dashboard") ? (
+            <></>
+          ) : (
+            <Footer data={footerLinks.data} />
+          )}
+        </NovuProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

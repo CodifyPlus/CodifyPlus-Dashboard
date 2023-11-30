@@ -5,7 +5,6 @@ import {
   Checkbox,
   CheckboxProps,
   Textarea,
-  TextInput,
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
@@ -26,7 +25,6 @@ export function SendNotificationFragment({ data }: notificationProps) {
     initialValues: {
       sendEmail: false,
       content: "",
-      title: "",
     },
   });
 
@@ -63,12 +61,6 @@ export function SendNotificationFragment({ data }: notificationProps) {
     <Container size={420}>
       {!successful && (
         <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
-          <TextInput
-            label="Title"
-            placeholder="Verification failed!"
-            required
-            {...form.getInputProps("title")}
-          />
           <Textarea
             label="Content"
             placeholder="Documents verification has been failed due..."

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppShell,
   Navbar,
@@ -9,7 +9,7 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { Sidebar } from "../Fragments/DashboardFragments/Sidebar";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import {
   IconHome,
   IconMessage,
@@ -18,11 +18,35 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
+import { useSocket } from "@novu/notification-center";
+import { notifications } from "@mantine/notifications";
 
 export default function Dashboard() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const { socket } = useSocket();
+  const navigate = useNavigate();
   const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("notification_received", (data) => {
+        notifications.show({
+          onClick: () => navigate("/dashboard/notifications"),
+          message: data.message.content,
+          autoClose: 5000,
+          color: "green",
+        });
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("notification_received");
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket]);
 
   if (!currentUser) {
     return <Navigate to="/login" />;

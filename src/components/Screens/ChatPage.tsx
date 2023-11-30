@@ -13,6 +13,7 @@ import ChatRoom from "../Fragments/ChatFragments/ChatRoom";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import { useSelector } from "react-redux";
+import { useCenteralContext } from "../../contexts/CenteralContext";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -134,6 +135,7 @@ export function ChatPage() {
   const [chatBoxes, setChatBoxes] = useState<any>([]);
   const [selectedChatBoxId, setSelectedChatBoxId] = useState<any>(null);
   const [isSelected, setIsSelected] = useState<any>(false);
+  const { updateNotifs } = useCenteralContext();
   const { user: currentUser } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
@@ -151,11 +153,14 @@ export function ChatPage() {
         const storedChatBoxes = JSON.parse(
           localStorage.getItem("chatBoxes") || "[]"
         );
-
+        let totalUnreads = 0;
         const updatedChatBoxes = response.data.chatBoxes.map((chatBox) => {
           const storedChatBox = storedChatBoxes.find(
             (storedChatBox) => storedChatBox._id === chatBox._id
           );
+          totalUnreads +=
+            chatBox.noOfMessages -
+            (storedChatBox ? storedChatBox.noOfMessages : 0);
           return {
             ...chatBox,
             unreadMessages:
@@ -164,6 +169,7 @@ export function ChatPage() {
           };
         });
         setChatBoxes(updatedChatBoxes);
+        updateNotifs(totalUnreads);
       } catch (error: any) {
         console.error(error);
         if (error.response && error.response.status === 401) {
@@ -256,6 +262,8 @@ export function ChatPage() {
               isSelected={isSelected}
               setIsSelected={setIsSelected}
               chatBoxId={selectedChatBoxId}
+              setChatBoxes={setChatBoxes}
+              chatBoxes={chatBoxes}
             />
           }
         </Grid.Col>

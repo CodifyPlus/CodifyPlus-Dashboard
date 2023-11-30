@@ -16,11 +16,29 @@ import UserService from "../../../services/user.service";
 import ChatUnselected from "./ChatUnselected";
 import { useSelector } from "react-redux";
 
-const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
+const ChatRoom = ({
+  chatBoxId,
+  setIsSelected,
+  isSelected,
+  setChatBoxes,
+  chatBoxes,
+}) => {
   const [chatBox, setChatBox] = useState<any>({
     messages: [],
   });
   const { user: currentUser } = useSelector((state: any) => state.auth);
+
+  const updateUnreadMessages = (chatBoxId) => {
+    setChatBoxes(() => {
+      return chatBoxes.map((chatBox) => {
+        if (chatBox._id === chatBoxId) {
+          // Update the unreadMessages of the specific chat box
+          return { ...chatBox, unreadMessages: 0 };
+        }
+        return chatBox;
+      });
+    });
+  };
 
   useEffect(() => {
     // Function to fetch chat box messages
@@ -32,6 +50,7 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
 
           // Update localStorage with noOfMessages
           updateLocalStorageChatBox(updatedChatBox);
+          updateUnreadMessages(chatBoxId);
           setChatBox(response.data);
         }
       } catch (error: any) {
@@ -67,6 +86,7 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
         found = true;
         return {
           _id: updatedChatBox._id,
+          unreadMessages: 0,
           noOfMessages: updatedChatBox.messages
             ? updatedChatBox.messages.length
             : 0,
@@ -79,6 +99,7 @@ const ChatRoom = ({ chatBoxId, setIsSelected, isSelected }) => {
       // If the chatBox is not found, add it to localStorage
       updatedChatBoxes.push({
         _id: updatedChatBox._id,
+        unreadMessages: 0,
         noOfMessages: updatedChatBox.messages
           ? updatedChatBox.messages.length
           : 0,

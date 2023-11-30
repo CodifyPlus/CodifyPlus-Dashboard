@@ -7,6 +7,7 @@ import {
   rem,
   ScrollArea,
   Text,
+  Badge,
 } from "@mantine/core";
 import {
   IconBellRinging,
@@ -25,6 +26,7 @@ import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
 import { Link, Navigate } from "react-router-dom";
 import { IconServer } from "@tabler/icons-react";
+import { useCenteralContext } from "../../../contexts/CenteralContext";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -41,6 +43,13 @@ const useStyles = createStyles((theme) => ({
     borderTop: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
+  },
+
+  mainLinkBadge: {
+    padding: 0,
+    width: rem(20),
+    height: rem(20),
+    pointerEvents: "none",
   },
 
   link: {
@@ -104,55 +113,58 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const data = [
-  { link: "/dashboard/home", label: "Home", icon: IconHome },
-  {
-    link: "/dashboard/allservices",
-    label: "All Services",
-    icon: IconStatusChange,
-  },
-  { link: "/dashboard/profile", label: "Profile", icon: IconUserBolt },
-  {
-    link: "/dashboard/notifications",
-    label: "Notifications",
-    icon: IconBellRinging,
-  },
-  {
-    link: "/dashboard/chat",
-    label: "Chat",
-    icon: IconMessage,
-  },
-  {
-    link: "/dashboard/changepassword",
-    label: "Change Password",
-    icon: IconKey,
-  },
-];
-
-const adminRoutes = [
-  { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
-  { link: "/dashboard/adduser", label: "Add User", icon: IconUser },
-  {
-    link: "/dashboard/manageservices",
-    label: "Manage Services",
-    icon: IconServer,
-  },
-  { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
-];
-
-const moderatorRoutes = [
-  {
-    link: "/dashboard/mod/manageservices",
-    label: "Manage Services",
-    icon: IconServer,
-  },
-];
-
 export function Sidebar({ drawerSetOpened }: any) {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Home");
   const [showAdminLinks, setShowAdminLinks] = useState(false);
   const [showModeratorLinks, setShowModeratorLinks] = useState(false);
+  const { notifs } = useCenteralContext();
+
+  const data = [
+    { link: "/dashboard/home", label: "Home", icon: IconHome },
+    {
+      link: "/dashboard/allservices",
+      label: "All Services",
+      icon: IconStatusChange,
+    },
+    { link: "/dashboard/profile", label: "Profile", icon: IconUserBolt },
+    {
+      link: "/dashboard/notifications",
+      label: "Notifications",
+      icon: IconBellRinging,
+    },
+    {
+      link: "/dashboard/chat",
+      label: "Chat",
+      icon: IconMessage,
+      notifications: notifs,
+    },
+    {
+      link: "/dashboard/changepassword",
+      label: "Change Password",
+      icon: IconKey,
+    },
+  ];
+
+  const adminRoutes = [
+    { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
+    { link: "/dashboard/adduser", label: "Add User", icon: IconUser },
+    {
+      link: "/dashboard/manageservices",
+      label: "Manage Services",
+      icon: IconServer,
+    },
+    { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
+  ];
+
+  const moderatorRoutes = [
+    {
+      link: "/dashboard/mod/manageservices",
+      label: "Manage Services",
+      icon: IconServer,
+    },
+  ];
+
   useEffect(() => {
     setActive(window.location.pathname);
     if (currentUser) {
@@ -181,6 +193,16 @@ export function Sidebar({ drawerSetOpened }: any) {
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
+      {item.notifications > 0 && (
+        <Badge
+          ml="auto"
+          size="sm"
+          variant="filled"
+          className={classes.mainLinkBadge}
+        >
+          {item.notifications}
+        </Badge>
+      )}
     </Link>
   ));
 

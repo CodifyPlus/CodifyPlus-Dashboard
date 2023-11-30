@@ -264,6 +264,10 @@ export function ChatPage() {
               chatBoxId={selectedChatBoxId}
               setChatBoxes={setChatBoxes}
               chatBoxes={chatBoxes}
+              unreadMessagesForThisChatBox={
+                chatBoxes.find((chatBox) => chatBox._id === selectedChatBoxId)
+                  ?.unreadMessages
+              }
             />
           }
         </Grid.Col>

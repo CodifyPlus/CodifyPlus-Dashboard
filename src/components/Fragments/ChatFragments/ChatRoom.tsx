@@ -15,6 +15,7 @@ import { IconArrowLeft, IconChevronDown } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import ChatUnselected from "./ChatUnselected";
 import { useSelector } from "react-redux";
+import { useCenteralContext } from "../../../contexts/CenteralContext";
 
 const ChatRoom = ({
   chatBoxId,
@@ -22,11 +23,13 @@ const ChatRoom = ({
   isSelected,
   setChatBoxes,
   chatBoxes,
+  unreadMessagesForThisChatBox,
 }) => {
   const [chatBox, setChatBox] = useState<any>({
     messages: [],
   });
   const { user: currentUser } = useSelector((state: any) => state.auth);
+  const { updateNotifs, notifs } = useCenteralContext();
 
   const updateUnreadMessages = (chatBoxId) => {
     setChatBoxes(() => {
@@ -62,6 +65,7 @@ const ChatRoom = ({
     };
 
     // Initial fetch
+    updateNotifs(notifs - unreadMessagesForThisChatBox);
     fetchChatBoxMessages();
 
     // Polling every 5 seconds

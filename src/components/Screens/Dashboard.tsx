@@ -17,11 +17,7 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
-import {
-  NotificationBell,
-  PopoverNotificationCenter,
-  useSocket,
-} from "@novu/notification-center";
+import { NotificationBell, useSocket } from "@novu/notification-center";
 import { notifications } from "@mantine/notifications";
 
 export default function Dashboard() {
@@ -30,6 +26,7 @@ export default function Dashboard() {
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { user: currentUser } = useSelector((state: any) => state.auth);
+  const [unseenCount, setUnseenCount] = useState(0);
 
   useEffect(() => {
     if (socket) {
@@ -40,6 +37,9 @@ export default function Dashboard() {
           autoClose: 5000,
           color: "green",
         });
+      });
+      socket.on("unseen_count_changed", (data) => {
+        setUnseenCount(data.unseenCount);
       });
     }
 
@@ -110,12 +110,12 @@ export default function Dashboard() {
                 >
                   <IconMessage />
                 </ActionIcon>
-                <ActionIcon>
-                  <PopoverNotificationCenter colorScheme="dark">
-                    {({ unseenCount }) => (
-                      <NotificationBell unseenCount={unseenCount} />
-                    )}
-                  </PopoverNotificationCenter>
+                <ActionIcon
+                  onClick={() => setOpened(false)}
+                  component={Link}
+                  to="/dashboard/notifications"
+                >
+                  <NotificationBell unseenCount={unseenCount} />
                 </ActionIcon>
                 <ActionIcon onClick={() => setOpened((o) => !o)}>
                   <IconSettings />

@@ -47,6 +47,7 @@ export default function Dashboard() {
     return () => {
       if (socket) {
         socket.off("notification_received");
+        socket.off("unseen_count_changed");
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

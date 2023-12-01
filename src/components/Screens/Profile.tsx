@@ -33,9 +33,10 @@ function Profile() {
   const enablePushNotifications = async () => {
     let permission = await OneSignal.Notifications.permission;
     if (!permission) {
-      await OneSignal.Notifications.requestPermission();
+      OneSignal.Slidedown.promptPush();
     }
-    setAllowOneSignal(true);
+    permission = await OneSignal.Notifications.permission;
+    setAllowOneSignal(permission);
   };
 
   const [formData, setFormData] = useState({

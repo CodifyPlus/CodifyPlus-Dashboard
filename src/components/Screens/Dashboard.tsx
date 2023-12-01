@@ -26,6 +26,7 @@ export default function Dashboard() {
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { user: currentUser } = useSelector((state: any) => state.auth);
+  const [activeMenuItem, setActiveMenuItem] = useState("/dashboard/home");
   const [unseenCount, setUnseenCount] = useState(0);
 
   useEffect(() => {
@@ -90,34 +91,54 @@ export default function Dashboard() {
                   color={theme.colors.gray[6]}
                 /> */}
                 <ActionIcon
-                  onClick={() => setOpened(false)}
+                  onClick={() => {
+                    setOpened(false);
+                    setActiveMenuItem("/dashboard/home");
+                  }}
                   component={Link}
                   to="/dashboard/home"
                 >
                   <IconHome />
                 </ActionIcon>
                 <ActionIcon
-                  onClick={() => setOpened(false)}
+                  onClick={() => {
+                    setOpened(false);
+                    setActiveMenuItem("/dashboard/allservices");
+                  }}
                   component={Link}
                   to="/dashboard/allservices"
                 >
                   <IconProgressCheck />
                 </ActionIcon>
                 <ActionIcon
-                  onClick={() => setOpened(false)}
+                  onClick={() => {
+                    setOpened(false);
+                    setActiveMenuItem("/dashboard/chat");
+                  }}
                   component={Link}
                   to="/dashboard/chat"
                 >
                   <IconMessage />
                 </ActionIcon>
                 <ActionIcon
-                  onClick={() => setOpened(false)}
+                  onClick={() => {
+                    setOpened(false);
+                    setActiveMenuItem("/dashboard/notifications");
+                  }}
                   component={Link}
                   to="/dashboard/notifications"
                 >
                   <NotificationBell unseenCount={unseenCount} />
                 </ActionIcon>
-                <ActionIcon onClick={() => setOpened((o) => !o)}>
+                <ActionIcon
+                  onClick={() => {
+                    setOpened((o) => !o);
+                    if (activeMenuItem === "/dashboard/notifications") {
+                      setActiveMenuItem("/dashboard/home");
+                      navigate("/dashboard/home");
+                    }
+                  }}
+                >
                   <IconSettings />
                 </ActionIcon>
               </Group>

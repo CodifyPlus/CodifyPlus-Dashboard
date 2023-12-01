@@ -20,6 +20,7 @@ import { useForm } from "@mantine/form";
 import UserService from "../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
+import OneSignal from "react-onesignal";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +29,14 @@ function Profile() {
   });
   const theme = useMantineTheme();
   const [allowOneSignal, setAllowOneSignal] = useState(false);
+
+  const enablePushNotifications = async () => {
+    let permission = await OneSignal.Notifications.permission;
+    if (!permission) {
+      await OneSignal.Notifications.requestPermission();
+    }
+    setAllowOneSignal(true);
+  };
 
   const [formData, setFormData] = useState({
     fullname: "",
@@ -150,9 +159,12 @@ function Profile() {
                     <Group position="center">
                       <Switch
                         checked={allowOneSignal}
-                        onChange={(event) =>
-                          setAllowOneSignal(event.currentTarget.checked)
-                        }
+                        onChange={(event) => {
+                          setAllowOneSignal(event.currentTarget.checked);
+                          if (event.currentTarget.checked) {
+                            enablePushNotifications();
+                          }
+                        }}
                         color="teal"
                         size="md"
                         label="Allow Push Notifications"

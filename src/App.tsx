@@ -44,6 +44,7 @@ export async function runOneSignal() {
     appId: ONESIGNAL_APP_ID!,
     allowLocalhostAsSecureOrigin: true,
   });
+  OneSignal.Notifications.setDefaultUrl("https://dashboard.codifyplus.com/dashboard/notifications");
   // OneSignal.Slidedown.promptPush();
 }
 

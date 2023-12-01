@@ -13,12 +13,15 @@ import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import {
   IconHome,
   IconMessage,
-  IconNotification,
   IconProgressCheck,
   IconSettings,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
-import { useSocket } from "@novu/notification-center";
+import {
+  NotificationBell,
+  PopoverNotificationCenter,
+  useSocket,
+} from "@novu/notification-center";
 import { notifications } from "@mantine/notifications";
 
 export default function Dashboard() {
@@ -45,7 +48,7 @@ export default function Dashboard() {
         socket.off("notification_received");
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   if (!currentUser) {
@@ -77,7 +80,7 @@ export default function Dashboard() {
           </Navbar>
         }
         footer={
-          <Footer height={60} p="md">
+          <Footer style={{ zIndex: 1000 }} height={60} p="md">
             <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Group position="center" grow>
                 {/* <Burger
@@ -107,12 +110,12 @@ export default function Dashboard() {
                 >
                   <IconMessage />
                 </ActionIcon>
-                <ActionIcon
-                  onClick={() => setOpened(false)}
-                  component={Link}
-                  to="/dashboard/notifications"
-                >
-                  <IconNotification />
+                <ActionIcon>
+                  <PopoverNotificationCenter colorScheme="dark">
+                    {({ unseenCount }) => (
+                      <NotificationBell unseenCount={unseenCount} />
+                    )}
+                  </PopoverNotificationCenter>
                 </ActionIcon>
                 <ActionIcon onClick={() => setOpened((o) => !o)}>
                   <IconSettings />

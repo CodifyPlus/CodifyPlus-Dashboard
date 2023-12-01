@@ -23,7 +23,7 @@ const PUSH_DOWN = rem(120);
 const useStyles = createStyles((theme) => ({
   root: {
     position: "fixed",
-    zIndex: 10,
+    zIndex: 1000,
     top: 0,
   },
 

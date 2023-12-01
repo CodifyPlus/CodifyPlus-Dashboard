@@ -9,11 +9,12 @@ const register = (username, email, password) => {
   });
 };
 
-const login = (username, password) => {
+const login = (username, password, player_id) => {
   return axios
     .post(API_URL + "auth/signin", {
       username,
       password,
+      player_id
     })
     .then((response) => {
       if (response.data.accessToken) {

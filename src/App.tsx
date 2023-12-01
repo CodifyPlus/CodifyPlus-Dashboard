@@ -35,7 +35,17 @@ import { TrackServiceMod } from "./components/Screens/ModeratorScreens/TrackServ
 import { ChatPage } from "./components/Screens/ChatPage";
 import { NovuProvider } from "@novu/notification-center";
 import { useSelector } from "react-redux";
-import { NOVU_APP_IDENTIFIER } from "./common/Constants";
+import { NOVU_APP_IDENTIFIER, ONESIGNAL_APP_ID } from "./common/Constants";
+import OneSignal from "react-onesignal";
+import { useEffect } from "react";
+
+export async function runOneSignal() {
+  await OneSignal.init({
+    appId: ONESIGNAL_APP_ID!,
+    allowLocalhostAsSecureOrigin: true,
+  });
+  // OneSignal.Slidedown.promptPush();
+}
 
 export default function App() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -44,6 +54,10 @@ export default function App() {
     defaultValue: "light",
     getInitialValueInEffect: true,
   });
+
+  useEffect(() => {
+    runOneSignal();
+  }, []);
 
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));

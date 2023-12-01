@@ -6,6 +6,12 @@ import {
   Paper,
   TextInput,
   Button,
+  SimpleGrid,
+  Grid,
+  Text,
+  Group,
+  Switch,
+  useMantineTheme,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,12 +19,15 @@ import { UserInfoCard } from "../Fragments/ProfileFragments/UserInfoCard";
 import { useForm } from "@mantine/form";
 import UserService from "../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const { user: currentUser } = useSelector((state: any) => {
     return state.auth;
   });
+  const theme = useMantineTheme();
+  const [allowOneSignal, setAllowOneSignal] = useState(false);
 
   const [formData, setFormData] = useState({
     fullname: "",
@@ -97,39 +106,83 @@ function Profile() {
           >
             Profile
           </Title>
-          <Container size={420} my={40}>
-            <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-              <UserInfoCard
-                avatar={`https://api.dicebear.com/7.x/miniavs/svg?seed=${currentUser.username.toUpperCase()}`}
-                email={currentUser.email}
-                name={currentUser.username}
-              />
-              <form onSubmit={form.onSubmit(handleSubmit)} autoComplete="off">
-                <TextInput
-                  label="Full Name"
-                  mt={"md"}
-                  placeholder="Please enter your full name"
-                  {...form.getInputProps("fullname")}
+          <Container>
+            <SimpleGrid
+              cols={2}
+              spacing="md"
+              breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+            >
+              <Paper withBorder shadow="md" p={30} mt={10} radius="md">
+                <UserInfoCard
+                  avatar={`https://api.dicebear.com/7.x/miniavs/svg?seed=${currentUser.username.toUpperCase()}`}
+                  email={currentUser.email}
+                  name={currentUser.username}
                 />
-                <TextInput
-                  label="Email"
-                  mt="md"
-                  placeholder="Please enter an email address"
-                  required
-                  disabled
-                  {...form.getInputProps("email")}
-                />
-                <TextInput
-                  label="Phone Number"
-                  mt="md"
-                  placeholder="Please enter your phone number"
-                  {...form.getInputProps("phone")}
-                />
-                <Button fullWidth mt="xl" type="submit">
-                  Save Info
-                </Button>
-              </form>
-            </Paper>
+                <form onSubmit={form.onSubmit(handleSubmit)} autoComplete="off">
+                  <TextInput
+                    label="Full Name"
+                    mt={"md"}
+                    placeholder="Please enter your full name"
+                    {...form.getInputProps("fullname")}
+                  />
+                  <TextInput
+                    label="Email"
+                    mt="md"
+                    placeholder="Please enter an email address"
+                    required
+                    disabled
+                    {...form.getInputProps("email")}
+                  />
+                  <TextInput
+                    label="Phone Number"
+                    mt="md"
+                    placeholder="Please enter your phone number"
+                    {...form.getInputProps("phone")}
+                  />
+                  <Button fullWidth mt="xl" type="submit">
+                    Save Info
+                  </Button>
+                </form>
+              </Paper>
+              <Grid gutter="md">
+                <Grid.Col>
+                  <Paper withBorder shadow="md" p={30} mt={10} radius="md">
+                    <Group position="center">
+                      <Switch
+                        checked={allowOneSignal}
+                        onChange={(event) =>
+                          setAllowOneSignal(event.currentTarget.checked)
+                        }
+                        color="teal"
+                        size="md"
+                        label="Allow Push Notifications"
+                        thumbIcon={
+                          allowOneSignal ? (
+                            <IconCheck
+                              size="0.8rem"
+                              color={theme.colors.teal[theme.fn.primaryShade()]}
+                              stroke={3}
+                            />
+                          ) : (
+                            <IconX
+                              size="0.8rem"
+                              color={theme.colors.red[theme.fn.primaryShade()]}
+                              stroke={3}
+                            />
+                          )
+                        }
+                      />
+                    </Group>
+                    <Center>
+                      <Text mt={10} maw={300} ta="center" c="dimmed" size="xs">
+                        These notifications would help you stay in touch with
+                        the experts while your services are being processed
+                      </Text>
+                    </Center>
+                  </Paper>
+                </Grid.Col>
+              </Grid>
+            </SimpleGrid>
           </Container>
         </>
       )}

@@ -17,6 +17,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { login } from "../../slices/auth";
 import { clearMessage } from "../../slices/message";
 import { useForm } from "@mantine/form";
+import OneSignal from "react-onesignal";
 
 export function Login() {
   const dispatch = useDispatch();
@@ -34,14 +35,16 @@ export function Login() {
     },
   });
 
-  const handleLogin = (formValue: any) => {
+  const handleLogin = async (formValue: any) => {
     const { username, password } = formValue;
-
+    const player_id = OneSignal.User.PushSubscription?.id;
     //@ts-ignore
-    dispatch(login({ username, password }))
+    dispatch(login({ username, password, player_id }))
       .unwrap()
-      .then(() => {
+      .then(async () => {
         navigate("/dashboard/home");
+        console.log(OneSignal.User.PushSubscription.id);
+        await OneSignal.login(username);
         window.location.reload();
       })
       .catch((error: any) => {

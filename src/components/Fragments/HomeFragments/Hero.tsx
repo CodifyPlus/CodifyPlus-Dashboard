@@ -12,7 +12,7 @@ import {
     Center,
   } from '@mantine/core';
   import { IconCheck } from '@tabler/icons-react';
-  import CodifyPlusLaptop from "./CodifyPlus Mockup BGT.png";
+  import CodifyPlusLaptop from "./CodifyPlus Mockup BGT.webp";
   
   const useStyles = createStyles((theme) => ({
     inner: {

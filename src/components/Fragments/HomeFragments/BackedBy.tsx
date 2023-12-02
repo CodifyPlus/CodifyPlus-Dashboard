@@ -1,9 +1,9 @@
 import { Center, Container, Grid, Image, Title, createStyles, rem, useMantineTheme } from "@mantine/core";
-import BackedByMicrosoft from "./BackedByLogos/MicrosoftForStartups.png";
-import StartupKroLight from "./BackedByLogos/StartupKro.png";
-import StartupKroDark from "./BackedByLogos/StartupKroDark.png";
-import StartupIndia from "./BackedByLogos/StartupIndia.png";
-import MakeInIndia from "./BackedByLogos/MakeInIndia.png";
+import BackedByMicrosoft from "./BackedByLogos/MicrosoftForStartups.webp";
+import StartupKroLight from "./BackedByLogos/StartupKro.webp";
+import StartupKroDark from "./BackedByLogos/StartupKroDark.webp";
+import StartupIndia from "./BackedByLogos/StartupIndia.webp";
+import MakeInIndia from "./BackedByLogos/MakeInIndia.webp";
 
 const useStyles = createStyles((theme) => ({
     title: {

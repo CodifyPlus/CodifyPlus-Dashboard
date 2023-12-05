@@ -8,7 +8,7 @@ import {
   Paper,
   MediaQuery,
 } from "@mantine/core";
-import { IconSearch, IconMessage2Bolt } from "@tabler/icons-react";
+import { IconSearch, IconUser } from "@tabler/icons-react";
 import ChatRoom from "../Fragments/ChatFragments/ChatRoom";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
@@ -56,6 +56,7 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     width: "100%",
+    height: rem(50),
     fontSize: theme.fontSizes.xs,
     padding: `${rem(8)} ${theme.spacing.xs}`,
     borderRadius: theme.radius.sm,
@@ -68,8 +69,8 @@ const useStyles = createStyles((theme) => ({
     "&:hover": {
       backgroundColor:
         theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+          ? theme.colors.dark[4]
+          : theme.colors.gray[2],
       color: theme.colorScheme === "dark" ? theme.white : theme.black,
     },
   },
@@ -185,7 +186,7 @@ export function ChatPage() {
 
   const links = chatBoxes.map((chatBox) => {
     return {
-      icon: IconMessage2Bolt,
+      icon: IconUser,
       label: chatBox.serviceName,
       id: chatBox._id,
       assignedFor: chatBox.assignedFor,

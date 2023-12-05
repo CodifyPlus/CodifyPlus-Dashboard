@@ -9,6 +9,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { handleLogout } from "../../common/HandleLogout";
 
 export default function DashboardHome() {
+  const { user: currentUser } = useSelector((state: any) => state.auth);
   const navigate = useNavigate();
   const [Stats, setStats] = useState({
     completedServices: [
@@ -32,9 +33,21 @@ export default function DashboardHome() {
   const [isLoading, setIsLoading] = useState(true); // New state variable for loading status
 
   useEffect(() => {
-    setIsLoading(true); // Set loading status to true before making the API call
+    setIsLoading(true);
 
-    UserService.getUserStats()
+    const userRole = currentUser.role;
+
+    let apiCall;
+
+    if (userRole === "MODERATOR") {
+      apiCall = UserService.getModStats;
+    } else if (userRole === "ADMIN") {
+      apiCall = UserService.getAdminStats;
+    } else {
+      apiCall = UserService.getUserStats;
+    }
+
+    apiCall()
       .then((response) => {
         // Process the response data
         let completedServicesData: any = [];
@@ -109,8 +122,6 @@ export default function DashboardHome() {
       diff: 100,
     },
   ];
-
-  const { user: currentUser } = useSelector((state: any) => state.auth);
 
   if (!currentUser) {
     return <Navigate to="/login" />;

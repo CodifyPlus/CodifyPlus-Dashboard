@@ -1,4 +1,12 @@
-import { Grid, Container, Text, Paper, Title, Loader, Center } from "@mantine/core";
+import {
+  Grid,
+  Container,
+  Text,
+  Paper,
+  Title,
+  Loader,
+  Center,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
@@ -7,6 +15,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 export default function AllServices() {
+  const { user: currentUser } = useSelector((state: any) => state.auth);
   const [Stats, setStats] = useState({
     completedServices: [
       {
@@ -29,12 +38,24 @@ export default function AllServices() {
   const [isLoading, setIsLoading] = useState(true); // New state variable for loading status
 
   useEffect(() => {
-    setIsLoading(true); // Set loading status to true before making the API call
+    setIsLoading(true);
 
-    UserService.getUserStats()
+    const userRole = currentUser.role;
+
+    let apiCall;
+
+    if (userRole === "MODERATOR") {
+      apiCall = UserService.getModStats;
+    } else if (userRole === "ADMIN") {
+      apiCall = UserService.getAdminStats;
+    } else {
+      apiCall = UserService.getUserStats;
+    }
+
+    apiCall()
       .then((response) => {
         // Process the response data
-        let completedServicesData:any = [];
+        let completedServicesData: any = [];
         let underProcessServicesData: any = [];
 
         for (var i = 0; i < response.data.completedServices.length; i++) {
@@ -82,8 +103,6 @@ export default function AllServices() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { user: currentUser } = useSelector((state: any) => state.auth);
-
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
@@ -91,9 +110,9 @@ export default function AllServices() {
   return (
     <Container my="md">
       {isLoading ? ( // Conditional rendering based on the loading status
-      <Center>
-        <Loader />
-      </Center>
+        <Center>
+          <Loader />
+        </Center>
       ) : (
         <>
           <Title

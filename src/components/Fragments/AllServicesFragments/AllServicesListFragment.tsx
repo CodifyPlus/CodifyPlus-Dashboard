@@ -4,6 +4,7 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../../../common/StrictModeDroppable";
 import { IconCheck, IconClockBolt } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -34,7 +35,7 @@ const useStyles = createStyles((theme) => ({
       display: "none",
     },
     borderColor:
-    theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
+      theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
     color:
       theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
   },
@@ -43,7 +44,7 @@ const useStyles = createStyles((theme) => ({
       display: "none",
     },
     borderColor:
-    theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
+      theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
     color:
       theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
   },
@@ -59,6 +60,7 @@ interface DndListProps {
 }
 
 export function AllServicesListFragment({ data }: DndListProps) {
+  const { user: currentUser } = useSelector((state: any) => state.auth);
   const { classes, cx } = useStyles();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, handlers] = useListState(data);
@@ -87,7 +89,13 @@ export function AllServicesListFragment({ data }: DndListProps) {
                 component={Link}
                 className={classes.viewButtonMobile}
                 mt={10}
-                to={`/dashboard/servicestatus/${item.serviceId}`}
+                to={`/dashboard${
+                  currentUser.role === "ADMIN"
+                    ? "/track"
+                    : currentUser.role === "MODERATOR"
+                    ? "/mod/track"
+                    : "/servicestatus"
+                }/${item.serviceId}`}
                 variant="outline"
                 color="yellow"
                 style={{ marginLeft: "auto" }}
@@ -98,7 +106,13 @@ export function AllServicesListFragment({ data }: DndListProps) {
             <Button
               component={Link}
               className={classes.viewButton}
-              to={`/dashboard/servicestatus/${item.serviceId}`}
+              to={`/dashboard${
+                currentUser.role === "ADMIN"
+                  ? "/track"
+                  : currentUser.role === "MODERATOR"
+                  ? "/mod/track"
+                  : "/servicestatus"
+              }/${item.serviceId}`}
               variant="outline"
               color="yellow"
               style={{ marginLeft: "auto" }}
@@ -120,11 +134,16 @@ export function AllServicesListFragment({ data }: DndListProps) {
       <StrictModeDroppable droppableId="dnd-list" direction="vertical">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {data.length === 0
-              ? <Text color="grey">There is nothing to show. Please check back later!</Text>
-              : items}
+            {data.length === 0 ? (
+              <Text color="grey">
+                There is nothing to show. Please check back later!
+              </Text>
+            ) : (
+              items
+            )}
             {provided.placeholder}
-            {datalen > 3 ? <Button
+            {datalen > 3 ? (
+              <Button
                 component={Link}
                 mt={10}
                 to={`/dashboard/all-services`}
@@ -133,7 +152,10 @@ export function AllServicesListFragment({ data }: DndListProps) {
                 style={{ marginLeft: "auto" }}
               >
                 View All
-              </Button> : <></>}
+              </Button>
+            ) : (
+              <></>
+            )}
           </div>
         )}
       </StrictModeDroppable>

@@ -236,6 +236,7 @@ export function Sidebar({ drawerSetOpened }: any) {
     if (item.link === "/login") {
       return (
         <a
+          style={{ marginBottom: "10px" }}
           className={cx(classes.link, {
             [classes.linkActive]: item.link === active,
           })}

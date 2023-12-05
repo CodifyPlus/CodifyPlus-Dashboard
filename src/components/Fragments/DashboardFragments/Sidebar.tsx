@@ -157,6 +157,15 @@ export function Sidebar({ drawerSetOpened }: any) {
     { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
   ];
 
+  const bottomRoutes = [
+    {
+      link: "https://startupkro.com/",
+      label: "Visit Start-up Kro",
+      icon: IconHomeBolt,
+    },
+    { link: "/login", label: "Logout", icon: IconLogout },
+  ];
+
   const moderatorRoutes = [
     {
       link: "/dashboard/mod/manageservices",
@@ -223,6 +232,44 @@ export function Sidebar({ drawerSetOpened }: any) {
     </Link>
   ));
 
+  const bottomLinks = bottomRoutes.map((item) => {
+    if (item.link === "/login") {
+      return (
+        <a
+          className={cx(classes.link, {
+            [classes.linkActive]: item.link === active,
+          })}
+          href={item.link}
+          key={item.label}
+          onClick={handleLogout}
+        >
+          <item.icon className={classes.linkIcon} stroke={1.5} />
+          <span>{item.label}</span>
+        </a>
+      );
+    }
+    return (
+      <Link
+        className={cx(classes.link, {
+          [classes.linkActive]: item.link === active,
+        })}
+        to={item.link}
+        key={item.label}
+        onClick={
+          item.link === "/login"
+            ? handleLogout
+            : (event) => {
+                drawerSetOpened(false);
+                setActive(item.link);
+              }
+        }
+      >
+        <item.icon className={classes.linkIcon} stroke={1.5} />
+        <span>{item.label}</span>
+      </Link>
+    );
+  });
+
   const moderatorLinks = moderatorRoutes.map((item) => (
     <Link
       className={cx(classes.link, {
@@ -274,18 +321,10 @@ export function Sidebar({ drawerSetOpened }: any) {
         ) : (
           <></>
         )}
-      </Navbar.Section>
-
-      <Navbar.Section className={classes.footer}>
-        <Link to="https://startupkro.com/" className={classes.link}>
-          <IconHomeBolt className={classes.linkIcon} stroke={1.5} />
-          <span>Visit Start-Up Kro</span>
-        </Link>
-
-        <a href="/login" className={classes.link} onClick={handleLogout}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
+        <>
+          <Text className={classes.adminLinks}>Other Links</Text>
+          {bottomLinks}
+        </>
       </Navbar.Section>
     </Navbar>
   );

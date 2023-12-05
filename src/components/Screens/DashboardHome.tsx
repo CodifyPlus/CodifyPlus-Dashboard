@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { handleLogout } from "../../common/HandleLogout";
 
 export default function DashboardHome() {
+  const navigate = useNavigate();
   const [Stats, setStats] = useState({
     completedServices: [
       {
@@ -76,6 +78,7 @@ export default function DashboardHome() {
         if (error.response && error.response.status === 401) {
           //@ts-ignore
           EventBus.dispatch("logout");
+          handleLogout(navigate);
         }
 
         setIsLoading(false); // Set loading status to false in case of an error
@@ -86,12 +89,18 @@ export default function DashboardHome() {
   const data = [
     {
       title: "Completed Services",
-      value: Stats?.completedServices[0]?.name === "" ? 0 : Stats.completedServices.length,
+      value:
+        Stats?.completedServices[0]?.name === ""
+          ? 0
+          : Stats.completedServices.length,
       diff: 100,
     },
     {
       title: "Under Process Services",
-      value: Stats?.processServices[0]?.name === "" ? 0 : Stats.processServices.length,
+      value:
+        Stats?.processServices[0]?.name === ""
+          ? 0
+          : Stats.processServices.length,
       diff: 100,
     },
     {
@@ -110,9 +119,9 @@ export default function DashboardHome() {
   return (
     <Container my="md">
       {isLoading ? ( // Conditional rendering based on the loading status
-      <Center>
-        <Loader />
-      </Center>
+        <Center>
+          <Loader />
+        </Center>
       ) : (
         <Grid>
           <Grid.Col xs={12}>

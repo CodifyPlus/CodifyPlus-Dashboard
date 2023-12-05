@@ -23,7 +23,6 @@ const PUSH_DOWN = rem(120);
 const useStyles = createStyles((theme) => ({
   root: {
     position: "fixed",
-    zIndex: 1000,
     top: 0,
   },
 
@@ -191,18 +190,18 @@ export function Navbar({ links }: HeaderResponsiveProps) {
 
   const otherLinks = currentUser ? (
     <a
-        key={"dashboard"}
-        href="dashboard/home"
-        className={cx(classes.link, {
-          [classes.linkActive]: active === "/dashboard/home",
-        })}
-        onClick={(event) => {
-          setActive("/dashboard/home");
-          close();
-        }}
-      >
-        {"Dashboard"}
-      </a>
+      key={"dashboard"}
+      href="dashboard/home"
+      className={cx(classes.link, {
+        [classes.linkActive]: active === "/dashboard/home",
+      })}
+      onClick={(event) => {
+        setActive("/dashboard/home");
+        close();
+      }}
+    >
+      {"Dashboard"}
+    </a>
   ) : (
     <>
       <Link
@@ -247,7 +246,8 @@ export function Navbar({ links }: HeaderResponsiveProps) {
             <Logo />
           </Link>
           <Group spacing={5} className={classes.links}>
-            {items}{otherLinks}
+            {items}
+            {otherLinks}
           </Group>
           <DarkModeButton />
 
@@ -264,7 +264,8 @@ export function Navbar({ links }: HeaderResponsiveProps) {
           >
             {(styles) => (
               <Paper className={classes.dropdown} withBorder style={styles}>
-                {items}{otherLinks}
+                {items}
+                {otherLinks}
               </Paper>
             )}
           </Transition>

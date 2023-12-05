@@ -13,7 +13,7 @@ import {
 import { notifications } from "@mantine/notifications";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { login } from "../../slices/auth";
 import { clearMessage } from "../../slices/message";
 import { useForm } from "@mantine/form";
@@ -43,9 +43,9 @@ export function Login() {
       .unwrap()
       .then(async () => {
         navigate("/dashboard/home");
-        console.log(OneSignal.User.PushSubscription.id);
-        await OneSignal.login(username);
         window.location.reload();
+        console.log("OneSignal PushSub ID", OneSignal.User.PushSubscription.id);
+        await OneSignal.login(username);
       })
       .catch((error: any) => {
         notifications.show({
@@ -74,7 +74,7 @@ export function Login() {
       </Title>
       <Text color="dimmed" size="sm" align="center" mt={5}>
         Do not have an account yet?{" "}
-        <Anchor size="sm" component="button">
+        <Anchor size="sm" component={Link} to="/register">
           Create account
         </Anchor>
       </Text>

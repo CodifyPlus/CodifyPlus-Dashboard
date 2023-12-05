@@ -82,7 +82,7 @@ export default function Dashboard() {
           </Navbar>
         }
         footer={
-          <Footer style={{ zIndex: 1000 }} height={60} p="md">
+          <Footer height={60} p="md">
             <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Group position="center" grow>
                 {/* <Burger

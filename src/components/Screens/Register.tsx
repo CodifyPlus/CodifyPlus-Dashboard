@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../slices/auth";
 import { clearMessage } from "../../slices/message";
 import { useForm } from "@mantine/form";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 
 export function Register() {
@@ -50,9 +50,17 @@ export function Register() {
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      username: (value) => (/^[a-zA-Z0-9]+$/.test(value) ? null : "The username must be unique and should not contain spaces or symbols!"),
+      username: (value) =>
+        /^[a-zA-Z0-9]+$/.test(value)
+          ? null
+          : "The username must be unique and should not contain spaces or symbols!",
       // eslint-disable-next-line no-useless-escape
-      password: (value) => (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(value) ? null : "The password must contain atleast one uppercase, lowercase, symbol, and a number, and length must be more than 8 characters"),
+      password: (value) =>
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
+          value
+        )
+          ? null
+          : "The password must contain atleast one uppercase, lowercase, symbol, and a number, and length must be more than 8 characters",
     },
   });
 
@@ -101,7 +109,7 @@ export function Register() {
           </Title>
           <Text color="dimmed" size="sm" align="center" mt={5}>
             Already have an account?{" "}
-            <Anchor size="sm" component="button">
+            <Anchor size="sm" component={Link} to="/login">
               Login
             </Anchor>
           </Text>

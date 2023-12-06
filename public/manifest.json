@@ -30,5 +30,13 @@
     "productivity",
     "utilities"
   ],
-  "orientation": "any"
+  "orientation": "any",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
+  "lang": "en",
+  "scope": "https://dashboard.codifyplus.com/",
+  "dir": "ltr",
+  "prefer_related_applications": false
 }

@@ -190,9 +190,9 @@ export function Navbar({ links }: HeaderResponsiveProps) {
   });
 
   const otherLinks = currentUser ? (
-    <a
+    <Link
       key={"dashboard"}
-      href="dashboard/home"
+      to="/dashboard/home"
       className={cx(classes.link, {
         [classes.linkActive]: active === "/dashboard/home",
       })}
@@ -202,7 +202,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
       }}
     >
       {"Dashboard"}
-    </a>
+    </Link>
   ) : (
     <>
       <Link

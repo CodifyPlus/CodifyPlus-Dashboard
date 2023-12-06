@@ -21,5 +21,14 @@
   "start_url": "./dashboard/home",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "id": "codifyplusdashboard",
+  "description": "Manage your services on the go with ManageKro by StartupKro.",
+  "categories": [
+    "business",
+    "finance",
+    "productivity",
+    "utilities"
+  ],
+  "orientation": "any"
 }

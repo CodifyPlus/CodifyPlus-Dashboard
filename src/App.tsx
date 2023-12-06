@@ -133,6 +133,7 @@ export async function runOneSignal() {
 }
 
 export default function App() {
+  const [enableFooter, setEnableFooter] = React.useState(true);
   const { user: currentUser } = useSelector((state: any) => state.auth);
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
@@ -326,7 +327,7 @@ export default function App() {
                     </>
                   }
                 >
-                  <Dashboard />
+                  <Dashboard setEnableFooter={setEnableFooter} />
                 </React.Suspense>
               }
             >
@@ -607,11 +608,7 @@ export default function App() {
               </Route>
             </Route>
           </Routes>
-          {window.location.pathname.toLowerCase().includes("dashboard") ? (
-            <></>
-          ) : (
-            <Footer data={footerLinks.data} />
-          )}
+          {!enableFooter ? <></> : <Footer data={footerLinks.data} />}
         </NovuProvider>
       </MantineProvider>
     </ColorSchemeProvider>

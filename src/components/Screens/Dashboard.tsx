@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import { NotificationBell, useSocket } from "@novu/notification-center";
 import { notifications } from "@mantine/notifications";
 
-export default function Dashboard() {
+export default function Dashboard({ setEnableFooter }) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const { socket } = useSocket();
@@ -30,6 +30,7 @@ export default function Dashboard() {
   const [unseenCount, setUnseenCount] = useState(0);
 
   useEffect(() => {
+    setEnableFooter(false);
     if (socket) {
       socket.on("notification_received", (data) => {
         notifications.show({
@@ -49,6 +50,7 @@ export default function Dashboard() {
         socket.off("notification_received");
         socket.off("unseen_count_changed");
       }
+      setEnableFooter(true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);

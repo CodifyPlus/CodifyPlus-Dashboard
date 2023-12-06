@@ -13,6 +13,7 @@ import {
   } from '@mantine/core';
   import { IconCheck } from '@tabler/icons-react';
   import CodifyPlusLaptop from "./CodifyPlus Mockup BGT.webp";
+import { Link } from 'react-router-dom';
   
   const useStyles = createStyles((theme) => ({
     inner: {
@@ -102,7 +103,7 @@ import {
               </List>
   
               <Group mt={30}>
-                <Button radius="xl" size="md" className={classes.control}>
+                <Button component={Link} to="/dashboard/home" radius="xl" size="md" className={classes.control}>
                   Go to Dashboard
                 </Button>
                 <Button variant="default" radius="xl" size="md" className={classes.control}>

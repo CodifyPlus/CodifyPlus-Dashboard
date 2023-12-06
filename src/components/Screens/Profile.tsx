@@ -21,6 +21,7 @@ import UserService from "../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import OneSignal from "react-onesignal";
+import { ProfileThemeChangeToggle } from "../Fragments/DarkModeButton/ProfileThemeChangeToggle";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
@@ -156,6 +157,11 @@ function Profile() {
               </Paper>
               <Grid gutter="md">
                 <Grid.Col>
+                  <Paper withBorder shadow="md" p={30} mt={10} radius="md">
+                    <Group position="center">
+                      <ProfileThemeChangeToggle />
+                    </Group>
+                  </Paper>
                   <Paper withBorder shadow="md" p={30} mt={10} radius="md">
                     <Group position="center">
                       <Switch

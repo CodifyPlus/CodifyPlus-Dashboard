@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MantineProvider,
   ColorSchemeProvider,
@@ -7,7 +7,7 @@ import {
   Center,
 } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import links from "./components/data/links";
 import footerLinks from "./components/data/footerLinks";
 import { NovuProvider } from "@novu/notification-center";
@@ -120,6 +120,11 @@ const ContactUs = React.lazy(() =>
     default: module.ContactUs,
   }))
 );
+const Offline = React.lazy(() =>
+  import("./components/Screens/Offline").then((module) => ({
+    default: module.Offline,
+  }))
+);
 
 export async function runOneSignal() {
   await OneSignal.init({
@@ -135,15 +140,34 @@ export async function runOneSignal() {
 export default function App() {
   const [enableFooter, setEnableFooter] = React.useState(true);
   const { user: currentUser } = useSelector((state: any) => state.auth);
+  const navigate = useNavigate();
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
     defaultValue: "light",
     getInitialValueInEffect: true,
   });
+  const [networkStatus, setNetworkStatus] = useState(() => {
+    if (navigator.onLine) {
+      console.log("Connected to network.");
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   useEffect(() => {
+    window.ononline = (e) => {
+      console.log("Connected to network.");
+      setNetworkStatus(true);
+    };
+    window.onoffline = (e) => {
+      console.log("Network connection lost.");
+      setNetworkStatus(false);
+      navigate("/offline");
+    };
     runOneSignal();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [networkStatus]);
 
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
@@ -264,6 +288,22 @@ export default function App() {
                   }
                 >
                   <OurServices />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="offline"
+              element={
+                <React.Suspense
+                  fallback={
+                    <>
+                      <Center>
+                        <Loader />
+                      </Center>
+                    </>
+                  }
+                >
+                  <Offline />
                 </React.Suspense>
               }
             />

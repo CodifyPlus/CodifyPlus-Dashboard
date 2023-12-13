@@ -55,6 +55,7 @@ interface DndListProps {
     icon: string;
     name: string;
     serviceId: string;
+    username: string;
   }[];
 }
 
@@ -64,6 +65,7 @@ export function ServicesList({ data }: DndListProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, handlers] = useListState(data);
   const datalen = data.length;
+  // console.log(state)
   const items = state.slice(0, 3).map((item, index) => (
     <Draggable key={item.serviceId} index={index} draggableId={item.serviceId}>
       {(provided, snapshot) => (
@@ -88,9 +90,13 @@ export function ServicesList({ data }: DndListProps) {
           >
             <div>
               <Text>{item.name}</Text>
-              <Text color="dimmed" size="sm">
-                Status: {item.status}
-              </Text>
+              {currentUser.role !== "USER" ? (
+                <Text color="dimmed" size="sm">
+                  Assigned for: {item.username}
+                </Text>
+              ) : (
+                <></>
+              )}
             </div>
           </UnstyledButton>
           <Button

@@ -14,8 +14,6 @@ import UserService from "../../../services/user.service";
 import {
   IconEye,
   IconMapPin,
-  IconNotebook,
-  IconPencil,
   IconSearch,
   IconSettingsBolt,
 } from "@tabler/icons-react";
@@ -121,18 +119,12 @@ export function ManageServicesMod() {
             <Menu.Item icon={<IconEye size="1rem" stroke={1.5} />}>
               View
             </Menu.Item>
-            <Menu.Item icon={<IconPencil size="1rem" stroke={1.5} />}>
-              Edit
-            </Menu.Item>
             <Menu.Item
               component={Link}
               to={`/dashboard/mod/track/${item._id}`}
               icon={<IconMapPin size="1rem" stroke={1.5} />}
             >
               Track
-            </Menu.Item>
-            <Menu.Item icon={<IconNotebook size="1rem" stroke={1.5} />}>
-              Send Note
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>

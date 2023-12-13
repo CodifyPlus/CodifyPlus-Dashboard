@@ -18,6 +18,7 @@ export default function DashboardHome() {
         icon: "",
         status: "",
         serviceId: "",
+        username: "",
       },
     ],
     pendingServices: [],
@@ -27,6 +28,7 @@ export default function DashboardHome() {
         icon: "",
         status: "",
         serviceId: "",
+        username: "",
       },
     ],
   });
@@ -59,6 +61,7 @@ export default function DashboardHome() {
             icon: "C",
             status: "Completed",
             serviceId: response.data.completedServices[i].serviceId.toString(),
+            username: response.data.completedServices[i].username,
           });
         }
 
@@ -68,6 +71,7 @@ export default function DashboardHome() {
             icon: "P",
             status: "Under Process",
             serviceId: response.data.processServices[j].serviceId.toString(),
+            username: response.data.processServices[i].username,
           });
         }
 

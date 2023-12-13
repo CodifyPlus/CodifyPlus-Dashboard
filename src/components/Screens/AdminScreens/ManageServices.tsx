@@ -15,8 +15,6 @@ import UserService from "../../../services/user.service";
 import {
   IconEye,
   IconMapPin,
-  IconNotebook,
-  IconPencil,
   IconSearch,
   IconSettingsBolt,
   IconTrash,
@@ -184,18 +182,12 @@ export function ManageServices() {
             <Menu.Item icon={<IconEye size="1rem" stroke={1.5} />}>
               View
             </Menu.Item>
-            <Menu.Item icon={<IconPencil size="1rem" stroke={1.5} />}>
-              Edit
-            </Menu.Item>
             <Menu.Item
               component={Link}
               to={`/dashboard/track/${item._id}`}
               icon={<IconMapPin size="1rem" stroke={1.5} />}
             >
               Track
-            </Menu.Item>
-            <Menu.Item icon={<IconNotebook size="1rem" stroke={1.5} />}>
-              Send Note
             </Menu.Item>
             <Menu.Item
               onClick={() => {

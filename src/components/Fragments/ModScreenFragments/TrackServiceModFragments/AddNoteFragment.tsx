@@ -32,16 +32,15 @@ export function AddNoteFragmentMod({ data }: noteProps) {
   const handleRegister = (formValue: any) => {
     setSuccessful(false);
     const objToPost = {
-        sendEmail: formValue.sendEmail,
-        information: formValue.information,
-        serviceId: data.serviceId,
-    }
+      sendEmail: formValue.sendEmail,
+      information: formValue.information,
+      serviceId: data.serviceId,
+    };
     UserService.addNoteMod(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();
         setSuccessful(true);
-        
       },
       (error) => {
         if (error.response && error.response.status === 401) {
@@ -61,17 +60,16 @@ export function AddNoteFragmentMod({ data }: noteProps) {
 
   return (
     <Container size={420}>
-      
-        {!successful && (
-          <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
-            <Textarea
-              label="Information"
-              placeholder="Please supply the documents..."
-              required
-              {...form.getInputProps("information")}
-            />
+      {!successful && (
+        <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
+          <Textarea
+            label="Information"
+            placeholder="Please supply the documents..."
+            required
+            {...form.getInputProps("information")}
+          />
 
-            <Group position="apart" mt="lg">
+          {/* <Group position="apart" mt="lg">
               <Checkbox
                 icon={CheckboxIcon}
                 label="Notify User via Email?"
@@ -79,12 +77,12 @@ export function AddNoteFragmentMod({ data }: noteProps) {
                 {...form.getInputProps("sendEmail")}
                 indeterminate
               />
-            </Group>
-            <Button fullWidth mt="xl" type="submit">
-              Add Note
-            </Button>
-          </form>
-        )}
+            </Group> */}
+          <Button fullWidth mt="xl" type="submit">
+            Add Note
+          </Button>
+        </form>
+      )}
     </Container>
   );
 }

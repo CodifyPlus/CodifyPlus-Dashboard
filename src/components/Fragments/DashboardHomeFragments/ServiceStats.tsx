@@ -7,7 +7,6 @@ interface StatsGridIconsProps {
 
 export function ServiceStats({ data }: StatsGridIconsProps) {
   const stats = data.map((stat) => {
-    // const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
 
     return (
       <Paper withBorder p="md" radius="md" key={stat.title} shadow="md">

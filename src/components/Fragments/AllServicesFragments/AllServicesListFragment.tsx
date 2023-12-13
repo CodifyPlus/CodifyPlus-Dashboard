@@ -55,6 +55,7 @@ interface DndListProps {
     icon: string;
     name: string;
     serviceId: string;
+    username: string;
   }[];
 }
 
@@ -92,9 +93,13 @@ export function AllServicesListFragment({ data }: DndListProps) {
             >
               <div>
                 <Text>{item.name}</Text>
-                <Text color="dimmed" size="sm">
-                  Status: {item.status}
-                </Text>
+                {currentUser.role !== "USER" ? (
+                  <Text color="dimmed" size="sm">
+                    Assigned for: {item.username}
+                  </Text>
+                ) : (
+                  <></>
+                )}
               </div>
             </UnstyledButton>
             <Button

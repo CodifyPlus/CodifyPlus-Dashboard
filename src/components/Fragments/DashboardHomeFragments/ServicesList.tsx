@@ -1,4 +1,11 @@
-import { createStyles, Text, rem, Button, UnstyledButton } from "@mantine/core";
+import {
+  createStyles,
+  Text,
+  rem,
+  Button,
+  UnstyledButton,
+  Center,
+} from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../../../common/StrictModeDroppable";
@@ -139,16 +146,17 @@ export function ServicesList({ data }: DndListProps) {
             )}
             {provided.placeholder}
             {datalen > 3 ? (
-              <Button
-                component={Link}
-                mt={10}
-                to={`/dashboard/allservices`}
-                variant="light"
-                color="yellow"
-                style={{ marginLeft: "auto" }}
-              >
-                View All
-              </Button>
+              <Center>
+                <Button
+                  component={Link}
+                  mt={10}
+                  to={`/dashboard/allservices`}
+                  variant="light"
+                  color="yellow"
+                >
+                  View All
+                </Button>
+              </Center>
             ) : (
               <></>
             )}

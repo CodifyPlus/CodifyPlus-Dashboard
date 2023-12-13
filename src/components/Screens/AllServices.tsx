@@ -23,6 +23,7 @@ export default function AllServices() {
         icon: "",
         status: "",
         serviceId: "",
+        username: "",
       },
     ],
     pendingServices: [],
@@ -32,6 +33,7 @@ export default function AllServices() {
         icon: "",
         status: "",
         serviceId: "",
+        username: "",
       },
     ],
   });
@@ -64,6 +66,7 @@ export default function AllServices() {
             icon: "C",
             status: "Completed",
             serviceId: response.data.completedServices[i].serviceId.toString(),
+            username: response.data.completedServices[i].username,
           });
         }
 
@@ -73,6 +76,7 @@ export default function AllServices() {
             icon: "P",
             status: "Under Process",
             serviceId: response.data.processServices[j].serviceId.toString(),
+            username: response.data.processServices[j].username,
           });
         }
 

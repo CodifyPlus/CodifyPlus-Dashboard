@@ -1,14 +1,10 @@
 import {
   Container,
-  Group,
   Button,
-  Checkbox,
-  CheckboxProps,
   Textarea,
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import { IconMail, IconNote } from "@tabler/icons-react";
 import UserService from "../../../../services/user.service";
 
 interface noteProps {
@@ -50,13 +46,6 @@ export function AddNoteFragmentMod({ data }: noteProps) {
       }
     );
   };
-
-  const CheckboxIcon: CheckboxProps["icon"] = ({ indeterminate, className }) =>
-    indeterminate ? (
-      <IconMail className={className} />
-    ) : (
-      <IconNote className={className} />
-    );
 
   return (
     <Container size={420}>

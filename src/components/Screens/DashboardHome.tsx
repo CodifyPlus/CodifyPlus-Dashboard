@@ -71,7 +71,7 @@ export default function DashboardHome() {
             icon: "P",
             status: "Under Process",
             serviceId: response.data.processServices[j].serviceId.toString(),
-            username: response.data.processServices[i].username,
+            username: response.data.processServices[j].username,
           });
         }
 

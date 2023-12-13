@@ -111,6 +111,7 @@ function Profile() {
           <Title
             align="center"
             mb={30}
+            mt={20}
             sx={(theme) => ({
               fontWeight: 900,
             })}

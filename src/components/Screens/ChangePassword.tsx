@@ -52,7 +52,7 @@ export function ChangePassword() {
   }
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420} my={30}>
       {
         <>
           <Title

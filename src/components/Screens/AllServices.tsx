@@ -108,7 +108,7 @@ export default function AllServices() {
   }
 
   return (
-    <Container my="md">
+    <Container size="auto" my="md">
       {isLoading ? ( // Conditional rendering based on the loading status
         <Center>
           <Loader />
@@ -126,7 +126,7 @@ export default function AllServices() {
           <Grid mt={30}>
             <Grid.Col xs={12}>
               <Paper shadow="md" p={20} withBorder>
-                <Text mb={10} ml={10}>
+                <Text size={18} mb={10} ml={10}>
                   Under Process Services:
                 </Text>
                 <AllServicesListFragment data={Stats.processServices} />
@@ -134,7 +134,7 @@ export default function AllServices() {
             </Grid.Col>
             <Grid.Col xs={12}>
               <Paper shadow="md" p={20} withBorder>
-                <Text mb={10} ml={10}>
+                <Text size={18} mb={10} ml={10}>
                   Completed Services:
                 </Text>
                 <AllServicesListFragment data={Stats.completedServices} />

@@ -128,27 +128,27 @@ export default function DashboardHome() {
   }
 
   return (
-    <Container my="md">
+    <Container size="auto" my="md">
       {isLoading ? ( // Conditional rendering based on the loading status
         <Center>
           <Loader />
         </Center>
       ) : (
-        <Grid>
-          <Grid.Col xs={12}>
+        <Grid grow>
+          <Grid.Col span={12}>
             <ServiceStats data={data} />
           </Grid.Col>
-          <Grid.Col xs={12}>
+          <Grid.Col span={12}>
             <Paper shadow="md" p={20} withBorder>
-              <Text mb={10} ml={10}>
+              <Text size={18} mb={10} ml={10}>
                 Under Process Services:
               </Text>
               <ServicesList data={Stats.processServices} />
             </Paper>
           </Grid.Col>
-          <Grid.Col xs={12}>
+          <Grid.Col span={12}>
             <Paper shadow="md" p={20} withBorder>
-              <Text mb={10} ml={10}>
+              <Text size={18} mb={10} ml={10}>
                 Completed Services:
               </Text>
               <ServicesList data={Stats.completedServices} />

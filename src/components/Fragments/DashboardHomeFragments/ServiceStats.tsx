@@ -1,29 +1,19 @@
-import { createStyles, Group, Paper, Text, ThemeIcon, SimpleGrid } from '@mantine/core';
-import { IconActivity } from '@tabler/icons-react';
-
-const useStyles = createStyles((theme) => ({
-  root: {
-    
-  },
-
-  label: {
-  },
-}));
+import { Group, Paper, Text, ThemeIcon, SimpleGrid } from "@mantine/core";
+import { IconActivity } from "@tabler/icons-react";
 
 interface StatsGridIconsProps {
   data: { title: string; value: number; diff: number }[];
 }
 
 export function ServiceStats({ data }: StatsGridIconsProps) {
-  const { classes } = useStyles();
   const stats = data.map((stat) => {
     // const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
 
     return (
-      <Paper withBorder p="md" radius="md" key={stat.title} shadow='md' >
+      <Paper withBorder p="md" radius="md" key={stat.title} shadow="md">
         <Group position="apart">
           <div>
-            <Text c="dimmed" tt="uppercase" fw={700} fz="xs" className={classes.label}>
+            <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
               {stat.title}
             </Text>
             <Text fw={700} fz="xl">
@@ -33,7 +23,9 @@ export function ServiceStats({ data }: StatsGridIconsProps) {
           <ThemeIcon
             color="gray"
             variant="light"
-            sx={(theme) => ({ color: stat.diff > 0 ? theme.colors.teal[6] : theme.colors.red[6] })}
+            sx={(theme) => ({
+              color: stat.diff > 0 ? theme.colors.teal[6] : theme.colors.red[6],
+            })}
             size={38}
             radius="md"
           >
@@ -51,8 +43,8 @@ export function ServiceStats({ data }: StatsGridIconsProps) {
   });
 
   return (
-    <div className={classes.root}>
-      <SimpleGrid cols={3} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+    <div>
+      <SimpleGrid cols={3} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
         {stats}
       </SimpleGrid>
     </div>

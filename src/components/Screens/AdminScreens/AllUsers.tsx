@@ -10,6 +10,7 @@ import {
   Loader,
   Center,
   Modal,
+  Pagination,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -18,7 +19,6 @@ import { notifications } from "@mantine/notifications";
 import {
   IconMessages,
   IconProgressCheck,
-  IconServer,
   IconSettingsBolt,
   IconTrash,
 } from "@tabler/icons-react";
@@ -55,11 +55,17 @@ export function AllUsers() {
 
   const [stateUpdate, setStateUpdate] = useState(false);
   const [notificationUsername, setNotificationUsername] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   const [
     opened_sendNotification,
     { open: open_sendNotification, close: close_sendNotification },
   ] = useDisclosure(false);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   const handleDelete = (userId: string) => {
     UserService.deleteUser({ userId }).then(
@@ -78,9 +84,14 @@ export function AllUsers() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getAllUsers().then(
+    UserService.getAllUsers({
+      page: currentPage,
+      limit: 10,
+    }).then(
       (response) => {
-        setUsers(response.data);
+        setUsers(response.data.users);
+        setTotalUsers(response.data.total);
+        setStateUpdate(!stateUpdate);
         setIsLoading(false);
       },
       (error) => {
@@ -167,11 +178,8 @@ export function AllUsers() {
             >
               Send Notification
             </Menu.Item>
-            <Menu.Item icon={<IconServer size="1rem" stroke={1.5} />}>
-              Add Service
-            </Menu.Item>
             <Menu.Item icon={<IconProgressCheck size="1rem" stroke={1.5} />}>
-              Pending Services
+              All Services
             </Menu.Item>
             <Menu.Item
               onClick={() => {
@@ -201,33 +209,45 @@ export function AllUsers() {
           <Loader />
         </Center>
       ) : (
-        <ScrollArea>
-          <Modal
-            opened={opened_sendNotification}
-            onClose={close_sendNotification}
-            title={`Send Notification to ${notificationUsername}`}
-            centered
-          >
-            <SendNotificationFragment
-              data={{
-                username: notificationUsername,
-                closeModal: close_sendNotification,
-              }}
+        <>
+          <ScrollArea>
+            <Modal
+              opened={opened_sendNotification}
+              onClose={close_sendNotification}
+              title={`Send Notification to ${notificationUsername}`}
+              centered
+            >
+              <SendNotificationFragment
+                data={{
+                  username: notificationUsername,
+                  closeModal: close_sendNotification,
+                }}
+              />
+            </Modal>
+            <Table miw={800} verticalSpacing="sm">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Created At</th>
+                  <th>Process Services</th>
+                  <th>Manage</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </Table>
+          </ScrollArea>
+          <Center>
+            <Pagination
+              value={currentPage}
+              onChange={handlePageChange}
+              pt={40}
+              total={Math.ceil(totalUsers / 10)}
+              color="yellow"
+              withEdges
             />
-          </Modal>
-          <Table miw={800} verticalSpacing="sm">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Role</th>
-                <th>Created At</th>
-                <th>Process Services</th>
-                <th>Manage</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
-        </ScrollArea>
+          </Center>
+        </>
       )}
     </>
   );

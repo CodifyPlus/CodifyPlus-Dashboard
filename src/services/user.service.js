@@ -22,8 +22,8 @@ const getServiceInfo = (serviceId) => {
   })
 }
 
-const getAllUsers = () => {
-  return axios.get(API_URL + "getAllUsers", { headers: authHeader() })
+const getAllUsers = (params) => {
+  return axios.get(API_URL + "getAllUsers", { headers: authHeader(), params: params })
 }
 
 const changeUserRole = (newRoleAndId) => {

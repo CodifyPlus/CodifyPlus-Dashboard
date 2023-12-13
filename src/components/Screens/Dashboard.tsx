@@ -84,8 +84,8 @@ export default function Dashboard({ setEnableFooter }) {
           </Navbar>
         }
         footer={
-          <Footer height={60} p="md">
-            <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+          <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+            <Footer height={60} p="md">
               <Group position="center" grow>
                 {/* <Burger
                   opened={opened}
@@ -145,10 +145,10 @@ export default function Dashboard({ setEnableFooter }) {
                   <IconSettings />
                 </ActionIcon>
               </Group>
-            </MediaQuery>
 
-            <div style={{ marginLeft: "auto" }}></div>
-          </Footer>
+              <div style={{ marginLeft: "auto" }}></div>
+            </Footer>
+          </MediaQuery>
         }
       >
         <Outlet />

@@ -137,7 +137,7 @@ export function ServicesList({ data }: DndListProps) {
                 component={Link}
                 mt={10}
                 to={`/dashboard/allservices`}
-                variant="outline"
+                variant="light"
                 color="yellow"
                 style={{ marginLeft: "auto" }}
               >

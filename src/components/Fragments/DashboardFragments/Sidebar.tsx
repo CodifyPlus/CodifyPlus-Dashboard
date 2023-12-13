@@ -236,7 +236,7 @@ export function Sidebar({ drawerSetOpened }: any) {
     if (item.link === "/login") {
       return (
         <a
-          style={{ marginBottom: "10px" }}
+          style={{ marginBottom: "60px" }}
           className={cx(classes.link, {
             [classes.linkActive]: item.link === active,
           })}
@@ -293,7 +293,7 @@ export function Sidebar({ drawerSetOpened }: any) {
   }
 
   return (
-    <Navbar height={600} width={{ sm: 330 }} p="md">
+    <Navbar height="auto" width={{ sm: 330 }} p="md">
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <Group className={classes.header} position="apart">
           <UserInfoSidebar

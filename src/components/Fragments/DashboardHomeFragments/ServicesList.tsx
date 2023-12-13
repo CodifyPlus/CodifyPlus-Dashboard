@@ -1,8 +1,7 @@
-import { createStyles, Text, rem, Button } from "@mantine/core";
+import { createStyles, Text, rem, Button, UnstyledButton } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../../../common/StrictModeDroppable";
-import { IconCheck, IconClockBolt } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -13,11 +12,13 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     borderRadius: theme.radius.md,
     border: `${rem(1)} solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[3] : theme.colors.gray[6]
     }`,
     padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
     backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.white,
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[1],
     marginBottom: theme.spacing.sm,
   },
 
@@ -34,10 +35,8 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("sm")]: {
       display: "none",
     },
-    borderColor:
-      theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
     color:
-      theme.colorScheme === "dark" ? theme.colors.yellow[5] : theme.colors.dark,
+      theme.colorScheme === "dark" ? theme.colors.yellow[2] : theme.colors.dark,
   },
   viewButtonMobile: {
     [theme.fn.largerThan("sm")]: {
@@ -65,64 +64,55 @@ export function ServicesList({ data }: DndListProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, handlers] = useListState(data);
   const datalen = data.length;
-  const items = data.slice(0, 3).map((item, index) => (
-    <>
-      <Draggable key={item.name} index={index} draggableId={item.name}>
-        {(provided, snapshot) => (
-          <div
-            className={cx(classes.item, {
-              [classes.itemDragging]: snapshot.isDragging,
-            })}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
+  const items = state.slice(0, 3).map((item, index) => (
+    <Draggable key={item.serviceId} index={index} draggableId={item.serviceId}>
+      {(provided, snapshot) => (
+        <div
+          className={cx(classes.item, {
+            [classes.itemDragging]: snapshot.isDragging,
+          })}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <UnstyledButton
+            key={item.serviceId}
+            component={Link}
+            to={`/dashboard${
+              currentUser.role === "ADMIN"
+                ? "/track"
+                : currentUser.role === "MODERATOR"
+                ? "/mod/track"
+                : "/servicestatus"
+            }/${item.serviceId}`}
           >
-            <Text className={classes.symbol}>
-              {item.icon === "C" ? <IconCheck /> : <IconClockBolt />}
-            </Text>
             <div>
               <Text>{item.name}</Text>
               <Text color="dimmed" size="sm">
                 Status: {item.status}
               </Text>
-              <Button
-                component={Link}
-                className={classes.viewButtonMobile}
-                mt={10}
-                to={`/dashboard${
-                  currentUser.role === "ADMIN"
-                    ? "/track"
-                    : currentUser.role === "MODERATOR"
-                    ? "/mod/track"
-                    : "/servicestatus"
-                }/${item.serviceId}`}
-                variant="outline"
-                color="yellow"
-                style={{ marginLeft: "auto" }}
-              >
-                View
-              </Button>
             </div>
-            <Button
-              component={Link}
-              className={classes.viewButton}
-              to={`/dashboard${
-                currentUser.role === "ADMIN"
-                  ? "/track"
-                  : currentUser.role === "MODERATOR"
-                  ? "/mod/track"
-                  : "/servicestatus"
-              }/${item.serviceId}`}
-              variant="outline"
-              color="yellow"
-              style={{ marginLeft: "auto" }}
-            >
-              View Status
-            </Button>
-          </div>
-        )}
-      </Draggable>
-    </>
+          </UnstyledButton>
+          <Button
+            compact
+            component={Link}
+            className={classes.viewButton}
+            to={`/dashboard${
+              currentUser.role === "ADMIN"
+                ? "/track"
+                : currentUser.role === "MODERATOR"
+                ? "/mod/track"
+                : "/servicestatus"
+            }/${item.serviceId}`}
+            variant="light"
+            color="yellow"
+            style={{ marginLeft: "auto" }}
+          >
+            View Status
+          </Button>
+        </div>
+      )}
+    </Draggable>
   ));
 
   return (

@@ -8,6 +8,7 @@ import {
   Loader,
   Center,
   TextInput,
+  Pagination,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -62,11 +63,15 @@ export function ManageServices() {
     },
   ]);
 
-  const [search, setSearch] = useState("a");
-
+  const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
   const [stateUpdate, setStateUpdate] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalServices, setTotalServices] = useState(0);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   const handleDelete = (serviceId: string) => {
     UserService.deleteService({ serviceId }).then(
@@ -95,26 +100,27 @@ export function ManageServices() {
         service.assignedTo.username
           .toLowerCase()
           .includes(search.toLowerCase()) ||
-        service.assignedTo.email
-          .toLowerCase()
-          .includes(search.toLowerCase()) ||
+        service.assignedTo.email.toLowerCase().includes(search.toLowerCase()) ||
         service.assignedFor.username
           .toLowerCase()
           .includes(search.toLowerCase()) ||
-        service.assignedFor.email
-          .toLowerCase()
-          .includes(search.toLowerCase())
+        service.assignedFor.email.toLowerCase().includes(search.toLowerCase())
     );
     setFilterData(filteredServices);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, stateUpdate]);
 
   useEffect(() => {
-    UserService.getAllServices().then(
+    UserService.getAllServices({
+      page: currentPage,
+      limit: 10,
+    }).then(
       (response) => {
-        const allServices = response.data;
+        const allServices = response.data.services;
+        const totalServices = response.data.total;
+        setTotalServices(totalServices);
         setServices(allServices);
-        setSearch("");
+        setStateUpdate(!stateUpdate);
         setIsLoading(false);
       },
       (error) => {
@@ -219,28 +225,40 @@ export function ManageServices() {
           <Loader />
         </Center>
       ) : (
-        <ScrollArea>
-          <TextInput
-            placeholder="Search by any field"
-            mb="md"
-            icon={<IconSearch size="0.9rem" stroke={1.5} />}
-            value={search}
-            onChange={handleSearchChange}
-          />
-          <Table miw={800} verticalSpacing="sm">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Cost</th>
-                <th>Assigned To</th>
-                <th>Assigned For</th>
-                <th>Manage</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
-        </ScrollArea>
+        <>
+          <ScrollArea>
+            <TextInput
+              placeholder="Search by any field"
+              mb="md"
+              icon={<IconSearch size="0.9rem" stroke={1.5} />}
+              value={search}
+              onChange={handleSearchChange}
+            />
+            <Table miw={800} verticalSpacing="sm">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Cost</th>
+                  <th>Assigned To</th>
+                  <th>Assigned For</th>
+                  <th>Manage</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </Table>
+          </ScrollArea>
+          <Center>
+            <Pagination
+              value={currentPage}
+              onChange={handlePageChange}
+              pt={40}
+              total={Math.ceil(totalServices / 10)}
+              color="yellow"
+              withEdges
+            />
+          </Center>
+        </>
       )}
     </>
   );

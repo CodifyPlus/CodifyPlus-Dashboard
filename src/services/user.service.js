@@ -34,8 +34,8 @@ const addNewUser = (newUserData) => {
   return axios.post(API_URL + "addNewUser", newUserData, { headers: authHeader() })
 }
 
-const getAllServices = () => {
-  return axios.get(API_URL + "getAllServices", { headers: authHeader() })
+const getAllServices = (params) => {
+  return axios.get(API_URL + "getAllServices", { headers: authHeader(), params: params })
 }
 
 const getAllUsernames = () => {

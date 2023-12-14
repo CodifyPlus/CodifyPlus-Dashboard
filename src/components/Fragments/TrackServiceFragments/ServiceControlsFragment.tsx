@@ -12,6 +12,8 @@ import {
   IconPencilPlus,
   IconMapPinBolt,
   IconCheck,
+  IconCalendarX,
+  IconMailFast,
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 
@@ -56,8 +58,6 @@ interface serviceControlFragment {
   };
 }
 
-
-
 export function ServiceControlsFragment({ data }: serviceControlFragment) {
   const mockdata = [
     {
@@ -67,6 +67,8 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       openModal: data.openModalAddNote,
     },
     { title: "Edit Details", icon: IconPencilPlus, color: "cyan" },
+    { title: "Toggle Dates", icon: IconCalendarX, color: "orange" },
+    { title: "Email Details", icon: IconMailFast, color: "yellow" },
     { title: "Add Track Point", icon: IconMapPinBolt, color: "pink" },
     { title: "Mark as Completed", icon: IconCheck, color: "red" },
   ];
@@ -88,22 +90,43 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
     );
   };
 
-  function handleClick(title: any){
-    if(title === "Add Note"){
+  const handleTimelineDatesVisibility = (serviceId: any) => {
+    const objToPost = {
+      serviceId: data.serviceId,
+    };
+    UserService.toggleTimelineDatesVisibility(objToPost).then(
+      (response) => {
+        data.setInfo(response.data);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+  };
+
+  function handleClick(title: any) {
+    if (title === "Add Note") {
       data.openModalAddNote();
-    }
-    else if(title === "Add Track Point"){
+    } else if (title === "Add Track Point") {
       data.openModalAddTrack();
-    }
-    else if(title === "Mark as Completed"){
+    } else if (title === "Mark as Completed") {
       handleComplete(data.serviceId);
+    } else if (title === "Toggle Dates") {
+      handleTimelineDatesVisibility(data.serviceId);
     }
   }
 
   const { classes, theme } = useStyles();
 
   const items = mockdata.map((item) => (
-    <UnstyledButton onClick={() => handleClick(item.title)} key={item.title} className={classes.item}>
+    <UnstyledButton
+      onClick={() => handleClick(item.title)}
+      key={item.title}
+      className={classes.item}
+    >
       <item.icon color={theme.colors[item.color][6]} size="2rem" />
       <Text size="xs" mt={7}>
         {item.title}
@@ -116,7 +139,7 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       <Group position="apart">
         <Text className={classes.title}>Controls</Text>
       </Group>
-      <SimpleGrid cols={2} mt="md">
+      <SimpleGrid cols={3} mt="md">
         {items}
       </SimpleGrid>
     </Card>

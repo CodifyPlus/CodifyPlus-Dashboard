@@ -7,10 +7,7 @@ import {
   Group,
   rem,
 } from "@mantine/core";
-import {
-  IconNote,
-  IconMapPinBolt,
-} from "@tabler/icons-react";
+import { IconNote, IconMapPinBolt } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -53,8 +50,6 @@ interface serviceControlFragment {
   };
 }
 
-
-
 export function ServiceControlsFragmentMod({ data }: serviceControlFragment) {
   const mockdata = [
     {
@@ -66,11 +61,10 @@ export function ServiceControlsFragmentMod({ data }: serviceControlFragment) {
     { title: "Add Track Point", icon: IconMapPinBolt, color: "pink" },
   ];
 
-  function handleClick(title: any){
-    if(title === "Add Note"){
+  function handleClick(title: any) {
+    if (title === "Add Note") {
       data.openModalAddNote();
-    }
-    else if(title === "Add Track Point"){
+    } else if (title === "Add Track Point") {
       data.openModalAddTrack();
     }
   }
@@ -78,7 +72,11 @@ export function ServiceControlsFragmentMod({ data }: serviceControlFragment) {
   const { classes, theme } = useStyles();
 
   const items = mockdata.map((item) => (
-    <UnstyledButton onClick={() => handleClick(item.title)} key={item.title} className={classes.item}>
+    <UnstyledButton
+      onClick={() => handleClick(item.title)}
+      key={item.title}
+      className={classes.item}
+    >
       <item.icon color={theme.colors[item.color][6]} size="2rem" />
       <Text size="xs" mt={7}>
         {item.title}

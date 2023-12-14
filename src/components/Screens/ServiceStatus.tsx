@@ -36,6 +36,7 @@ export default function ServiceStatus() {
     status: "",
     name: "",
     duration: "",
+    timelineDatesIsVisible: true,
     notes: [
       {
         information: "",
@@ -151,6 +152,7 @@ export default function ServiceStatus() {
                 data={info.pathway}
                 serviceId={serviceId}
                 setInfo={setInfo}
+                timelineDatesIsVisible={info.timelineDatesIsVisible}
               />
               <Grid gutter="md">
                 <Grid.Col>

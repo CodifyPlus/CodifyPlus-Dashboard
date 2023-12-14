@@ -45,6 +45,7 @@ export function TrackServiceMod() {
   const [info, setInfo] = useState({
     cost: "",
     status: "",
+    timelineDatesIsVisible: true,
     name: "",
     duration: "",
     notes: [
@@ -191,6 +192,7 @@ export function TrackServiceMod() {
                 data={info.pathway}
                 serviceId={serviceId}
                 setInfo={setInfo}
+                timelineDatesIsVisible={info.timelineDatesIsVisible}
               />
               <Grid gutter="md">
                 <Grid.Col>

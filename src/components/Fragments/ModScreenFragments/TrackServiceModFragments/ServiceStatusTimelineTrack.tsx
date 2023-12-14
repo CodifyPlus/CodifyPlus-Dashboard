@@ -1,8 +1,5 @@
 import { Timeline, Text, ActionIcon } from "@mantine/core";
-import {
-  Icon3dCubeSphere,
-  IconMapPinCheck,
-} from "@tabler/icons-react";
+import { Icon3dCubeSphere, IconMapPinCheck } from "@tabler/icons-react";
 import UserService from "../../../../services/user.service";
 
 interface dataProps {
@@ -13,32 +10,35 @@ interface dataProps {
     status: boolean;
     _id: string;
     approved: boolean;
-  }[],
+  }[];
   serviceId: string;
-  setInfo: any
+  setInfo: any;
+  timelineDatesIsVisible: boolean;
 }
 
-export function ServiceStatusTimelineTrackMod({ data, serviceId, setInfo }: dataProps) {
-
-    const handleRegister = (id: string) => {
-        const objToPost = {
-            pathwayId: id,
-            serviceId: serviceId,
+export function ServiceStatusTimelineTrackMod({
+  data,
+  serviceId,
+  setInfo,
+  timelineDatesIsVisible,
+}: dataProps) {
+  const handleRegister = (id: string) => {
+    const objToPost = {
+      pathwayId: id,
+      serviceId: serviceId,
+    };
+    UserService.editTrackStatusMod(objToPost).then(
+      (response) => {
+        setInfo(response.data);
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
         }
-        UserService.editTrackStatusMod(objToPost).then(
-          (response) => {
-            setInfo(response.data);
-            
-          },
-          (error) => {
-            if (error.response && error.response.status === 401) {
-              //@ts-ignore
-              EventBus.dispatch("logout");
-            }
-          }
-        );
-      };
-    
+      }
+    );
+  };
 
   let completedServices = 0;
   for (var i = 0; i < data.length; i++) {
@@ -56,10 +56,14 @@ export function ServiceStatusTimelineTrackMod({ data, serviceId, setInfo }: data
         <Text color="dimmed" size="sm">
           {item.description}
         </Text>
-        <Text size="xs" mt={4}>
-          {item.startedAt === null ? <></> : `${item.startedAt.split("T")[0]}`}
-          <br></br>
-        </Text>
+        {item.startedAt === null || !timelineDatesIsVisible ? (
+          <></>
+        ) : (
+          <Text size="xs" mt={4}>
+            {item.startedAt.split("T")[0]}
+            <br></br>
+          </Text>
+        )}
         <Text size="xs" mt={4}>
           Approved:{" "}
           {item.approved === undefined
@@ -74,7 +78,9 @@ export function ServiceStatusTimelineTrackMod({ data, serviceId, setInfo }: data
           variant="outline"
           color="yellow"
           title="Mark as completed"
-          onClick={() => {handleRegister(item._id)}}
+          onClick={() => {
+            handleRegister(item._id);
+          }}
         >
           <IconMapPinCheck size="1.1rem" />
         </ActionIcon>

@@ -17,12 +17,14 @@ interface dataProps {
   }[];
   serviceId: string;
   setInfo: any;
+  timelineDatesIsVisible: boolean;
 }
 
 export function ServiceStatusTimelineTrack({
   data,
   serviceId,
   setInfo,
+  timelineDatesIsVisible,
 }: dataProps) {
   const handleRegister = (id: string) => {
     const objToPost = {
@@ -44,13 +46,12 @@ export function ServiceStatusTimelineTrack({
 
   const handleApprove = (id: string) => {
     const objToPost = {
-        pathwayId: id,
-        serviceId: serviceId,
-    }
+      pathwayId: id,
+      serviceId: serviceId,
+    };
     UserService.approveTrack(objToPost).then(
       (response) => {
         setInfo(response.data);
-        
       },
       (error) => {
         if (error.response && error.response.status === 401) {
@@ -77,10 +78,14 @@ export function ServiceStatusTimelineTrack({
         <Text color="dimmed" size="sm">
           {item.description}
         </Text>
-        <Text size="xs" mt={4}>
-          {item.startedAt === null ? <></> : `${item.startedAt.split("T")[0]}`}
-          <br></br>
-        </Text>
+        {item.startedAt === null || !timelineDatesIsVisible ? (
+          <></>
+        ) : (
+          <Text size="xs" mt={4}>
+            {item.startedAt.split("T")[0]}
+            <br></br>
+          </Text>
+        )}
         <Text size="xs" mt={4}>
           Approved:{" "}
           {item.approved === undefined

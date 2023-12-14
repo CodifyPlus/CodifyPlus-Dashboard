@@ -1,8 +1,4 @@
-import {
-  Container,
-  Button,
-  Textarea,
-} from "@mantine/core";
+import { Container, Button, Textarea } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import UserService from "../../../../services/user.service";

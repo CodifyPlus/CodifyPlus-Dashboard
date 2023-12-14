@@ -142,6 +142,10 @@ const sendMessage = (newMessageData) => {
   return axios.post(API_URL + "sendMessage", newMessageData, { headers: authHeader() })
 }
 
+const toggleTimelineDatesVisibility = (updatedService) => {
+  return axios.post(API_URL + "toggleTimelineDatesVisibility", updatedService, { headers: authHeader() })
+}
+
 const userService = {
   getUserStats,
   getServiceInfo,
@@ -175,6 +179,7 @@ const userService = {
   adminGetSubscribedChatBoxes,
   getModStats,
   getAdminStats,
+  toggleTimelineDatesVisibility,
 };
 
 export default userService

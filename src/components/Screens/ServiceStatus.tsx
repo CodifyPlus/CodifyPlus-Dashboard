@@ -126,9 +126,9 @@ export default function ServiceStatus() {
   return (
     <>
       {isLoading ? ( // Conditional rendering based on the loading status
-      <Center>
-        <Loader />
-      </Center>
+        <Center>
+          <Loader variant="bars" />
+        </Center>
       ) : (
         <>
           <Title

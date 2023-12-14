@@ -116,24 +116,25 @@ export function TrackServiceMod() {
   };
 
   const Notes = info.notes
-  .filter((note) => !note.private)
-  .map((note) => {
-    return (
-      <Grid.Col span={12}>
-        <Paper shadow="sm" p="sm" withBorder>
-          <Badge>{note.createdAt.split("T")[0]}</Badge>
-          <Badge ml={10}>
-            Approved: {note.approved === undefined
-              ? "Yes"
-              : note.approved === true
-              ? "Yes"
-              : "No"}
-          </Badge>
-          <Text mt={5}>{note.information}</Text>
-        </Paper>
-      </Grid.Col>
-    );
-  });
+    .filter((note) => !note.private)
+    .map((note) => {
+      return (
+        <Grid.Col span={12}>
+          <Paper shadow="sm" p="sm" withBorder>
+            <Badge>{note.createdAt.split("T")[0]}</Badge>
+            <Badge ml={10}>
+              Approved:{" "}
+              {note.approved === undefined
+                ? "Yes"
+                : note.approved === true
+                ? "Yes"
+                : "No"}
+            </Badge>
+            <Text mt={5}>{note.information}</Text>
+          </Paper>
+        </Grid.Col>
+      );
+    });
 
   const { user: currentUser } = useSelector((state: any) => state.auth);
 
@@ -145,7 +146,7 @@ export function TrackServiceMod() {
     <>
       {isLoading ? ( // Conditional rendering based on the loading status
         <Center>
-          <Loader />
+          <Loader variant="bars" />
         </Center>
       ) : (
         <>

@@ -153,18 +153,18 @@ export function TrackService() {
                 : "No"}
             </Badge>
             <ActionIcon
-            style={{ marginLeft: "auto" }}
-            mt={8}
-            size={"xs"}
-            variant="outline"
-            color="yellow"
-            title="Approve Note"
-            onClick={() => {
-              handleApprove(note._id);
-            }}
-          >
-            <IconCheck size="0.7rem" />
-          </ActionIcon>
+              style={{ marginLeft: "auto" }}
+              mt={8}
+              size={"xs"}
+              variant="outline"
+              color="yellow"
+              title="Approve Note"
+              onClick={() => {
+                handleApprove(note._id);
+              }}
+            >
+              <IconCheck size="0.7rem" />
+            </ActionIcon>
           </Group>
           <Text mt={5}>{note.information}</Text>
         </Paper>
@@ -182,7 +182,7 @@ export function TrackService() {
     <>
       {isLoading ? ( // Conditional rendering based on the loading status
         <Center>
-          <Loader />
+          <Loader variant="bars" />
         </Center>
       ) : (
         <>

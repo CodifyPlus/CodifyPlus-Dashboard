@@ -202,7 +202,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -218,7 +218,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -234,7 +234,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -250,7 +250,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -266,7 +266,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -282,7 +282,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -298,7 +298,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -314,7 +314,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -330,7 +330,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -346,7 +346,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -362,7 +362,7 @@ export default function App() {
                   fallback={
                     <>
                       <Center>
-                        <Loader />
+                        <Loader variant="bars" />
                       </Center>
                     </>
                   }
@@ -378,7 +378,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -394,7 +394,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -410,7 +410,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -426,7 +426,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -442,7 +442,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -458,7 +458,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -474,7 +474,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -490,7 +490,7 @@ export default function App() {
                       fallback={
                         <>
                           <Center>
-                            <Loader />
+                            <Loader variant="bars" />
                           </Center>
                         </>
                       }
@@ -507,7 +507,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -523,7 +523,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -539,7 +539,7 @@ export default function App() {
                       fallback={
                         <>
                           <Center>
-                            <Loader />
+                            <Loader variant="bars" />
                           </Center>
                         </>
                       }
@@ -556,7 +556,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -572,7 +572,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -588,7 +588,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -604,7 +604,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -620,7 +620,7 @@ export default function App() {
                     fallback={
                       <>
                         <Center>
-                          <Loader />
+                          <Loader variant="bars" />
                         </Center>
                       </>
                     }
@@ -636,7 +636,7 @@ export default function App() {
                       fallback={
                         <>
                           <Center>
-                            <Loader />
+                            <Loader variant="bars" />
                           </Center>
                         </>
                       }

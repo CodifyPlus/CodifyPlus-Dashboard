@@ -206,7 +206,7 @@ export function AllUsers() {
     <>
       {isLoading ? ( // Conditional rendering based on the loading status
         <Center>
-          <Loader />
+          <Loader variant="bars" />
         </Center>
       ) : (
         <>

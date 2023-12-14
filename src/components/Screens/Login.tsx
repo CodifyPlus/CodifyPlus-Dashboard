@@ -9,9 +9,11 @@ import {
   Container,
   Group,
   Button,
+  LoadingOverlay,
+  Box,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { login } from "../../slices/auth";
@@ -23,6 +25,7 @@ export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state: any) => state.auth);
+  const [loadingOverlayIsVisible, setLoadingOverlayIsVisible] = useState(false);
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -36,12 +39,14 @@ export function Login() {
   });
 
   const handleLogin = async (formValue: any) => {
+    setLoadingOverlayIsVisible(true);
     const { username, password } = formValue;
     const player_id = OneSignal.User.PushSubscription?.id;
     //@ts-ignore
-    dispatch(login({ username, password, player_id }))
+    await dispatch(login({ username, password, player_id }))
       .unwrap()
       .then(async () => {
+        setLoadingOverlayIsVisible(false);
         navigate("/dashboard/home");
         window.location.reload();
         console.log("OneSignal PushSub ID", OneSignal.User.PushSubscription.id);
@@ -54,6 +59,7 @@ export function Login() {
           autoClose: 3000,
           color: "red",
         });
+        setLoadingOverlayIsVisible(false);
       });
   };
 
@@ -79,32 +85,39 @@ export function Login() {
         </Anchor>
       </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={form.onSubmit(handleLogin)}>
-          <TextInput
-            label="Username"
-            placeholder="johndoe123"
-            required
-            {...form.getInputProps("username")}
-          />
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            required
-            mt="md"
-            {...form.getInputProps("password")}
-          />
-          <Group position="apart" mt="lg">
-            <Checkbox label="Remember me" />
-            <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor>
-          </Group>
-          <Button fullWidth mt="xl" type="submit">
-            Sign in
-          </Button>
-        </form>
-      </Paper>
+      <Box maw={400} pos="relative">
+        <LoadingOverlay
+          loaderProps={{ variant: "bars" }}
+          visible={loadingOverlayIsVisible}
+          overlayBlur={1}
+        />
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <form onSubmit={form.onSubmit(handleLogin)}>
+            <TextInput
+              label="Username"
+              placeholder="johndoe123"
+              required
+              {...form.getInputProps("username")}
+            />
+            <PasswordInput
+              label="Password"
+              placeholder="Your password"
+              required
+              mt="md"
+              {...form.getInputProps("password")}
+            />
+            <Group position="apart" mt="lg">
+              <Checkbox label="Remember me" />
+              <Anchor component="button" size="sm">
+                Forgot password?
+              </Anchor>
+            </Group>
+            <Button fullWidth mt="xl" type="submit">
+              Sign in
+            </Button>
+          </form>
+        </Paper>
+      </Box>
     </Container>
   );
 }

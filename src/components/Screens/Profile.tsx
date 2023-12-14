@@ -104,7 +104,7 @@ function Profile() {
     <>
       {isLoading ? (
         <Center>
-          <Loader />
+          <Loader variant="bars" />
         </Center>
       ) : (
         <>

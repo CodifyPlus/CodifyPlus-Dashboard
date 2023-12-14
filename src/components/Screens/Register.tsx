@@ -8,6 +8,8 @@ import {
   Container,
   Group,
   Button,
+  Box,
+  LoadingOverlay,
 } from "@mantine/core";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +28,7 @@ export function Register() {
   const { message } = useSelector((state: any) => {
     return state.message;
   });
+  const [loadingOverlayIsVisible, setLoadingOverlayIsVisible] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,18 +74,21 @@ export function Register() {
   if (isLoggedIn) {
     return <Navigate to="/dashboard/home" />;
   }
-  const handleRegister = (formValue: any) => {
+  const handleRegister = async (formValue: any) => {
+    setLoadingOverlayIsVisible(true);
     const { username, email, password } = formValue;
 
     setSuccessful(false);
 
     // @ts-ignore
-    dispatch(register({ username, email, password }))
+    await dispatch(register({ username, email, password }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
+        setLoadingOverlayIsVisible(false);
       })
       .catch(() => {
+        setLoadingOverlayIsVisible(false);
         setSuccessful(false);
         if (message) {
           notifications.clean();
@@ -116,45 +122,52 @@ export function Register() {
         </>
       )}
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        {!successful && (
-          <form onSubmit={form.onSubmit(handleRegister)}>
-            <TextInput
-              label="Username"
-              placeholder="johndoe"
-              required
-              {...form.getInputProps("username")}
-            />
-            <TextInput
-              label="Email"
-              mt="md"
-              placeholder="you@mantine.dev"
-              required
-              {...form.getInputProps("email")}
-            />
-            <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              required
-              mt="md"
-              {...form.getInputProps("password")}
-            />
-            <Group position="apart" mt="lg">
-              <Anchor component="button" size="sm">
-                Forgot password?
-              </Anchor>
-            </Group>
-            <Button fullWidth mt="xl" type="submit">
-              Sign up
-            </Button>
-          </form>
-        )}
-        {successful && (
-          <>
-            <Text>Thanks for registering!</Text>
-          </>
-        )}
-      </Paper>
+      <Box maw={400} pos="relative">
+        <LoadingOverlay
+          loaderProps={{ variant: "bars" }}
+          visible={loadingOverlayIsVisible}
+          overlayBlur={1}
+        />
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          {!successful && (
+            <form onSubmit={form.onSubmit(handleRegister)}>
+              <TextInput
+                label="Username"
+                placeholder="johndoe"
+                required
+                {...form.getInputProps("username")}
+              />
+              <TextInput
+                label="Email"
+                mt="md"
+                placeholder="you@mantine.dev"
+                required
+                {...form.getInputProps("email")}
+              />
+              <PasswordInput
+                label="Password"
+                placeholder="Your password"
+                required
+                mt="md"
+                {...form.getInputProps("password")}
+              />
+              <Group position="apart" mt="lg">
+                <Anchor component="button" size="sm">
+                  Forgot password?
+                </Anchor>
+              </Group>
+              <Button fullWidth mt="xl" type="submit">
+                Sign up
+              </Button>
+            </form>
+          )}
+          {successful && (
+            <>
+              <Text>Thanks for registering!</Text>
+            </>
+          )}
+        </Paper>
+      </Box>
     </Container>
   );
 }

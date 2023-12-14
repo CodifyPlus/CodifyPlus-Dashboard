@@ -115,7 +115,7 @@ export default function AllServices() {
     <Container size="auto" my="md">
       {isLoading ? ( // Conditional rendering based on the loading status
         <Center>
-          <Loader />
+          <Loader variant="bars" />
         </Center>
       ) : (
         <>

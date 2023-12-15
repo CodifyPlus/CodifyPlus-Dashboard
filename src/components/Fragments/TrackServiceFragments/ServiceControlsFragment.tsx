@@ -142,14 +142,16 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
   ));
 
   return (
-    <Card withBorder radius="md" className={classes.card}>
+    <Card mt="md" withBorder radius="md" className={classes.card}>
       <LoadingOverlay
         loaderProps={{ variant: "bars" }}
         visible={loadingOverlayIsVisible}
         overlayBlur={1}
       />
       <Group position="apart">
-        <Text className={classes.title}>Controls</Text>
+        <Text size="lg" className={classes.title}>
+          Controls
+        </Text>
       </Group>
       <SimpleGrid cols={2} mt="md">
         {items}

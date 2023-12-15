@@ -8,7 +8,6 @@ import {
   Paper,
   Badge,
   createStyles,
-  Card,
   Loader,
   Center,
 } from "@mantine/core";
@@ -157,17 +156,21 @@ export default function ServiceStatus() {
               <Grid gutter="md">
                 <Grid.Col>
                   <ServiceStatusInfoTrackService data={serviceInfoData} />
+                  <Paper
+                    p="sm"
+                    mt="md"
+                    className={classes.card}
+                    withBorder
+                    radius="md"
+                  >
+                    <Text fw={700} size="lg">
+                      Notes
+                    </Text>
+                    {Notes.length === 0 ? <>No Notes Found!</> : Notes}
+                  </Paper>
                 </Grid.Col>
               </Grid>
             </SimpleGrid>
-            <Card withBorder radius="md" className={classes.card}>
-              <Grid gutter="md" className={classes.card}>
-                <Grid.Col span={12}>
-                  <Text>Notes</Text>
-                </Grid.Col>
-                {Notes.length === 0 ? <>No Notes Found!</> : Notes}
-              </Grid>
-            </Card>
           </Container>
         </>
       )}

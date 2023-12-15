@@ -85,9 +85,11 @@ export function ServiceControlsFragmentMod({ data }: serviceControlFragment) {
   ));
 
   return (
-    <Card withBorder radius="md" className={classes.card}>
+    <Card mt="md" withBorder radius="md" className={classes.card}>
       <Group position="apart">
-        <Text className={classes.title}>Controls</Text>
+        <Text size="lg" className={classes.title}>
+          Controls
+        </Text>
       </Group>
       <SimpleGrid cols={2} mt="md">
         {items}

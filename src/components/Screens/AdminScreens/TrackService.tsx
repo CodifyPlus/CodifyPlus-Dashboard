@@ -8,7 +8,6 @@ import {
   Paper,
   Badge,
   createStyles,
-  Card,
   Modal,
   Loader,
   Center,
@@ -233,8 +232,6 @@ export function TrackService() {
               <Grid gutter="md">
                 <Grid.Col>
                   <ServiceStatusInfoTrackService data={serviceInfoData} />
-                </Grid.Col>
-                <Grid.Col span={12}>
                   <ServiceControlsFragment
                     data={{
                       openModalAddNote: open_addNote,
@@ -243,17 +240,21 @@ export function TrackService() {
                       serviceId: serviceId,
                     }}
                   />
+                  <Paper
+                    p="sm"
+                    mt="md"
+                    className={classes.card}
+                    withBorder
+                    radius="md"
+                  >
+                    <Text fw={700} size="lg">
+                      Notes
+                    </Text>
+                    {Notes.length === 0 ? <>No Notes Found!</> : Notes}
+                  </Paper>
                 </Grid.Col>
               </Grid>
             </SimpleGrid>
-            <Card withBorder radius="md" className={classes.card}>
-              <Grid gutter="md" className={classes.card}>
-                <Grid.Col span={12}>
-                  <Text>Notes</Text>
-                </Grid.Col>
-                {Notes.length === 0 ? <>No Notes Found!</> : Notes}
-              </Grid>
-            </Card>
           </Container>
         </>
       )}

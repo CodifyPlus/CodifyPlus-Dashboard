@@ -6,6 +6,7 @@ import {
   UnstyledButton,
   Group,
   rem,
+  LoadingOverlay,
 } from "@mantine/core";
 import {
   IconNote,
@@ -16,6 +17,7 @@ import {
   IconMailFast,
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
+import { useState } from "react";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -59,6 +61,8 @@ interface serviceControlFragment {
 }
 
 export function ServiceControlsFragment({ data }: serviceControlFragment) {
+  const [loadingOverlayIsVisible, setLoadingOverlayIsVisible] = useState(false);
+
   const mockdata = [
     {
       title: "Add Note",
@@ -74,14 +78,17 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
   ];
 
   const handleComplete = (serviceId: any) => {
+    setLoadingOverlayIsVisible(true);
     const objToPost = {
       serviceId: data.serviceId,
     };
     UserService.markAsCompleted(objToPost).then(
       (response) => {
         data.setInfo(response.data);
+        setLoadingOverlayIsVisible(false);
       },
       (error) => {
+        setLoadingOverlayIsVisible(false);
         if (error.response && error.response.status === 401) {
           //@ts-ignore
           EventBus.dispatch("logout");
@@ -136,10 +143,15 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
 
   return (
     <Card withBorder radius="md" className={classes.card}>
+      <LoadingOverlay
+        loaderProps={{ variant: "bars" }}
+        visible={loadingOverlayIsVisible}
+        overlayBlur={1}
+      />
       <Group position="apart">
         <Text className={classes.title}>Controls</Text>
       </Group>
-      <SimpleGrid cols={3} mt="md">
+      <SimpleGrid cols={2} mt="md">
         {items}
       </SimpleGrid>
     </Card>

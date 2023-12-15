@@ -116,7 +116,11 @@ export function ManageServicesMod() {
             </Button>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<IconEye size="1rem" stroke={1.5} />}>
+            <Menu.Item
+              component={Link}
+              to={`/dashboard/servicestatus/${item._id}`}
+              icon={<IconEye size="1rem" stroke={1.5} />}
+            >
               View
             </Menu.Item>
             <Menu.Item

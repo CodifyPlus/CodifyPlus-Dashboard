@@ -105,6 +105,10 @@ const approveNote = (updateNoteData) => {
   return axios.post(API_URL + "approveNote", updateNoteData, { headers: authHeader() })
 }
 
+const sendNoteEmail = (updateNoteData) => {
+  return axios.post(API_URL + "sendNoteEmail", updateNoteData, { headers: authHeader() })
+}
+
 // Mod API Endpoints
 const getAllServicesMod = (username) => {
   return axios.get(API_URL + "getAllServicesMod", {
@@ -180,6 +184,7 @@ const userService = {
   getModStats,
   getAdminStats,
   toggleTimelineDatesVisibility,
+  sendNoteEmail,
 };
 
 export default userService

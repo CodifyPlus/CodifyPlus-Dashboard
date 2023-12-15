@@ -24,7 +24,8 @@ import { AddTrackPointFragment } from "../../Fragments/TrackServiceFragments/Add
 import { ServiceStatusTimelineTrack } from "../../Fragments/TrackServiceFragments/ServiceStatusTimelineTrack";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconMailBolt } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -102,6 +103,29 @@ export function TrackService() {
     );
   };
 
+  const handleNoteEmail = (id: string) => {
+    const objToPost = {
+      noteId: id,
+      serviceId: serviceId,
+    };
+    UserService.sendNoteEmail(objToPost).then(
+      (response) => {
+        notifications.show({
+          title: `Email sent!`,
+          message: `Email sent to user!`,
+          autoClose: 3000,
+          color: "green",
+        });
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          //@ts-ignore
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+  };
+
   useEffect(() => {
     UserService.getServiceInfo(serviceId).then(
       (response) => {
@@ -154,16 +178,26 @@ export function TrackService() {
             </Badge>
             <ActionIcon
               style={{ marginLeft: "auto" }}
-              mt={8}
-              size={"xs"}
-              variant="outline"
+              size={25}
+              variant="light"
               color="yellow"
               title="Approve Note"
               onClick={() => {
                 handleApprove(note._id);
               }}
             >
-              <IconCheck size="0.7rem" />
+              <IconCheck size="0.9rem" />
+            </ActionIcon>
+            <ActionIcon
+              size={25}
+              variant="light"
+              color="yellow"
+              title="Mail to user"
+              onClick={() => {
+                handleNoteEmail(note._id);
+              }}
+            >
+              <IconMailBolt size="0.9rem" />
             </ActionIcon>
           </Group>
           <Text mt={5}>{note.information}</Text>

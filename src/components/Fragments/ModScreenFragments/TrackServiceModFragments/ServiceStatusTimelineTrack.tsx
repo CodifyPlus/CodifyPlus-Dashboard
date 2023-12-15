@@ -75,7 +75,7 @@ export function ServiceStatusTimelineTrackMod({
         </Text>
         <ActionIcon
           mt={8}
-          variant="outline"
+          variant="light"
           color="yellow"
           title="Mark as completed"
           onClick={() => {

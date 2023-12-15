@@ -98,7 +98,7 @@ export function ServiceStatusTimelineTrack({
         <Group>
           <ActionIcon
             mt={8}
-            variant="outline"
+            variant="light"
             color="yellow"
             title="Mark as completed"
             onClick={() => {
@@ -109,7 +109,7 @@ export function ServiceStatusTimelineTrack({
           </ActionIcon>
           <ActionIcon
             mt={8}
-            variant="outline"
+            variant="light"
             color="yellow"
             title="Approve Track Point"
             onClick={() => {

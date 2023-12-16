@@ -47,6 +47,7 @@ export function Register() {
 
   const form = useForm({
     initialValues: {
+      fullname: "",
       username: "",
       email: "",
       password: "",
@@ -76,12 +77,12 @@ export function Register() {
   }
   const handleRegister = async (formValue: any) => {
     setLoadingOverlayIsVisible(true);
-    const { username, email, password } = formValue;
+    const { fullname, username, email, password } = formValue;
 
     setSuccessful(false);
 
     // @ts-ignore
-    await dispatch(register({ username, email, password }))
+    await dispatch(register({ fullname, username, email, password }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
@@ -132,7 +133,15 @@ export function Register() {
           {!successful && (
             <form onSubmit={form.onSubmit(handleRegister)}>
               <TextInput
+                label="Full Name"
+                placeholder="John Doe"
+                required
+                {...form.getInputProps("fullname")}
+              />
+              <TextInput
                 label="Username"
+                description="The username must be unique and should not contain spaces or symbols!"
+                mt="md"
                 placeholder="johndoe"
                 required
                 {...form.getInputProps("username")}
@@ -146,6 +155,7 @@ export function Register() {
               />
               <PasswordInput
                 label="Password"
+                description="The password must contain atleast one uppercase, lowercase, symbol, and a number, and length must be more than 8 characters"
                 placeholder="Your password"
                 required
                 mt="md"

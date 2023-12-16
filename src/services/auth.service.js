@@ -1,8 +1,9 @@
 import axios from "axios";
 import { API_URL } from "../common/Constants";
 
-const register = (username, email, password) => {
+const register = (fullname, username, email, password) => {
   return axios.post(API_URL + "auth/signup", {
+    fullname,
     username,
     email,
     password,

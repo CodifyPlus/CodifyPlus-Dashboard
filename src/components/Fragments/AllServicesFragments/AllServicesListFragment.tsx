@@ -93,7 +93,7 @@ export function AllServicesListFragment({ data }: DndListProps) {
             >
               <div>
                 <Text>{item.name}</Text>
-                {currentUser.role !== "USER" ? (
+                {currentUser.role !== "USER" && item.username ? (
                   <Text color="dimmed" size="sm">
                     Assigned for: {item.username}
                   </Text>

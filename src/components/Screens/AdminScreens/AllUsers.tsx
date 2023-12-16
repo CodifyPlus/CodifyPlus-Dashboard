@@ -23,7 +23,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { SendNotificationFragment } from "../../Fragments/AllUsersFragments/SendNotificationFragment";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -178,7 +178,11 @@ export function AllUsers() {
             >
               Send Notification
             </Menu.Item>
-            <Menu.Item icon={<IconProgressCheck size="1rem" stroke={1.5} />}>
+            <Menu.Item
+              component={Link}
+              to={`/dashboard/all-user-services/${item._id}`}
+              icon={<IconProgressCheck size="1rem" stroke={1.5} />}
+            >
               All Services
             </Menu.Item>
             <Menu.Item

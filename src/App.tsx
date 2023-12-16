@@ -87,6 +87,9 @@ const TrackService = React.lazy(() =>
     default: module.TrackService,
   }))
 );
+const AllUserServices = React.lazy(
+  () => import("./components/Screens/AdminScreens/AllUserServices")
+);
 const ChangePassword = React.lazy(() =>
   import("./components/Screens/ChangePassword").then((module) => ({
     default: module.ChangePassword,
@@ -166,7 +169,7 @@ export default function App() {
       navigate("/offline");
     };
     runOneSignal();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [networkStatus]);
 
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -451,6 +454,39 @@ export default function App() {
                   </React.Suspense>
                 }
               />
+              <Route
+                path="all-user-services"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <>
+                        <Center>
+                          <Loader variant="bars" />
+                        </Center>
+                      </>
+                    }
+                  >
+                    <AllUserServices />
+                  </React.Suspense>
+                }
+              >
+                <Route
+                  path="*"
+                  element={
+                    <React.Suspense
+                      fallback={
+                        <>
+                          <Center>
+                            <Loader variant="bars" />
+                          </Center>
+                        </>
+                      }
+                    >
+                      <AllUserServices />
+                    </React.Suspense>
+                  }
+                />
+              </Route>
               <Route
                 path="changepassword"
                 element={

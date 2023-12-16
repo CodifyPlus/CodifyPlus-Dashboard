@@ -113,7 +113,7 @@ function UserDetailsModal({ data }: newUserDataProps) {
           component={Link}
           mt={5}
           to={`/dashboard/adduser/`}
-          variant="outline"
+          variant="light"
           color="yellow"
           onClick={() => window.location.reload()}
         >

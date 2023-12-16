@@ -54,6 +54,10 @@ const addNote = (newNoteData) => {
   return axios.post(API_URL + "addNote", newNoteData, { headers: authHeader() })
 }
 
+const editServiceDetails = (formData) => {
+  return axios.post(API_URL + "editServiceDetails", formData, { headers: authHeader() })
+}
+
 const addTrack = (newTrackPointData) => {
   return axios.post(API_URL + "addTrack", newTrackPointData, { headers: authHeader() })
 }
@@ -189,6 +193,7 @@ const userService = {
   toggleTimelineDatesVisibility,
   sendNoteEmail,
   getUserStatsForAdmin,
+  editServiceDetails,
 };
 
 export default userService

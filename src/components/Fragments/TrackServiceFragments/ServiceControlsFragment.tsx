@@ -54,6 +54,7 @@ const useStyles = createStyles((theme) => ({
 interface serviceControlFragment {
   data: {
     openModalAddNote: any;
+    openModalEditService: any;
     openModalAddTrack: any;
     setInfo: any;
     serviceId: any;
@@ -70,7 +71,12 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       color: "teal",
       openModal: data.openModalAddNote,
     },
-    { title: "Edit Details", icon: IconPencilPlus, color: "cyan" },
+    {
+      title: "Edit Details",
+      icon: IconPencilPlus,
+      color: "cyan",
+      openModal: data.openModalEditService,
+    },
     { title: "Toggle Dates", icon: IconCalendarX, color: "orange" },
     { title: "Email Details", icon: IconMailFast, color: "yellow" },
     { title: "Add Track Point", icon: IconMapPinBolt, color: "pink" },
@@ -123,6 +129,8 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       handleComplete(data.serviceId);
     } else if (title === "Toggle Dates") {
       handleTimelineDatesVisibility(data.serviceId);
+    } else if (title === "Edit Details") {
+      data.openModalEditService();
     }
   }
 

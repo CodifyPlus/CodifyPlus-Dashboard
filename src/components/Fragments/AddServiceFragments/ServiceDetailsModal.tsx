@@ -19,7 +19,7 @@ import {
             m={5}
             ml={0}
             to={`/dashboard/addservice/`}
-            variant="outline"
+            variant="light"
             color="yellow"
             onClick={() => window.location.reload()}
           >
@@ -30,7 +30,7 @@ import {
             m={5}
             ml={0}
             to={`/dashboard/track/${data._id}`}
-            variant="outline"
+            variant="light"
             color="yellow"
           >
             Add Tracking Info

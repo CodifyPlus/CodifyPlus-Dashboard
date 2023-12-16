@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { IconCheck, IconMailBolt } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
+import EditServiceFragment from "../../Fragments/TrackServiceFragments/EditServiceFragment";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -39,6 +40,11 @@ const useStyles = createStyles((theme) => ({
 export function TrackService() {
   const [opened_addNote, { open: open_addNote, close: close_addNote }] =
     useDisclosure(false);
+
+  const [
+    opened_editService,
+    { open: open_editService, close: close_editService },
+  ] = useDisclosure(false);
 
   const [opened_addTrack, { open: open_addTrack, close: close_addTrack }] =
     useDisclosure(false);
@@ -231,6 +237,23 @@ export function TrackService() {
             />
           </Modal>
           <Modal
+            opened={opened_editService}
+            fullScreen
+            onClose={close_editService}
+            title=""
+            centered
+          >
+            <EditServiceFragment
+              assignedTo={info.assignedTo.username}
+              name={info.name}
+              cost={info.cost}
+              duration={info.duration}
+              setInfo={setInfo}
+              serviceId={serviceId}
+              closeModal={close_editService}
+            />
+          </Modal>
+          <Modal
             opened={opened_addTrack}
             onClose={close_addTrack}
             title=""
@@ -269,6 +292,7 @@ export function TrackService() {
                   <ServiceControlsFragment
                     data={{
                       openModalAddNote: open_addNote,
+                      openModalEditService: open_editService,
                       openModalAddTrack: open_addTrack,
                       setInfo,
                       serviceId: serviceId,

@@ -170,7 +170,7 @@ export function ManageServices() {
         >
           <Menu.Target>
             <Button
-              variant="outline"
+              variant="light"
               color="yellow"
               compact
               leftIcon={<IconSettingsBolt size="1rem" stroke={1.5} />}

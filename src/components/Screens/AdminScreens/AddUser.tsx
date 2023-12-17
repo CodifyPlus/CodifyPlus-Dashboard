@@ -20,7 +20,7 @@ import UserService from "../../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-export function AddUser() {
+export default function AddUser() {
   const [successful, setSuccessful] = useState(false);
   const [formData, setFormData] = useState({
     email: "",

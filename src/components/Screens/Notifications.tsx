@@ -27,4 +27,4 @@ function NotificationsPage() {
   );
 }
 
-export { NotificationsPage };
+export default NotificationsPage;

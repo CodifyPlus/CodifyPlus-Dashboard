@@ -103,7 +103,7 @@ interface FooterLinksProps {
   }[];
 }
 
-export function Footer({ data }: FooterLinksProps) {
+export default function Footer({ data }: FooterLinksProps) {
   const { classes } = useStyles();
 
   const groups = data.map((group) => {

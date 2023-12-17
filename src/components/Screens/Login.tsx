@@ -21,7 +21,7 @@ import { clearMessage } from "../../slices/message";
 import { useForm } from "@mantine/form";
 import OneSignal from "react-onesignal";
 
-export function Login() {
+export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state: any) => state.auth);

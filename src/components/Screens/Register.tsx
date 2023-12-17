@@ -20,7 +20,7 @@ import { useForm } from "@mantine/form";
 import { Link, Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 
-export function Register() {
+export default function Register() {
   const [successful, setSuccessful] = useState(false);
   const { isLoggedIn } = useSelector((state: any) => {
     return state.auth;

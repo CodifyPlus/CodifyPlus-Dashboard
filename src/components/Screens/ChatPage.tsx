@@ -131,7 +131,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function ChatPage() {
+export default function ChatPage() {
   const { classes } = useStyles();
   const [chatBoxes, setChatBoxes] = useState<any>([]);
   const [selectedChatBoxId, setSelectedChatBoxId] = useState<any>(null);

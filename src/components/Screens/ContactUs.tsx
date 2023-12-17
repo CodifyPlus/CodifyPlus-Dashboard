@@ -84,7 +84,7 @@ const useStyles = createStyles((theme) => ({
 
 const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function ContactUs() {
+export default function ContactUs() {
   const { classes } = useStyles();
 
   const [state, handleSubmit] = useForm("mayzklbv");
@@ -158,7 +158,9 @@ export function ContactUs() {
               />
 
               <Group position="right" mt="md">
-                <Button type="submit" className={classes.control}>Send message</Button>
+                <Button type="submit" className={classes.control}>
+                  Send message
+                </Button>
               </Group>
             </div>
           </form>

@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function EmptyPage() {
+export default function EmptyPage() {
   const { classes } = useStyles();
 
   return (

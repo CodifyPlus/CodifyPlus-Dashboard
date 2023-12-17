@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 
-export function ChangePassword() {
+export default function ChangePassword() {
   const [successful, setSuccessful] = useState(false);
   const form = useForm({
     initialValues: {

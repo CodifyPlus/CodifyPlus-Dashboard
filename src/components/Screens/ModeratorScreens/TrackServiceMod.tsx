@@ -31,7 +31,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function TrackServiceMod() {
+export default function TrackServiceMod() {
   const [opened_addNote, { open: open_addNote, close: close_addNote }] =
     useDisclosure(false);
 

@@ -29,7 +29,7 @@ import { useDisclosure } from "@mantine/hooks";
 
 const rolesData = ["USER", "MODERATOR", "ADMIN"];
 
-export function AllUsers() {
+export default function AllUsers() {
   const changeRole = (userId: string, newRole: string) => {
     UserService.changeUserRole({ userId, newRole }).then(
       (response) => {},

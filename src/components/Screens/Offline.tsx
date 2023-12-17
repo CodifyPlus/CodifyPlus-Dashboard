@@ -50,7 +50,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function Offline() {
+export default function Offline() {
   const { classes } = useStyles();
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps

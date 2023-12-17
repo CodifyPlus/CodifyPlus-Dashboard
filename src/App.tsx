@@ -14,119 +14,118 @@ import { NovuProvider } from "@novu/notification-center";
 import { useSelector } from "react-redux";
 import { NOVU_APP_IDENTIFIER, ONESIGNAL_APP_ID } from "./common/Constants";
 import OneSignal from "react-onesignal";
+import { Notifications } from "@mantine/notifications";
+import { lazyRetry } from "./common/lazyRetry";
 const Navbar = React.lazy(() =>
-  import("./components/Fragments/Navbar/Navbar").then((module) => ({
-    default: module.Navbar,
-  }))
+  lazyRetry(() => import("./components/Fragments/Navbar/Navbar"), "Navbar")
 );
 const Footer = React.lazy(() =>
-  import("./components/Fragments/Footer/Footer").then((module) => ({
-    default: module.Footer,
-  }))
+  lazyRetry(() => import("./components/Fragments/Footer/Footer"), "Footer")
 );
-const OurProcess = React.lazy(() => import("./components/Screens/OurProcess"));
-const OurServices = React.lazy(
-  () => import("./components/Screens/OurServices")
+const OurProcess = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/OurProcess"), "OurProcess")
+);
+const OurServices = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/OurServices"), "OurServices")
 );
 const Login = React.lazy(() =>
-  import("./components/Screens/Login").then((module) => ({
-    default: module.Login,
-  }))
+  lazyRetry(() => import("./components/Screens/Login"), "Login")
 );
 const Register = React.lazy(() =>
-  import("./components/Screens/Register").then((module) => ({
-    default: module.Register,
-  }))
+  lazyRetry(() => import("./components/Screens/Register"), "Register")
 );
-const Dashboard = React.lazy(() => import("./components/Screens/Dashboard"));
-const DashboardHome = React.lazy(
-  () => import("./components/Screens/DashboardHome")
+const Dashboard = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/Dashboard"), "Dashboard")
+);
+const DashboardHome = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/DashboardHome"), "DashboardHome")
 );
 const NotificationsPage = React.lazy(() =>
-  import("./components/Screens/Notifications").then((module) => ({
-    default: module.NotificationsPage,
-  }))
+  lazyRetry(
+    () => import("./components/Screens/Notifications"),
+    "NotificationsPage"
+  )
 );
-const Notifications = React.lazy(() =>
-  import("@mantine/notifications").then((module) => ({
-    default: module.Notifications,
-  }))
+const Profile = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/Profile"), "Profile")
 );
-const Profile = React.lazy(() => import("./components/Screens/Profile"));
 const EmptyPage = React.lazy(() =>
-  import("./components/Screens/EmptyPage").then((module) => ({
-    default: module.EmptyPage,
-  }))
+  lazyRetry(() => import("./components/Screens/EmptyPage"), "EmptyPage")
 );
-const AllServices = React.lazy(
-  () => import("./components/Screens/AllServices")
+const AllServices = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/AllServices"), "AllServices")
 );
-const ServiceStatus = React.lazy(
-  () => import("./components/Screens/ServiceStatus")
+const ServiceStatus = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/ServiceStatus"), "ServiceStatus")
 );
 const AllUsers = React.lazy(() =>
-  import("./components/Screens/AdminScreens/AllUsers").then((module) => ({
-    default: module.AllUsers,
-  }))
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/AllUsers"),
+    "AllUsers"
+  )
 );
 const AddUser = React.lazy(() =>
-  import("./components/Screens/AdminScreens/AddUser").then((module) => ({
-    default: module.AddUser,
-  }))
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/AddUser"),
+    "AddUser"
+  )
 );
 const ManageServices = React.lazy(() =>
-  import("./components/Screens/AdminScreens/ManageServices").then((module) => ({
-    default: module.ManageServices,
-  }))
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/ManageServices"),
+    "ManageServices"
+  )
 );
-const AddService = React.lazy(
-  () => import("./components/Screens/AdminScreens/AddService")
+const AddService = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/AddService"),
+    "AddService"
+  )
 );
 const TrackService = React.lazy(() =>
-  import("./components/Screens/AdminScreens/TrackService").then((module) => ({
-    default: module.TrackService,
-  }))
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/TrackService"),
+    "TrackService"
+  )
 );
-const AllUserServices = React.lazy(
-  () => import("./components/Screens/AdminScreens/AllUserServices")
+const AllUserServices = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/AllUserServices"),
+    "AllUserServices"
+  )
 );
 const ChangePassword = React.lazy(() =>
-  import("./components/Screens/ChangePassword").then((module) => ({
-    default: module.ChangePassword,
-  }))
+  lazyRetry(
+    () => import("./components/Screens/ChangePassword"),
+    "ChangePassword"
+  )
 );
 const ManageServicesMod = React.lazy(() =>
-  import("./components/Screens/ModeratorScreens/ManageServicesMod").then(
-    (module) => ({
-      default: module.ManageServicesMod,
-    })
+  lazyRetry(
+    () => import("./components/Screens/ModeratorScreens/ManageServicesMod"),
+    "ManageServicesMod"
   )
 );
 const TrackServiceMod = React.lazy(() =>
-  import("./components/Screens/ModeratorScreens/TrackServiceMod").then(
-    (module) => ({
-      default: module.TrackServiceMod,
-    })
+  lazyRetry(
+    () => import("./components/Screens/ModeratorScreens/TrackServiceMod"),
+    "TrackServiceMod"
   )
 );
 const ChatPage = React.lazy(() =>
-  import("./components/Screens/ChatPage").then((module) => ({
-    default: module.ChatPage,
-  }))
+  lazyRetry(() => import("./components/Screens/ChatPage"), "ChatPage")
 );
-const Home = React.lazy(() => import("./components/Screens/Home"));
-const GSTCalculator = React.lazy(
-  () => import("./components/Screens/GSTCalculator")
+const Home = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/Home"), "Home")
+);
+const GSTCalculator = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/GSTCalculator"), "GSTCalculator")
 );
 const ContactUs = React.lazy(() =>
-  import("./components/Screens/ContactUs").then((module) => ({
-    default: module.ContactUs,
-  }))
+  lazyRetry(() => import("./components/Screens/ContactUs"), "ContactUs")
 );
 const Offline = React.lazy(() =>
-  import("./components/Screens/Offline").then((module) => ({
-    default: module.Offline,
-  }))
+  lazyRetry(() => import("./components/Screens/Offline"), "Offline")
 );
 
 export async function runOneSignal() {

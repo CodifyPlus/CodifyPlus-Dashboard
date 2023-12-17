@@ -22,7 +22,7 @@ import {
 import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export function ManageServices() {
+export default function ManageServices() {
   const [services, setServices] = useState([
     {
       cost: "",

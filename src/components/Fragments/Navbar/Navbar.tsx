@@ -13,9 +13,9 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import DarkModeButton from "../DarkModeButton/DarkModeButton";
 import { Link } from "react-router-dom";
-import Logo from "./Logo";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
+import LogoStatic from "./LogoStatic";
 
 const HEADER_HEIGHT = rem(60);
 const PUSH_DOWN = rem(120);
@@ -119,7 +119,7 @@ interface HeaderResponsiveProps {
   }[];
 }
 
-export function Navbar({ links }: HeaderResponsiveProps) {
+export default function Navbar({ links }: HeaderResponsiveProps) {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
@@ -244,7 +244,7 @@ export function Navbar({ links }: HeaderResponsiveProps) {
               close();
             }}
           >
-            <Logo />
+            <LogoStatic />
           </Link>
           <Group spacing={5} className={classes.links}>
             {items}

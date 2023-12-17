@@ -14,7 +14,6 @@ import {
   ActionIcon,
   Group,
 } from "@mantine/core";
-import moment from "moment";
 import UserService from "../../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
 import { ServiceControlsFragment } from "../../Fragments/TrackServiceFragments/ServiceControlsFragment";
@@ -78,7 +77,7 @@ export function TrackService() {
     },
     pathway: [
       {
-        startedAt: moment().utcOffset("+5:30").format("DD/MM/YYYY"),
+        startedAt: undefined,
         description: "",
         title: "",
         status: true,

@@ -1,10 +1,14 @@
-import { Timeline, Text, ActionIcon, Group } from "@mantine/core";
+import { Timeline, Text, ActionIcon, Group, Modal } from "@mantine/core";
 import {
   Icon3dCubeSphere,
   IconCheck,
   IconMapPinCheck,
+  IconPencil,
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
+import { EditTrackPointFragment } from "./EditTrackPointFragment";
+import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 
 interface dataProps {
   data: {
@@ -26,6 +30,16 @@ export function ServiceStatusTimelineTrack({
   setInfo,
   timelineDatesIsVisible,
 }: dataProps) {
+  const [
+    opened_editTrackPoint,
+    { open: open_editTrackPoint, close: close_editTrackPoint },
+  ] = useDisclosure(false);
+  const [pointInfo, setPointInfo] = useState<any>({
+    title: "",
+    description: "",
+    startedAt: "",
+  });
+
   const handleRegister = (id: string) => {
     const objToPost = {
       pathwayId: id,
@@ -78,7 +92,9 @@ export function ServiceStatusTimelineTrack({
         <Text color="dimmed" size="sm">
           {item.description}
         </Text>
-        {item.startedAt === null || !timelineDatesIsVisible ? (
+        {item.startedAt === null ||
+        item.startedAt === undefined ||
+        !timelineDatesIsVisible ? (
           <></>
         ) : (
           <Text size="xs" mt={4}>
@@ -118,14 +134,44 @@ export function ServiceStatusTimelineTrack({
           >
             <IconCheck size="1.1rem" />
           </ActionIcon>
+          <ActionIcon
+            mt={8}
+            variant="light"
+            color="yellow"
+            title="Edit Track Point"
+            onClick={() => {
+              open_editTrackPoint();
+              setPointInfo(item);
+            }}
+          >
+            <IconPencil size="1.1rem" />
+          </ActionIcon>
         </Group>
       </Timeline.Item>
     );
   });
 
   return (
-    <Timeline active={completedServices - 1} bulletSize={24} lineWidth={4}>
-      {items}
-    </Timeline>
+    <>
+    <Modal
+          opened={opened_editTrackPoint}
+          fullScreen
+          onClose={close_editTrackPoint}
+          title=""
+          centered
+        >
+          <EditTrackPointFragment
+            title={pointInfo.title}
+            description={pointInfo.description}
+            setInfo={setInfo}
+            serviceId={serviceId}
+            pathwayId={pointInfo._id}
+            closeModal={close_editTrackPoint}
+          />
+        </Modal>
+      <Timeline active={completedServices - 1} bulletSize={24} lineWidth={4}>
+        {items}
+      </Timeline>
+    </>
   );
 }

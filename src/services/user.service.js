@@ -62,6 +62,10 @@ const addTrack = (newTrackPointData) => {
   return axios.post(API_URL + "addTrack", newTrackPointData, { headers: authHeader() })
 }
 
+const editTrack = (newTrackPointData) => {
+  return axios.post(API_URL + "editTrack", newTrackPointData, { headers: authHeader() })
+}
+
 const editTrackStatus = (updatedTrackPoint) => {
   return axios.post(API_URL + "editTrackStatus", updatedTrackPoint, { headers: authHeader() })
 }
@@ -194,6 +198,7 @@ const userService = {
   sendNoteEmail,
   getUserStatsForAdmin,
   editServiceDetails,
+  editTrack,
 };
 
 export default userService

@@ -12,7 +12,6 @@ import {
   Loader,
   Center,
 } from "@mantine/core";
-import moment from "moment";
 import UserService from "../../../services/user.service";
 import { useDisclosure } from "@mantine/hooks";
 import { useSelector } from "react-redux";
@@ -67,7 +66,7 @@ export function TrackServiceMod() {
     },
     pathway: [
       {
-        startedAt: moment().utcOffset("+5:30").format("DD/MM/YYYY"),
+        startedAt: undefined,
         description: "",
         title: "",
         status: true,

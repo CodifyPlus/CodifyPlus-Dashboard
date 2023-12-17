@@ -11,7 +11,6 @@ import {
   Loader,
   Center,
 } from "@mantine/core";
-import moment from "moment";
 import UserService from "../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
 import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
@@ -56,7 +55,7 @@ export default function ServiceStatus() {
     },
     pathway: [
       {
-        startedAt: moment().utcOffset("+5:30").format("DD/MM/YYYY"),
+        startedAt: undefined,
         description: "",
         title: "",
         status: true,

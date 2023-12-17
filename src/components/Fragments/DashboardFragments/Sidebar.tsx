@@ -21,6 +21,7 @@ import {
   IconKey,
   IconHomeBolt,
   IconMessage,
+  IconSettings2,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -155,6 +156,7 @@ export function Sidebar({ drawerSetOpened }: any) {
       icon: IconServer,
     },
     { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
+    { link: "/dashboard/settings", label: "Settings", icon: IconSettings2 },
   ];
 
   const bottomRoutes = [

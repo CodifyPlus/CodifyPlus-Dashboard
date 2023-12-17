@@ -161,6 +161,18 @@ const getUserStatsForAdmin = (userId) => {
   return axios.get(API_URL + "getUserStatsForAdmin", { headers: authHeader(), params: { userId: userId } })
 }
 
+const exportUsers = () => {
+  return axios.get(API_URL + "exportUsers", { headers: authHeader() })
+}
+
+const exportServices = () => {
+  return axios.get(API_URL + "exportServices", { headers: authHeader() })
+}
+
+const exportChats = () => {
+  return axios.get(API_URL + "exportChats", { headers: authHeader() })
+}
+
 const userService = {
   getUserStats,
   getServiceInfo,
@@ -199,6 +211,9 @@ const userService = {
   getUserStatsForAdmin,
   editServiceDetails,
   editTrack,
+  exportUsers,
+  exportChats,
+  exportServices,
 };
 
 export default userService

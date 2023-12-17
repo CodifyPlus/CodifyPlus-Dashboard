@@ -64,6 +64,12 @@ const AllUsers = React.lazy(() =>
     "AllUsers"
   )
 );
+const Settings = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/Settings"),
+    "Settings"
+  )
+);
 const AddUser = React.lazy(() =>
   lazyRetry(
     () => import("./components/Screens/AdminScreens/AddUser"),
@@ -597,6 +603,22 @@ export default function App() {
                     }
                   >
                     <AllUsers />
+                  </React.Suspense>
+                }
+              ></Route>
+              <Route
+                path="settings"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <>
+                        <Center>
+                          <Loader variant="bars" />
+                        </Center>
+                      </>
+                    }
+                  >
+                    <Settings />
                   </React.Suspense>
                 }
               ></Route>

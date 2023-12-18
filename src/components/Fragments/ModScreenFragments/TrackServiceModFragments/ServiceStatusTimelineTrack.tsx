@@ -60,7 +60,9 @@ export function ServiceStatusTimelineTrackMod({
         <Text color="dimmed" size="sm">
           {item.description}
         </Text>
-        {item.startedAt === null || !timelineDatesIsVisible ? (
+        {item.startedAt === null ||
+        item.startedAt === undefined ||
+        !timelineDatesIsVisible ? (
           <></>
         ) : (
           <Text size="xs" mt={4}>

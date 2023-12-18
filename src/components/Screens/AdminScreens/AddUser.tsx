@@ -19,6 +19,7 @@ import UserDetailsModal from "../../Fragments/AddUserFragments/UserDetailsModal"
 import UserService from "../../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 export default function AddUser() {
   const [successful, setSuccessful] = useState(false);
@@ -49,9 +50,12 @@ export default function AddUser() {
         setSuccessful(true);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

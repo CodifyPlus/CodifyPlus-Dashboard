@@ -18,6 +18,7 @@ import {
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import { useState } from "react";
+import { notifications } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -95,9 +96,12 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       },
       (error) => {
         setLoadingOverlayIsVisible(false);
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -112,9 +116,12 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
         data.setInfo(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

@@ -92,9 +92,7 @@ export default function DashboardHome() {
 
         setStats(_Stats);
 
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
           handleLogout(navigate);
         }
 

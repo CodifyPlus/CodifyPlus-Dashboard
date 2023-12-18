@@ -9,10 +9,10 @@ import {
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
-import EventBus from "../../../common/EventBus";
 import { AllServicesListFragment } from "../../Fragments/AllServicesFragments/AllServicesListFragment";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 export default function AllUserServices() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -90,9 +90,12 @@ export default function AllUserServices() {
 
         setStats(_Stats);
 
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
 
         setIsLoading(false); // Set loading status to false in case of an error

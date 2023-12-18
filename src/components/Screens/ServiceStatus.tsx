@@ -16,6 +16,7 @@ import { ServiceStatusInfoTrackService } from "../Fragments/TrackServiceFragment
 import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -84,9 +85,12 @@ export default function ServiceStatus() {
 
         setInfo(_Stats);
 
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setIsLoading(false);
       }

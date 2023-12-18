@@ -100,9 +100,12 @@ export default function TrackService() {
         setInfo(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -123,9 +126,12 @@ export default function TrackService() {
         });
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -147,9 +153,12 @@ export default function TrackService() {
 
         setInfo(_Stats);
 
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setIsLoading(false);
       }

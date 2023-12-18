@@ -12,6 +12,7 @@ import { useForm } from "@mantine/form";
 import { IconMail, IconStatusChange } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import { DateTimePicker } from "@mantine/dates";
+import { notifications } from "@mantine/notifications";
 
 interface noteProps {
   data: {
@@ -51,9 +52,12 @@ export function AddTrackPointFragment({ data }: noteProps) {
         setSuccessful(true);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

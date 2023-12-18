@@ -38,9 +38,12 @@ const ChatBox = (props: any) => {
         setTimeoutId(id);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setCanSendMessage(true);
       }

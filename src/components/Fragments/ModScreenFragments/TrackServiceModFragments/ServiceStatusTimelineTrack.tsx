@@ -1,6 +1,7 @@
 import { Timeline, Text, ActionIcon } from "@mantine/core";
 import { Icon3dCubeSphere, IconMapPinCheck } from "@tabler/icons-react";
 import UserService from "../../../../services/user.service";
+import { notifications } from "@mantine/notifications";
 
 interface dataProps {
   data: {
@@ -32,9 +33,12 @@ export function ServiceStatusTimelineTrackMod({
         setInfo(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

@@ -15,6 +15,7 @@ import {
   IconPackageExport,
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
+import { notifications } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -63,9 +64,12 @@ const handleExportUsers = () => {
       window.URL.revokeObjectURL(url);
     },
     (error) => {
-      if (error.response && error.response.status === 401) {
-        //@ts-ignore
-        EventBus.dispatch("logout");
+      if (error) {
+        notifications.show({
+          title: "Error",
+          message: error.message,
+          color: "red",
+        });
       }
     }
   );
@@ -86,9 +90,12 @@ const handleExportServices = () => {
       window.URL.revokeObjectURL(url);
     },
     (error) => {
-      if (error.response && error.response.status === 401) {
-        //@ts-ignore
-        EventBus.dispatch("logout");
+      if (error) {
+        notifications.show({
+          title: "Error",
+          message: error.message,
+          color: "red",
+        });
       }
     }
   );
@@ -109,9 +116,12 @@ const handleExportChats = () => {
       window.URL.revokeObjectURL(url);
     },
     (error) => {
-      if (error.response && error.response.status === 401) {
-        //@ts-ignore
-        EventBus.dispatch("logout");
+      if (error) {
+        notifications.show({
+          title: "Error",
+          message: error.message,
+          color: "red",
+        });
       }
     }
   );

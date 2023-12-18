@@ -9,6 +9,7 @@ import UserService from "../../../services/user.service";
 import { EditTrackPointFragment } from "./EditTrackPointFragment";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
+import { notifications } from "@mantine/notifications";
 
 interface dataProps {
   data: {
@@ -50,9 +51,12 @@ export function ServiceStatusTimelineTrack({
         setInfo(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -68,9 +72,12 @@ export function ServiceStatusTimelineTrack({
         setInfo(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -153,22 +160,22 @@ export function ServiceStatusTimelineTrack({
 
   return (
     <>
-    <Modal
-          opened={opened_editTrackPoint}
-          fullScreen
-          onClose={close_editTrackPoint}
-          title=""
-          centered
-        >
-          <EditTrackPointFragment
-            title={pointInfo.title}
-            description={pointInfo.description}
-            setInfo={setInfo}
-            serviceId={serviceId}
-            pathwayId={pointInfo._id}
-            closeModal={close_editTrackPoint}
-          />
-        </Modal>
+      <Modal
+        opened={opened_editTrackPoint}
+        fullScreen
+        onClose={close_editTrackPoint}
+        title=""
+        centered
+      >
+        <EditTrackPointFragment
+          title={pointInfo.title}
+          description={pointInfo.description}
+          setInfo={setInfo}
+          serviceId={serviceId}
+          pathwayId={pointInfo._id}
+          closeModal={close_editTrackPoint}
+        />
+      </Modal>
       <Timeline active={completedServices - 1} bulletSize={24} lineWidth={4}>
         {items}
       </Timeline>

@@ -2,6 +2,7 @@ import { Container, Button, Textarea } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import UserService from "../../../../services/user.service";
+import { notifications } from "@mantine/notifications";
 
 interface noteProps {
   data: {
@@ -35,9 +36,12 @@ export function AddNoteFragmentMod({ data }: noteProps) {
         setSuccessful(true);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

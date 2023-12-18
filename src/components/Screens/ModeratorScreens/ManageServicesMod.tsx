@@ -19,6 +19,7 @@ import {
 } from "@tabler/icons-react";
 import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { notifications } from "@mantine/notifications";
 
 export default function ManageServicesMod() {
   const [services, setServices] = useState([
@@ -75,9 +76,12 @@ export default function ManageServicesMod() {
         setIsLoading(false);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setIsLoading(false);
       }

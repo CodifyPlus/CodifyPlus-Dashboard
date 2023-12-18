@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
 import { useSelector } from "react-redux";
 import { useCenteralContext } from "../../contexts/CenteralContext";
+import { notifications } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -173,9 +174,12 @@ export default function ChatPage() {
         updateNotifs(totalUnreads);
       } catch (error: any) {
         console.error(error);
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     };

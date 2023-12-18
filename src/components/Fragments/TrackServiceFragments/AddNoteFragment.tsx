@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail, IconNote } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
+import { notifications } from "@mantine/notifications";
 
 interface noteProps {
   data: {
@@ -33,22 +34,24 @@ export function AddNoteFragment({ data }: noteProps) {
   const handleRegister = (formValue: any) => {
     setSuccessful(false);
     const objToPost = {
-        private: formValue.private,
-        sendEmail: formValue.sendEmail,
-        information: formValue.information,
-        serviceId: data.serviceId,
-    }
+      private: formValue.private,
+      sendEmail: formValue.sendEmail,
+      information: formValue.information,
+      serviceId: data.serviceId,
+    };
     UserService.addNote(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();
         setSuccessful(true);
-        
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -63,36 +66,35 @@ export function AddNoteFragment({ data }: noteProps) {
 
   return (
     <Container size={420}>
-      
-        {!successful && (
-          <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
-            <Textarea
-              label="Information"
-              placeholder="Please supply the documents..."
-              required
-              {...form.getInputProps("information")}
-            />
+      {!successful && (
+        <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
+          <Textarea
+            label="Information"
+            placeholder="Please supply the documents..."
+            required
+            {...form.getInputProps("information")}
+          />
 
-            <Group position="apart" mt="lg">
-              <Checkbox
-                icon={CheckboxIcon}
-                label="Keep it private"
-                description="It would not show the note on user dashboard"
-                {...form.getInputProps("private")}
-              />
-              <Checkbox
-                icon={CheckboxIcon}
-                label="Notify User via Email?"
-                description="It would send an email to user with details to new note"
-                {...form.getInputProps("sendEmail")}
-                indeterminate
-              />
-            </Group>
-            <Button fullWidth mt="xl" type="submit">
-              Add Note
-            </Button>
-          </form>
-        )}
+          <Group position="apart" mt="lg">
+            <Checkbox
+              icon={CheckboxIcon}
+              label="Keep it private"
+              description="It would not show the note on user dashboard"
+              {...form.getInputProps("private")}
+            />
+            <Checkbox
+              icon={CheckboxIcon}
+              label="Notify User via Email?"
+              description="It would send an email to user with details to new note"
+              {...form.getInputProps("sendEmail")}
+              indeterminate
+            />
+          </Group>
+          <Button fullWidth mt="xl" type="submit">
+            Add Note
+          </Button>
+        </form>
+      )}
     </Container>
   );
 }

@@ -19,6 +19,7 @@ import UserService from "../../../services/user.service";
 import ServiceDetalsModal from "../../Fragments/AddServiceFragments/ServiceDetailsModal";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 export default function AddService() {
   const [usernames, setUsernames] = useState([
@@ -41,9 +42,12 @@ export default function AddService() {
         setUsernames(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -52,9 +56,12 @@ export default function AddService() {
         setModerators(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -85,9 +92,12 @@ export default function AddService() {
         setNewServiceId(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

@@ -14,6 +14,7 @@ import { IconMail } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 
 export default function EditServiceFragment({
   assignedTo,
@@ -37,9 +38,12 @@ export default function EditServiceFragment({
         setModerators(response.data);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -67,9 +71,12 @@ export default function EditServiceFragment({
         closeModal();
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

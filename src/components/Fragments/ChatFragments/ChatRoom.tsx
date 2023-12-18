@@ -16,6 +16,7 @@ import UserService from "../../../services/user.service";
 import ChatUnselected from "./ChatUnselected";
 import { useSelector } from "react-redux";
 import { useCenteralContext } from "../../../contexts/CenteralContext";
+import { notifications } from "@mantine/notifications";
 
 const ChatRoom = ({
   chatBoxId,
@@ -57,9 +58,12 @@ const ChatRoom = ({
           setChatBox(response.data);
         }
       } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     };

@@ -34,9 +34,12 @@ export default function AllUsers() {
     UserService.changeUserRole({ userId, newRole }).then(
       (response) => {},
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -73,9 +76,12 @@ export default function AllUsers() {
         setStateUpdate(!stateUpdate);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -103,9 +109,12 @@ export default function AllUsers() {
 
         setUsers(_Stats);
 
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setIsLoading(false);
       }

@@ -21,6 +21,7 @@ import {
 } from "@tabler/icons-react";
 import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { notifications } from "@mantine/notifications";
 
 export default function ManageServices() {
   const [services, setServices] = useState([
@@ -77,9 +78,12 @@ export default function ManageServices() {
         setStateUpdate(!stateUpdate);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );
@@ -120,9 +124,12 @@ export default function ManageServices() {
         setIsLoading(false);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setIsLoading(false);
       }

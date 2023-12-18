@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail, IconNote } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
+import { notifications } from "@mantine/notifications";
 
 interface notificationProps {
   data: {
@@ -42,9 +43,12 @@ export function SendNotificationFragment({ data }: notificationProps) {
         setSuccessful(true);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

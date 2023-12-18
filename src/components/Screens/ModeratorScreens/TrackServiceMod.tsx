@@ -21,6 +21,7 @@ import { AddTrackPointFragmentMod } from "../../Fragments/ModScreenFragments/Tra
 import { ServiceStatusTimelineTrackMod } from "../../Fragments/ModScreenFragments/TrackServiceModFragments/ServiceStatusTimelineTrack";
 import { ServiceStatusInfoTrackServiceMod } from "../../Fragments/ModScreenFragments/TrackServiceModFragments/ServiceStatusInfoTrackService";
 import { ServiceControlsFragmentMod } from "../../Fragments/ModScreenFragments/TrackServiceModFragments/ServiceControlsFragment";
+import { notifications } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -95,9 +96,12 @@ export default function TrackServiceMod() {
 
         setInfo(_Stats);
 
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
         setIsLoading(false);
       }

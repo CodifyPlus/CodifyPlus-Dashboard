@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import UserService from "../../../services/user.service";
 import { DateTimePicker } from "@mantine/dates";
+import { notifications } from "@mantine/notifications";
 
 export function EditTrackPointFragment({
   setInfo,
@@ -38,9 +39,12 @@ export function EditTrackPointFragment({
         setSuccessful(true);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
         }
       }
     );

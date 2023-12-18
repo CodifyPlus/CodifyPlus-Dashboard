@@ -30,9 +30,7 @@ export default function ChangePassword() {
         setSuccessful(true);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          //@ts-ignore
-          EventBus.dispatch("logout");
+        if (error) {
         } else {
           notifications.show({
             title: `Please try again!`,

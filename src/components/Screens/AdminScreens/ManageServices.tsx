@@ -110,7 +110,7 @@ export default function ManageServices() {
   useEffect(() => {
     UserService.getAllServices({
       page: currentPage,
-      limit: 2,
+      limit: 10,
     }).then(
       (response) => {
         const allServices = response.data.services;
@@ -252,7 +252,7 @@ export default function ManageServices() {
               value={currentPage}
               onChange={handlePageChange}
               pt={40}
-              total={Math.ceil(totalServices / 2)}
+              total={Math.ceil(totalServices / 10)}
               color="yellow"
               withEdges
             />

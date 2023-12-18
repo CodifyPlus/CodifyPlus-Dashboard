@@ -128,12 +128,12 @@ export default function ManageServices() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, search, stateUpdate]);
+  }, [currentPage, stateUpdate]);
 
   useEffect(() => {
     dataFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterData]);
+  }, [filterData, search]);
 
   const rows = filterData.map((item) => (
     <tr key={item._id}>

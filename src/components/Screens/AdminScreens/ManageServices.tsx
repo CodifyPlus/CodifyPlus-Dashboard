@@ -89,7 +89,7 @@ export default function ManageServices() {
     setSearch(event.currentTarget.value);
   };
 
-  useEffect(() => {
+  const dataFilter = () => {
     const filteredServices = services.filter(
       (service: any) =>
         service.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -105,20 +105,18 @@ export default function ManageServices() {
         service.assignedFor.email.toLowerCase().includes(search.toLowerCase())
     );
     setFilterData(filteredServices);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, stateUpdate]);
+  };
 
   useEffect(() => {
     UserService.getAllServices({
       page: currentPage,
-      limit: 10,
+      limit: 2,
     }).then(
       (response) => {
         const allServices = response.data.services;
         const totalServices = response.data.total;
         setTotalServices(totalServices);
         setServices(allServices);
-        setStateUpdate(!stateUpdate);
         setIsLoading(false);
       },
       (error) => {
@@ -130,7 +128,12 @@ export default function ManageServices() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateUpdate]);
+  }, [currentPage, search, stateUpdate]);
+
+  useEffect(() => {
+    dataFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterData]);
 
   const rows = filterData.map((item) => (
     <tr key={item._id}>
@@ -249,7 +252,7 @@ export default function ManageServices() {
               value={currentPage}
               onChange={handlePageChange}
               pt={40}
-              total={Math.ceil(totalServices / 10)}
+              total={Math.ceil(totalServices / 2)}
               color="yellow"
               withEdges
             />

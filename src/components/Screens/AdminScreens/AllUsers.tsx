@@ -91,7 +91,6 @@ export default function AllUsers() {
       (response) => {
         setUsers(response.data.users);
         setTotalUsers(response.data.total);
-        setStateUpdate(!stateUpdate);
         setIsLoading(false);
       },
       (error) => {
@@ -112,7 +111,7 @@ export default function AllUsers() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateUpdate]);
+  }, [currentPage, stateUpdate]);
 
   const rows = users.map((item) => (
     <tr key={item.username}>

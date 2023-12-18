@@ -159,7 +159,11 @@ export default function Settings() {
                 Settings
               </Text>
             </Center>
-            <SimpleGrid cols={3} mt="md">
+            <SimpleGrid
+              breakpoints={[{ maxWidth: "xs", cols: 1, spacing: "sm" }]}
+              cols={3}
+              mt="md"
+            >
               {items}
             </SimpleGrid>
           </Card>

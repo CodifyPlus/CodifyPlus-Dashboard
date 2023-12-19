@@ -16,6 +16,7 @@ import { NOVU_APP_IDENTIFIER, ONESIGNAL_APP_ID } from "./common/Constants";
 import OneSignal from "react-onesignal";
 import { Notifications } from "@mantine/notifications";
 import { lazyRetry } from "./common/lazyRetry";
+import { welcomeConsoleLog } from "./common/welcome";
 const Navbar = React.lazy(() =>
   lazyRetry(() => import("./components/Fragments/Navbar/Navbar"), "Navbar")
 );
@@ -174,6 +175,7 @@ export default function App() {
       navigate("/offline");
     };
     runOneSignal();
+    welcomeConsoleLog();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [networkStatus]);
 

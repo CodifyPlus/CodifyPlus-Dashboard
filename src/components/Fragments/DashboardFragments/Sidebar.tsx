@@ -22,6 +22,7 @@ import {
   IconHomeBolt,
   IconMessage,
   IconSettings2,
+  IconHomeEco,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -164,6 +165,11 @@ export function Sidebar({ drawerSetOpened }: any) {
       link: "https://startupkro.com/",
       label: "Visit Start-up Kro",
       icon: IconHomeBolt,
+    },
+    {
+      link: "https://codifyplus.com/",
+      label: "Visit CodifyPlus",
+      icon: IconHomeEco,
     },
     { link: "/login", label: "Logout", icon: IconLogout },
   ];

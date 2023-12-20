@@ -23,6 +23,7 @@ import {
   IconMessage,
   IconSettings2,
   IconHomeEco,
+  IconLadder,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -157,6 +158,7 @@ export function Sidebar({ drawerSetOpened }: any) {
       icon: IconServer,
     },
     { link: "/dashboard/addservice", label: "Add Service", icon: IconCoin },
+    { link: "/dashboard/templates", label: "Service Templates", icon: IconLadder },
     { link: "/dashboard/settings", label: "Settings", icon: IconSettings2 },
   ];
 

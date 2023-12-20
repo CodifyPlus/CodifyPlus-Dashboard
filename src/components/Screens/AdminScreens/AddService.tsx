@@ -29,6 +29,13 @@ export default function AddService() {
     },
   ]);
 
+  const [templates, setTemplates] = useState([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+
   const [moderators, setModerators] = useState([
     {
       label: "",
@@ -40,6 +47,20 @@ export default function AddService() {
     UserService.getAllUsernames().then(
       (response) => {
         setUsernames(response.data);
+      },
+      (error) => {
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
+        }
+      }
+    );
+    UserService.getTemplateNames().then(
+      (response) => {
+        setTemplates(response.data);
       },
       (error) => {
         if (error) {
@@ -76,6 +97,7 @@ export default function AddService() {
     initialValues: {
       assignedTo: "",
       name: "",
+      templateName: "",
       cost: "",
       sendEmailToUser: false,
       sendEmailToAssignee: false,
@@ -153,12 +175,33 @@ export default function AddService() {
               required
               data={usernames}
             />
-            <TextInput
+            <Select
               label="Name"
+              required
               mt="md"
               placeholder="GST Registration"
-              required
+              searchable
+              nothingFound="No template Found"
+              maxDropdownHeight={280}
               {...form.getInputProps("name")}
+              data={templates}
+              creatable
+              getCreateLabel={(query) => `${query}`}
+              onCreate={(query) => {
+                const item = { value: query, label: query };
+                setTemplates((current) => [...current, item]);
+                return item;
+              }}
+            />
+            <Select
+              label="Import Template From"
+              mt="md"
+              placeholder="GST Registration"
+              searchable
+              nothingFound="No template Found"
+              maxDropdownHeight={280}
+              {...form.getInputProps("templateName")}
+              data={templates}
             />
             <TextInput
               label="Cost"

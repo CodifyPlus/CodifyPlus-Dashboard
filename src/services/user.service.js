@@ -22,8 +22,20 @@ const getServiceInfo = (serviceId) => {
   })
 }
 
+const getTemplateInfo = (templateId) => {
+  return axios.get(API_URL + "getTemplateInfo", {
+    headers: authHeader(), params: {
+      templateId: templateId
+    }
+  })
+}
+
 const getAllUsers = (params) => {
   return axios.get(API_URL + "getAllUsers", { headers: authHeader(), params: params })
+}
+
+const getAllTemplates = () => {
+  return axios.get(API_URL + "getAllTemplates", { headers: authHeader() })
 }
 
 const changeUserRole = (newRoleAndId) => {
@@ -42,6 +54,10 @@ const getAllUsernames = () => {
   return axios.get(API_URL + "getAllUsernames", { headers: authHeader() })
 }
 
+const getTemplateNames = () => {
+  return axios.get(API_URL + "getTemplateNames", { headers: authHeader() })
+}
+
 const getAllModerators = () => {
   return axios.get(API_URL + "getAllModerators", { headers: authHeader() })
 }
@@ -54,12 +70,20 @@ const addNote = (newNoteData) => {
   return axios.post(API_URL + "addNote", newNoteData, { headers: authHeader() })
 }
 
+const addTemplate = (newTemplateData) => {
+  return axios.post(API_URL + "addTemplate", newTemplateData, { headers: authHeader() })
+}
+
 const editServiceDetails = (formData) => {
   return axios.post(API_URL + "editServiceDetails", formData, { headers: authHeader() })
 }
 
 const addTrack = (newTrackPointData) => {
   return axios.post(API_URL + "addTrack", newTrackPointData, { headers: authHeader() })
+}
+
+const addTemplateTrack = (newTrackPointData) => {
+  return axios.post(API_URL + "addTemplateTrack", newTrackPointData, { headers: authHeader() })
 }
 
 const editTrack = (newTrackPointData) => {
@@ -214,6 +238,11 @@ const userService = {
   exportUsers,
   exportChats,
   exportServices,
+  getAllTemplates,
+  addTemplate,
+  getTemplateInfo,
+  addTemplateTrack,
+  getTemplateNames,
 };
 
 export default userService

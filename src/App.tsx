@@ -65,6 +65,12 @@ const AllUsers = React.lazy(() =>
     "AllUsers"
   )
 );
+const ServiceTemplates = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/ServiceTemplates"),
+    "ServiceTemplates"
+  )
+);
 const Settings = React.lazy(() =>
   lazyRetry(
     () => import("./components/Screens/AdminScreens/Settings"),
@@ -99,6 +105,12 @@ const AllUserServices = React.lazy(() =>
   lazyRetry(
     () => import("./components/Screens/AdminScreens/AllUserServices"),
     "AllUserServices"
+  )
+);
+const EditTemplate = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/EditTemplate"),
+    "EditTemplate"
   )
 );
 const ChangePassword = React.lazy(() =>
@@ -495,6 +507,39 @@ export default function App() {
                 />
               </Route>
               <Route
+                path="template"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <>
+                        <Center>
+                          <Loader variant="bars" />
+                        </Center>
+                      </>
+                    }
+                  >
+                    <EditTemplate />
+                  </React.Suspense>
+                }
+              >
+                <Route
+                  path="*"
+                  element={
+                    <React.Suspense
+                      fallback={
+                        <>
+                          <Center>
+                            <Loader variant="bars" />
+                          </Center>
+                        </>
+                      }
+                    >
+                      <EditTemplate />
+                    </React.Suspense>
+                  }
+                />
+              </Route>
+              <Route
                 path="changepassword"
                 element={
                   <React.Suspense
@@ -605,6 +650,22 @@ export default function App() {
                     }
                   >
                     <AllUsers />
+                  </React.Suspense>
+                }
+              ></Route>
+              <Route
+                path="templates"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <>
+                        <Center>
+                          <Loader variant="bars" />
+                        </Center>
+                      </>
+                    }
+                  >
+                    <ServiceTemplates />
                   </React.Suspense>
                 }
               ></Route>

@@ -113,6 +113,12 @@ const EditTemplate = React.lazy(() =>
     "EditTemplate"
   )
 );
+const Analytics = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/AdminScreens/Analytics"),
+    "Analytics"
+  )
+);
 const ChangePassword = React.lazy(() =>
   lazyRetry(
     () => import("./components/Screens/ChangePassword"),
@@ -454,6 +460,22 @@ export default function App() {
                     }
                   >
                     <Profile />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="analytics"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <>
+                        <Center>
+                          <Loader variant="bars" />
+                        </Center>
+                      </>
+                    }
+                  >
+                    <Analytics />
                   </React.Suspense>
                 }
               />

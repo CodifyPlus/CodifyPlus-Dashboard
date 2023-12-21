@@ -33,6 +33,7 @@
     "react-onesignal": "^3.0.1",
     "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
+    "recharts": "^2.10.3",
     "tawkto-react": "^3.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",

@@ -24,6 +24,7 @@ import {
   IconSettings2,
   IconHomeEco,
   IconLadder,
+  IconChartBar,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -150,6 +151,7 @@ export function Sidebar({ drawerSetOpened }: any) {
   ];
 
   const adminRoutes = [
+    { link: "/dashboard/analytics", label: "Analytics", icon: IconChartBar },
     { link: "/dashboard/allusers", label: "Manage Users", icon: IconUsers },
     { link: "/dashboard/adduser", label: "Add User", icon: IconUser },
     {

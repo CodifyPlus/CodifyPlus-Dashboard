@@ -3,7 +3,6 @@ import { ServiceStats } from "../Fragments/DashboardHomeFragments/ServiceStats";
 import { ServicesList } from "../Fragments/DashboardHomeFragments/ServicesList";
 import { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
-import EventBus from "../../common/EventBus";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { handleLogout } from "../../common/HandleLogout";

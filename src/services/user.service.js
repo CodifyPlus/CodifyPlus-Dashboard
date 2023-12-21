@@ -58,6 +58,14 @@ const getTemplateNames = () => {
   return axios.get(API_URL + "getTemplateNames", { headers: authHeader() })
 }
 
+const getTotalRevenueByService = () => {
+  return axios.get(API_URL + "getTotalRevenueByService", { headers: authHeader() })
+}
+
+const getServicesSoldData = () => {
+  return axios.get(API_URL + "getServicesSoldData", { headers: authHeader() })
+}
+
 const getAllModerators = () => {
   return axios.get(API_URL + "getAllModerators", { headers: authHeader() })
 }
@@ -243,6 +251,8 @@ const userService = {
   getTemplateInfo,
   addTemplateTrack,
   getTemplateNames,
+  getTotalRevenueByService,
+  getServicesSoldData,
 };
 
 export default userService

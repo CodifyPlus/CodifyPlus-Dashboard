@@ -62,7 +62,6 @@ export default function TotalRevenueByServiceGraph() {
               dataKey="totalRevenue"
               barSize={20}
               fill="#ff7300"
-              background={{ fill: "#eee" }}
             >
               {chartData.map((entry, index) => (
                 <Cell

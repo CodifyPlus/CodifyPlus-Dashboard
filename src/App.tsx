@@ -32,6 +32,18 @@ const OurServices = React.lazy(() =>
 const Login = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/Login"), "Login")
 );
+const ForgotPassword = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/ForgotPassword"),
+    "ForgotPassword"
+  )
+);
+const ResetPassword = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/ResetPassword"),
+    "ResetPassword"
+  )
+);
 const Register = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/Register"), "Register")
 );
@@ -348,6 +360,38 @@ export default function App() {
                   }
                 >
                   <Login />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="forgot-password"
+              element={
+                <React.Suspense
+                  fallback={
+                    <>
+                      <Center>
+                        <Loader variant="bars" />
+                      </Center>
+                    </>
+                  }
+                >
+                  <ForgotPassword />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="reset-password/:token"
+              element={
+                <React.Suspense
+                  fallback={
+                    <>
+                      <Center>
+                        <Loader variant="bars" />
+                      </Center>
+                    </>
+                  }
+                >
+                  <ResetPassword />
                 </React.Suspense>
               }
             />

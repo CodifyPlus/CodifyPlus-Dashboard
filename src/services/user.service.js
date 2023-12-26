@@ -46,6 +46,14 @@ const addNewUser = (newUserData) => {
   return axios.post(API_URL + "addNewUser", newUserData, { headers: authHeader() })
 }
 
+const forgotPassword = (formData) => {
+  return axios.post(API_URL + "auth/forgotPassword", formData, { headers: authHeader() })
+}
+
+const resetPassword = (formData) => {
+  return axios.post(API_URL + "auth/resetPassword", formData, { headers: authHeader() })
+}
+
 const getAllServices = (params) => {
   return axios.get(API_URL + "getAllServices", { headers: authHeader(), params: params })
 }
@@ -253,6 +261,8 @@ const userService = {
   getTemplateNames,
   getTotalRevenueByService,
   getServicesSoldData,
+  forgotPassword,
+  resetPassword,
 };
 
 export default userService

@@ -162,7 +162,7 @@ export default function Register() {
                 {...form.getInputProps("password")}
               />
               <Group position="apart" mt="lg">
-                <Anchor component="button" size="sm">
+                <Anchor component={Link} to="/forgot-password" size="sm">
                   Forgot password?
                 </Anchor>
               </Group>

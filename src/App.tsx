@@ -17,6 +17,7 @@ import OneSignal from "react-onesignal";
 import { Notifications } from "@mantine/notifications";
 import { lazyRetry } from "./common/lazyRetry";
 import { welcomeConsoleLog } from "./common/welcome";
+import Home from "./components/Screens/Home";
 const Navbar = React.lazy(() =>
   lazyRetry(() => import("./components/Fragments/Navbar/Navbar"), "Navbar")
 );
@@ -39,10 +40,7 @@ const ForgotPassword = React.lazy(() =>
   )
 );
 const ResetPassword = React.lazy(() =>
-  lazyRetry(
-    () => import("./components/Screens/ResetPassword"),
-    "ResetPassword"
-  )
+  lazyRetry(() => import("./components/Screens/ResetPassword"), "ResetPassword")
 );
 const Register = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/Register"), "Register")
@@ -152,9 +150,6 @@ const TrackServiceMod = React.lazy(() =>
 const ChatPage = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/ChatPage"), "ChatPage")
 );
-const Home = React.lazy(() =>
-  lazyRetry(() => import("./components/Screens/Home"), "Home")
-);
 const GSTCalculator = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/GSTCalculator"), "GSTCalculator")
 );
@@ -235,38 +230,8 @@ export default function App() {
         >
           <Navbar links={links.links} />
           <Routes>
-            <Route
-              path="/"
-              element={
-                <React.Suspense
-                  fallback={
-                    <>
-                      <Center>
-                        <Loader variant="bars" />
-                      </Center>
-                    </>
-                  }
-                >
-                  <Home />
-                </React.Suspense>
-              }
-            />
-            <Route
-              index
-              element={
-                <React.Suspense
-                  fallback={
-                    <>
-                      <Center>
-                        <Loader variant="bars" />
-                      </Center>
-                    </>
-                  }
-                >
-                  <Home />
-                </React.Suspense>
-              }
-            />
+            <Route path="/" element={<Home />} />
+            <Route index element={<Home />} />
             <Route
               path="gst-calculator"
               element={

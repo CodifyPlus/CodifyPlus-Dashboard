@@ -120,7 +120,8 @@ export default function ManageServices() {
         const allServices = response.data.services;
         const totalServices = response.data.total;
         setTotalServices(totalServices);
-        setServices(allServices);
+        // Reverse the array to show the latest services first
+        setServices(allServices.reverse());
         setIsLoading(false);
       },
       (error) => {

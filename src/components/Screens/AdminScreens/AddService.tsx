@@ -36,6 +36,13 @@ export default function AddService() {
     },
   ]);
 
+  const [names, setNames] = useState([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+
   const [moderators, setModerators] = useState([
     {
       label: "",
@@ -61,6 +68,7 @@ export default function AddService() {
     UserService.getTemplateNames().then(
       (response) => {
         setTemplates(response.data);
+        setNames(response.data);
       },
       (error) => {
         if (error) {
@@ -184,12 +192,12 @@ export default function AddService() {
               nothingFound="No template Found"
               maxDropdownHeight={280}
               {...form.getInputProps("name")}
-              data={templates}
+              data={names}
               creatable
               getCreateLabel={(query) => `${query}`}
               onCreate={(query) => {
                 const item = { value: query, label: query };
-                setTemplates((current) => [...current, item]);
+                setNames((current) => [...current, item]);
                 return item;
               }}
             />

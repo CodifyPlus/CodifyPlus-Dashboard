@@ -32,8 +32,8 @@ export default function ServiceTemplates() {
     { open: open_addTemplateModal, close: close_addTemplateModal },
   ] = useDisclosure(false);
 
-  const handleDelete = (userId: string) => {
-    UserService.deleteUser({ userId }).then(
+  const handleDelete = (templateId: string) => {
+    UserService.deleteTemplate({ templateId }).then(
       (response) => {
         setStateUpdate(!stateUpdate);
       },

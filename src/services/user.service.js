@@ -117,8 +117,13 @@ const markAsCompleted = (updatedService) => {
 const deleteUser = (userId) => {
   return axios.post(API_URL + "deleteUser", userId, { headers: authHeader() })
 }
+
 const deleteService = (serviceId) => {
   return axios.post(API_URL + "deleteService", serviceId, { headers: authHeader() })
+}
+
+const deleteTemplate = (templateId) => {
+  return axios.post(API_URL + "deleteTemplate", templateId, { headers: authHeader() })
 }
 
 const getAllNotifications = (username) => {
@@ -263,6 +268,7 @@ const userService = {
   getServicesSoldData,
   forgotPassword,
   resetPassword,
+  deleteTemplate,
 };
 
 export default userService

@@ -9,6 +9,7 @@ import {
   Center,
   TextInput,
   Pagination,
+  ActionIcon,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -17,11 +18,13 @@ import {
   IconMapPin,
   IconSearch,
   IconSettingsBolt,
+  IconSettingsSearch,
   IconTrash,
 } from "@tabler/icons-react";
 import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
+import { useDebouncedValue } from "@mantine/hooks";
 
 export default function ManageServices() {
   const [services, setServices] = useState([
@@ -43,26 +46,9 @@ export default function ManageServices() {
     },
   ]);
 
-  const [filterData, setFilterData] = useState([
-    {
-      cost: "",
-      name: "",
-      status: "",
-      _id: "",
-      assignedTo: {
-        userId: "",
-        username: "",
-        email: "",
-      },
-      assignedFor: {
-        userId: "",
-        username: "",
-        email: "",
-      },
-    },
-  ]);
-
   const [search, setSearch] = useState("");
+  const [advancedSearch, setAdvancedSearch] = useState(false);
+  const [debouncedSearch] = useDebouncedValue(search, 1000, { leading: true });
   const [isLoading, setIsLoading] = useState(true);
   const [stateUpdate, setStateUpdate] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,28 +79,12 @@ export default function ManageServices() {
     setSearch(event.currentTarget.value);
   };
 
-  const dataFilter = () => {
-    const filteredServices = services.filter(
-      (service: any) =>
-        service.name.toLowerCase().includes(search.toLowerCase()) ||
-        service.status.toLowerCase().includes(search.toLowerCase()) ||
-        service.cost.includes(search.toLowerCase()) ||
-        service.assignedTo.username
-          .toLowerCase()
-          .includes(search.toLowerCase()) ||
-        service.assignedTo.email.toLowerCase().includes(search.toLowerCase()) ||
-        service.assignedFor.username
-          .toLowerCase()
-          .includes(search.toLowerCase()) ||
-        service.assignedFor.email.toLowerCase().includes(search.toLowerCase())
-    );
-    setFilterData(filteredServices);
-  };
-
   useEffect(() => {
     UserService.getAllServices({
       page: currentPage,
       limit: 10,
+      search: debouncedSearch,
+      advancedSearch: advancedSearch,
     }).then(
       (response) => {
         const allServices = response.data.services;
@@ -136,14 +106,9 @@ export default function ManageServices() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, stateUpdate]);
+  }, [currentPage, stateUpdate, debouncedSearch]);
 
-  useEffect(() => {
-    dataFilter();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterData, search]);
-
-  const rows = filterData.map((item) => (
+  const rows = services.map((item) => (
     <tr key={item._id}>
       <td>{item.name}</td>
       <td>{item.status}</td>
@@ -240,6 +205,21 @@ export default function ManageServices() {
               icon={<IconSearch size="0.9rem" stroke={1.5} />}
               value={search}
               onChange={handleSearchChange}
+              rightSection={
+                <ActionIcon
+                  color="yellow"
+                  title={!advancedSearch ? "Basic Search" : "Advanced Search"}
+                  onClick={() => {
+                    setAdvancedSearch(!advancedSearch);
+                  }}
+                >
+                  {!advancedSearch ? (
+                    <IconSearch size={20} />
+                  ) : (
+                    <IconSettingsSearch size={20} />
+                  )}
+                </ActionIcon>
+              }
             />
             <Table miw={800} verticalSpacing="sm">
               <thead>

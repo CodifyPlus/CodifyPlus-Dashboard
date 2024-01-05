@@ -200,7 +200,11 @@ export default function ManageServices() {
         <>
           <ScrollArea>
             <TextInput
-              placeholder="Search by any field"
+              placeholder={
+                !advancedSearch
+                  ? "Search by any field"
+                  : "Use syntax <field>:<operator{eq, contains}>:<value> & <field>:<operator{eq, contains}>:<value> & etc."
+              }
               mb="md"
               icon={<IconSearch size="0.9rem" stroke={1.5} />}
               value={search}

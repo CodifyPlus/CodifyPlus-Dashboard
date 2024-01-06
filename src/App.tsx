@@ -30,6 +30,9 @@ const OurProcess = React.lazy(() =>
 const OurServices = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/OurServices"), "OurServices")
 );
+const Services = React.lazy(() =>
+  lazyRetry(() => import("./components/Screens/Services"), "Services")
+);
 const Login = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/Login"), "Login")
 );
@@ -469,6 +472,22 @@ export default function App() {
                     }
                   >
                     <Profile />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="services"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <>
+                        <Center>
+                          <Loader variant="bars" />
+                        </Center>
+                      </>
+                    }
+                  >
+                    <Services />
                   </React.Suspense>
                 }
               />

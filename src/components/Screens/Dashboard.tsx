@@ -13,7 +13,7 @@ import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import {
   IconHome,
   IconMessage,
-  IconProgressCheck,
+  IconPackage,
   IconSettings,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
@@ -106,12 +106,12 @@ export default function Dashboard({ setEnableFooter }) {
                 <ActionIcon
                   onClick={() => {
                     setOpened(false);
-                    setActiveMenuItem("/dashboard/allservices");
+                    setActiveMenuItem("/dashboard/services");
                   }}
                   component={Link}
-                  to="/dashboard/allservices"
+                  to="/dashboard/services"
                 >
-                  <IconProgressCheck />
+                  <IconPackage />
                 </ActionIcon>
                 <ActionIcon
                   onClick={() => {

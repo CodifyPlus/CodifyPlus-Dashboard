@@ -16,7 +16,6 @@ import {
   IconUsers,
   IconUser,
   IconCoin,
-  IconStatusChange,
   IconUserBolt,
   IconKey,
   IconHomeBolt,
@@ -25,6 +24,7 @@ import {
   IconHomeEco,
   IconLadder,
   IconChartBar,
+  IconPackage,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { UserInfoSidebar } from "./UserInfoSidebar";
@@ -127,9 +127,9 @@ export function Sidebar({ drawerSetOpened }: any) {
   const data = [
     { link: "/dashboard/home", label: "Home", icon: IconHome },
     {
-      link: "/dashboard/allservices",
-      label: "All Services",
-      icon: IconStatusChange,
+      link: "/dashboard/services",
+      label: "Buy Services",
+      icon: IconPackage,
     },
     { link: "/dashboard/profile", label: "Profile", icon: IconUserBolt },
     {

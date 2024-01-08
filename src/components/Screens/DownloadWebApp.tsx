@@ -78,10 +78,6 @@ export default function DownloadWebApp() {
       setDeferredPrompt(event);
     };
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    // Delay the execution of handleInstallClick by 500ms
-    const timeoutId = setTimeout(() => {
-      handleInstallClick();
-    }, 500);
 
     const intervalId = setInterval(() => {
       const nextIndex =
@@ -95,7 +91,6 @@ export default function DownloadWebApp() {
         handleBeforeInstallPrompt
       );
       clearInterval(intervalId);
-      clearTimeout(timeoutId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentEmoticon, emoticons]);

@@ -11,6 +11,8 @@ import {
   Center,
   Modal,
   Pagination,
+  TextInput,
+  ActionIcon,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
@@ -19,13 +21,15 @@ import { notifications } from "@mantine/notifications";
 import {
   IconMessages,
   IconProgressCheck,
+  IconSearch,
   IconSettingsBolt,
+  IconSettingsSearch,
   IconTrash,
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { SendNotificationFragment } from "../../Fragments/AllUsersFragments/SendNotificationFragment";
-import { useDisclosure } from "@mantine/hooks";
+import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 
 const rolesData = ["USER", "MODERATOR", "ADMIN"];
 
@@ -57,6 +61,9 @@ export default function AllUsers() {
   ]);
 
   const [stateUpdate, setStateUpdate] = useState(false);
+  const [advancedSearch, setAdvancedSearch] = useState(false);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch] = useDebouncedValue(search, 1000, { leading: true });
   const [notificationUsername, setNotificationUsername] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -65,6 +72,10 @@ export default function AllUsers() {
     opened_sendNotification,
     { open: open_sendNotification, close: close_sendNotification },
   ] = useDisclosure(false);
+
+  const handleSearchChange = (event: any) => {
+    setSearch(event.currentTarget.value);
+  };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -93,6 +104,8 @@ export default function AllUsers() {
     UserService.getAllUsers({
       page: currentPage,
       limit: 10,
+      search: debouncedSearch,
+      advancedSearch: advancedSearch,
     }).then(
       (response) => {
         setUsers(response.data.users);
@@ -100,15 +113,6 @@ export default function AllUsers() {
         setIsLoading(false);
       },
       (error) => {
-        const _Stats =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        setUsers(_Stats);
-
         if (error) {
           notifications.show({
             title: "Error",
@@ -120,7 +124,7 @@ export default function AllUsers() {
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, stateUpdate]);
+  }, [currentPage, stateUpdate, debouncedSearch]);
 
   const rows = users.map((item) => (
     <tr key={item.username}>
@@ -223,6 +227,32 @@ export default function AllUsers() {
       ) : (
         <>
           <ScrollArea>
+            <TextInput
+              placeholder={
+                !advancedSearch
+                  ? "Search by any field"
+                  : "Use syntax <field>:<operator{eq, contains}>:<value> & <field>:<operator{eq, contains}>:<value> & etc."
+              }
+              mb="md"
+              icon={<IconSearch size="0.9rem" stroke={1.5} />}
+              value={search}
+              onChange={handleSearchChange}
+              rightSection={
+                <ActionIcon
+                  color="yellow"
+                  title={!advancedSearch ? "Basic Search" : "Advanced Search"}
+                  onClick={() => {
+                    setAdvancedSearch(!advancedSearch);
+                  }}
+                >
+                  {!advancedSearch ? (
+                    <IconSearch size={20} />
+                  ) : (
+                    <IconSettingsSearch size={20} />
+                  )}
+                </ActionIcon>
+              }
+            />
             <Modal
               opened={opened_sendNotification}
               onClose={close_sendNotification}

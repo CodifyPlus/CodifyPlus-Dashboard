@@ -162,6 +162,12 @@ const ContactUs = React.lazy(() =>
 const Offline = React.lazy(() =>
   lazyRetry(() => import("./components/Screens/Offline"), "Offline")
 );
+const DownloadWebApp = React.lazy(() =>
+  lazyRetry(
+    () => import("./components/Screens/DownloadWebApp"),
+    "DownloadWebApp"
+  )
+);
 
 export async function runOneSignal() {
   await OneSignal.init({
@@ -312,6 +318,22 @@ export default function App() {
                   }
                 >
                   <Offline />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="download"
+              element={
+                <React.Suspense
+                  fallback={
+                    <>
+                      <Center>
+                        <Loader variant="bars" />
+                      </Center>
+                    </>
+                  }
+                >
+                  <DownloadWebApp />
                 </React.Suspense>
               }
             />

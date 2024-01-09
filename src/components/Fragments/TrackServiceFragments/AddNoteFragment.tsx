@@ -4,13 +4,13 @@ import {
   Button,
   Checkbox,
   CheckboxProps,
-  Textarea,
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail, IconNote } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import RichTextComponent from "../../../common/RichTextComponent";
 
 interface noteProps {
   data: {
@@ -22,12 +22,12 @@ interface noteProps {
 
 export function AddNoteFragment({ data }: noteProps) {
   const [successful, setSuccessful] = useState(false);
+  const [noteContent, setNoteContent] = useState("");
 
   const form = useForm({
     initialValues: {
       private: false,
       sendEmail: false,
-      information: "",
     },
   });
 
@@ -36,7 +36,7 @@ export function AddNoteFragment({ data }: noteProps) {
     const objToPost = {
       private: formValue.private,
       sendEmail: formValue.sendEmail,
-      information: formValue.information,
+      information: noteContent,
       serviceId: data.serviceId,
     };
     UserService.addNote(objToPost).then(
@@ -68,13 +68,7 @@ export function AddNoteFragment({ data }: noteProps) {
     <Container size={420}>
       {!successful && (
         <form onSubmit={form.onSubmit(handleRegister)} autoComplete="off">
-          <Textarea
-            label="Information"
-            placeholder="Please supply the documents..."
-            required
-            {...form.getInputProps("information")}
-          />
-
+          <RichTextComponent setNoteContent={setNoteContent} />
           <Group position="apart" mt="lg">
             <Checkbox
               icon={CheckboxIcon}

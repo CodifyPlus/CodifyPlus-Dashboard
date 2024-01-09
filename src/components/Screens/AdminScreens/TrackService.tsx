@@ -214,7 +214,7 @@ export default function TrackService() {
               <IconMailBolt size="0.9rem" />
             </ActionIcon>
           </Group>
-          <Text mt={5}>{note.information}</Text>
+          <Text mt={5} dangerouslySetInnerHTML={{ __html: note.information }} />
         </Paper>
       </Grid.Col>
     );

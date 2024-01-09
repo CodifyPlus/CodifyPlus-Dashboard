@@ -133,7 +133,10 @@ export default function TrackServiceMod() {
                 ? "Yes"
                 : "No"}
             </Badge>
-            <Text mt={5}>{note.information}</Text>
+            <Text
+              mt={5}
+              dangerouslySetInnerHTML={{ __html: note.information }}
+            />
           </Paper>
         </Grid.Col>
       );

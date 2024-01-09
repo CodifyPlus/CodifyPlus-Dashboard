@@ -114,7 +114,7 @@ export default function ServiceStatus() {
         <Grid.Col span={12} key={note.information}>
           <Paper shadow="sm" p="sm" withBorder>
             <Badge>{note.createdAt.split("T")[0]}</Badge>
-            <Text mt={5}>{note.information}</Text>
+            <Text mt={5} dangerouslySetInnerHTML={{ __html: note.information }} />
           </Paper>
         </Grid.Col>
       );

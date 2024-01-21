@@ -54,6 +54,7 @@ export default function AllUsers() {
       username: "",
       email: "",
       processServices: [],
+      onHoldServices: [],
       _id: "",
       role: "",
       createdAt: "",
@@ -163,6 +164,7 @@ export default function AllUsers() {
       </td>
       <td>{moment(item.createdAt).utcOffset("+5:30").format("DD-MM-YYYY")}</td>
       <td>{item.processServices.length}</td>
+      <td>{item.onHoldServices.length}</td>
       <td>
         <Menu
           transitionProps={{ transition: "pop" }}
@@ -272,7 +274,8 @@ export default function AllUsers() {
                   <th>User</th>
                   <th>Role</th>
                   <th>Created At</th>
-                  <th>Process Services</th>
+                  <th>Services Under Process</th>
+                  <th>Services On Hold</th>
                   <th>Manage</th>
                 </tr>
               </thead>

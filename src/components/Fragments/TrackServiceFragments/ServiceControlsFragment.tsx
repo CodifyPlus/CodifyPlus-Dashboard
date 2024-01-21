@@ -14,7 +14,7 @@ import {
   IconMapPinBolt,
   IconCheck,
   IconCalendarX,
-  IconMailFast,
+  IconClockStop,
 } from "@tabler/icons-react";
 import UserService from "../../../services/user.service";
 import { useState } from "react";
@@ -79,7 +79,7 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       openModal: data.openModalEditService,
     },
     { title: "Toggle Dates", icon: IconCalendarX, color: "orange" },
-    { title: "Email Details", icon: IconMailFast, color: "yellow" },
+    { title: "Mark On Hold", icon: IconClockStop, color: "yellow" },
     { title: "Add Track Point", icon: IconMapPinBolt, color: "pink" },
     { title: "Mark as Completed", icon: IconCheck, color: "red" },
   ];
@@ -90,6 +90,29 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       serviceId: data.serviceId,
     };
     UserService.markAsCompleted(objToPost).then(
+      (response) => {
+        data.setInfo(response.data);
+        setLoadingOverlayIsVisible(false);
+      },
+      (error) => {
+        setLoadingOverlayIsVisible(false);
+        if (error) {
+          notifications.show({
+            title: "Error",
+            message: error.message,
+            color: "red",
+          });
+        }
+      }
+    );
+  };
+
+  const handleOnHold = (serviceId: any) => {
+    setLoadingOverlayIsVisible(true);
+    const objToPost = {
+      serviceId: data.serviceId,
+    };
+    UserService.markOnHold(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         setLoadingOverlayIsVisible(false);
@@ -138,6 +161,8 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
       handleTimelineDatesVisibility(data.serviceId);
     } else if (title === "Edit Details") {
       data.openModalEditService();
+    } else if (title === "Mark On Hold") {
+      handleOnHold(data.serviceId);
     }
   }
 

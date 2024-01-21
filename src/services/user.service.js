@@ -114,6 +114,10 @@ const markAsCompleted = (updatedService) => {
   return axios.post(API_URL + "markAsCompleted", updatedService, { headers: authHeader() })
 }
 
+const markOnHold = (updatedService) => {
+  return axios.post(API_URL + "markOnHold", updatedService, { headers: authHeader() })
+}
+
 const deleteUser = (userId) => {
   return axios.post(API_URL + "deleteUser", userId, { headers: authHeader() })
 }
@@ -232,6 +236,7 @@ const userService = {
   addTrack,
   editTrackStatus,
   markAsCompleted,
+  markOnHold,
   deleteService,
   deleteUser,
   getAllNotifications,

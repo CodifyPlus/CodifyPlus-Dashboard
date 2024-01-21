@@ -27,7 +27,15 @@ export default function AllUserServices() {
         username: "",
       },
     ],
-    pendingServices: [],
+    onHoldServices: [
+      {
+        name: "",
+        icon: "",
+        status: "",
+        serviceId: "",
+        username: "",
+      },
+    ],
     processServices: [
       {
         name: "",
@@ -52,6 +60,7 @@ export default function AllUserServices() {
         // Process the response data
         let completedServicesData: any = [];
         let underProcessServicesData: any = [];
+        let onHoldServicesData: any = [];
 
         for (var i = 0; i < response.data.completedServices.length; i++) {
           completedServicesData.push({
@@ -73,10 +82,21 @@ export default function AllUserServices() {
           });
         }
 
+        for (var k = 0; k < response.data.onHoldServices.length; k++) {
+          onHoldServicesData.push({
+            name: response.data.onHoldServices[k].name,
+            icon: "P",
+            status: "On Hold",
+            serviceId: response.data.onHoldServices[k].serviceId.toString(),
+            username: response.data.onHoldServices[k].username,
+          });
+        }
+
         setStats({
           ...response.data,
           completedServices: completedServicesData,
           processServices: underProcessServicesData,
+          onHoldServices: onHoldServicesData,
         });
         setIsLoading(false); // Set loading status to false after the data is fetched
       })
@@ -127,7 +147,7 @@ export default function AllUserServices() {
             <Grid.Col xs={12}>
               <Paper shadow="md" p={20} withBorder>
                 <Text size={18} mb={10} ml={10}>
-                  Under Process Services:
+                  Services Under Process:
                 </Text>
                 <AllServicesListFragment data={Stats.processServices} />
               </Paper>
@@ -135,7 +155,15 @@ export default function AllUserServices() {
             <Grid.Col xs={12}>
               <Paper shadow="md" p={20} withBorder>
                 <Text size={18} mb={10} ml={10}>
-                  Completed Services:
+                  Services On Hold:
+                </Text>
+                <AllServicesListFragment data={Stats.onHoldServices} />
+              </Paper>
+            </Grid.Col>
+            <Grid.Col xs={12}>
+              <Paper shadow="md" p={20} withBorder>
+                <Text size={18} mb={10} ml={10}>
+                  Services Completed:
                 </Text>
                 <AllServicesListFragment data={Stats.completedServices} />
               </Paper>

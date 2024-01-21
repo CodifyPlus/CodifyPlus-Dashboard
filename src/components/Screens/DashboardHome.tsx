@@ -20,7 +20,15 @@ export default function DashboardHome() {
         username: "",
       },
     ],
-    pendingServices: [],
+    onHoldServices: [
+      {
+        name: "",
+        icon: "",
+        status: "",
+        serviceId: "",
+        username: "",
+      },
+    ],
     processServices: [
       {
         name: "",
@@ -53,6 +61,7 @@ export default function DashboardHome() {
         // Process the response data
         let completedServicesData: any = [];
         let underProcessServicesData: any = [];
+        let onHoldServicesData: any = [];
 
         for (var i = 0; i < response.data.completedServices.length; i++) {
           completedServicesData.push({
@@ -74,10 +83,21 @@ export default function DashboardHome() {
           });
         }
 
+        for (var k = 0; k < response.data.onHoldServices.length; k++) {
+          onHoldServicesData.push({
+            name: response.data.onHoldServices[k].name,
+            icon: "P",
+            status: "On Hold",
+            serviceId: response.data.onHoldServices[k].serviceId.toString(),
+            username: response.data.onHoldServices[k].username,
+          });
+        }
+
         setStats({
           ...response.data,
           completedServices: completedServicesData,
           processServices: underProcessServicesData,
+          onHoldServices: onHoldServicesData,
         });
         setIsLoading(false); // Set loading status to false after the data is fetched
       })
@@ -102,7 +122,7 @@ export default function DashboardHome() {
 
   const data = [
     {
-      title: "Completed Services",
+      title: "Services Completed",
       value:
         Stats?.completedServices[0]?.name === ""
           ? 0
@@ -110,7 +130,7 @@ export default function DashboardHome() {
       diff: 100,
     },
     {
-      title: "Under Process Services",
+      title: "Services Under Process",
       value:
         Stats?.processServices[0]?.name === ""
           ? 0
@@ -118,8 +138,9 @@ export default function DashboardHome() {
       diff: 100,
     },
     {
-      title: "Pending Services",
-      value: Stats?.pendingServices?.length,
+      title: "Services On Hold",
+      value:
+        Stats?.onHoldServices[0]?.name === "" ? 0 : Stats.onHoldServices.length,
       diff: 100,
     },
   ];
@@ -142,7 +163,7 @@ export default function DashboardHome() {
           <Grid.Col span={12}>
             <Paper shadow="md" p={20} withBorder>
               <Text size={18} mb={10} ml={10}>
-                Under Process Services:
+                Services Under Process:
               </Text>
               <ServicesList data={Stats.processServices} />
             </Paper>
@@ -150,7 +171,15 @@ export default function DashboardHome() {
           <Grid.Col span={12}>
             <Paper shadow="md" p={20} withBorder>
               <Text size={18} mb={10} ml={10}>
-                Completed Services:
+                Services On Hold:
+              </Text>
+              <ServicesList data={Stats.onHoldServices} />
+            </Paper>
+          </Grid.Col>
+          <Grid.Col span={12}>
+            <Paper shadow="md" p={20} withBorder>
+              <Text size={18} mb={10} ml={10}>
+                Services Completed:
               </Text>
               <ServicesList data={Stats.completedServices} />
             </Paper>

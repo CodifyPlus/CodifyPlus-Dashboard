@@ -15,6 +15,7 @@ import { IconCheck } from "@tabler/icons-react";
 import CodifyPlusLaptop from "./CodifyPlus Mockup BGT.webp";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { GlobalConfiguration } from "../../../common/GlobalConfiguration";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -116,9 +117,9 @@ export function Hero() {
               An <span className={classes.highlight}>All-in-one</span> Dashboard
             </Title>
             <Text color="dimmed" mt="md">
-              CodifyPlus Dashboard offers the integrated experience to manage
-              your clients on-the-fly. Anytime, any device, anywhere, in a
-              matter of few clicks.
+              {GlobalConfiguration.appName} offers the integrated experience to
+              manage your clients on-the-fly. Anytime, any device, anywhere, in
+              a matter of few clicks.
             </Text>
 
             <List

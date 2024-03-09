@@ -12,6 +12,7 @@ import {
   IconBrandInstagram,
 } from "@tabler/icons-react";
 import LogoStatic from "../Navbar/LogoStatic";
+import { GlobalConfiguration } from "../../../common/GlobalConfiguration";
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -127,7 +128,7 @@ export default function Footer({ data }: FooterLinksProps) {
         <div className={classes.logo}>
           <LogoStatic />
           <Text size="xs" color="dimmed" className={classes.description}>
-            Business Accelerator and Toolkit
+            {GlobalConfiguration.appSlogan}
           </Text>
         </div>
       </Container>

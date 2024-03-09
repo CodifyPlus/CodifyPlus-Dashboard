@@ -1,7 +1,7 @@
 import { Timeline, Text, ActionIcon } from "@mantine/core";
 import { Icon3dCubeSphere, IconMapPinCheck } from "@tabler/icons-react";
-import UserService from "../../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import { editTrackStatusMod } from "../../../../services/UserService";
 
 interface dataProps {
   data: {
@@ -28,7 +28,7 @@ export function ServiceStatusTimelineTrackMod({
       pathwayId: id,
       serviceId: serviceId,
     };
-    UserService.editTrackStatusMod(objToPost).then(
+    editTrackStatusMod(objToPost).then(
       (response) => {
         setInfo(response.data);
       },

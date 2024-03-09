@@ -197,7 +197,7 @@ const exportChats = () => {
   return axios.get(API_URL + "exportChats", { headers: authHeader() });
 };
 
-const adminService = {
+export {
   getAllUsers,
   changeUserRole,
   addNewUser,
@@ -234,5 +234,3 @@ const adminService = {
   getServicesSoldData,
   deleteTemplate,
 };
-
-export default adminService;

@@ -8,9 +8,9 @@ import {
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail, IconNote } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import RichTextComponent from "../../../common/RichTextComponent";
+import { addNote } from "../../../services/AdminService";
 
 interface noteProps {
   data: {
@@ -39,7 +39,7 @@ export function AddNoteFragment({ data }: noteProps) {
       information: noteContent,
       serviceId: data.serviceId,
     };
-    UserService.addNote(objToPost).then(
+    addNote(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();

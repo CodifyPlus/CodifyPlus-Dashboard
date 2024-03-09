@@ -99,7 +99,7 @@ const sendMessage = (newMessageData) => {
   });
 };
 
-const userService = {
+export {
   getUserStats,
   getServiceInfo,
   getAllNotifications,
@@ -116,5 +116,3 @@ const userService = {
   forgotPassword,
   resetPassword,
 };
-
-export default userService;

@@ -1,8 +1,8 @@
 import { TextInput, Container, Button, Textarea } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import { addTemplateTrack } from "../../../services/AdminService";
 
 interface noteProps {
   data: {
@@ -29,7 +29,7 @@ export function AddTemplatePoint({ data }: noteProps) {
       title: formValue.title,
       templateId: data.templateId,
     };
-    UserService.addTemplateTrack(objToPost).then(
+    addTemplateTrack(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();

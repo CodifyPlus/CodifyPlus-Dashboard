@@ -1,9 +1,9 @@
 import { Container, Button } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import UserService from "../../../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import RichTextComponent from "../../../../common/RichTextComponent";
+import { addNoteMod } from "../../../../services/UserService";
 
 interface noteProps {
   data: {
@@ -31,7 +31,7 @@ export function AddNoteFragmentMod({ data }: noteProps) {
       information: noteContent,
       serviceId: data.serviceId,
     };
-    UserService.addNoteMod(objToPost).then(
+    addNoteMod(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();

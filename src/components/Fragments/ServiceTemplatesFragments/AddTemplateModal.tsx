@@ -1,8 +1,8 @@
 import { Container, Button, TextInput } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import { addTemplate } from "../../../services/AdminService";
 
 export function AddTemplateModal({
   close_addTemplateModal,
@@ -22,7 +22,7 @@ export function AddTemplateModal({
     const objToPost = {
       templateName: formValue.templateName,
     };
-    UserService.addTemplate(objToPost).then(
+    addTemplate(objToPost).then(
       (response) => {
         setStateUpdate(!stateUpdate);
         close_addTemplateModal();

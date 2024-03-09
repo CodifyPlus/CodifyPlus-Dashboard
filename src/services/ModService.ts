@@ -34,12 +34,10 @@ const addNoteMod = (newNoteData) => {
   });
 };
 
-const modService = {
+export {
   getAllServicesMod,
   editTrackStatusMod,
   addTrackMod,
   addNoteMod,
   getModStats,
 };
-
-export default modService;

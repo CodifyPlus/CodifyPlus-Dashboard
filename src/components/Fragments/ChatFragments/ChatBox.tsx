@@ -2,9 +2,9 @@ import { ActionIcon, Group, Stack, TextInput } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { IconSend } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { useSelector } from "react-redux";
+import { sendMessage as sendChatMessage } from "../../../services/UserService";
 
 const ChatBox = (props: any) => {
   const [value, setValue] = useState("");
@@ -22,7 +22,7 @@ const ChatBox = (props: any) => {
 
     setCanSendMessage(false);
 
-    UserService.sendMessage({
+    sendChatMessage({
       chatBoxId: props.chatBoxId,
       content: value,
       senderName: currentUser.username,

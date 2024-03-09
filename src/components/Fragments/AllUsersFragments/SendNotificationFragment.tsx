@@ -9,8 +9,8 @@ import {
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail, IconNote } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import { sendNotification } from "../../../services/AdminService";
 
 interface notificationProps {
   data: {
@@ -37,7 +37,7 @@ export function SendNotificationFragment({ data }: notificationProps) {
       username: data.username,
       title: formValue.title,
     };
-    UserService.sendNotification(objToPost).then(
+    sendNotification(objToPost).then(
       (response) => {
         data.closeModal();
         setSuccessful(true);

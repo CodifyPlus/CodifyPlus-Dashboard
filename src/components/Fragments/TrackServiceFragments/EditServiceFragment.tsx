@@ -11,10 +11,13 @@ import {
 import React, { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import {
+  editServiceDetails,
+  getAllModerators,
+} from "../../../services/AdminService";
 
 export default function EditServiceFragment({
   assignedTo,
@@ -33,7 +36,7 @@ export default function EditServiceFragment({
   ]);
 
   useEffect(() => {
-    UserService.getAllModerators().then(
+    getAllModerators().then(
       (response) => {
         setModerators(response.data);
       },
@@ -65,7 +68,7 @@ export default function EditServiceFragment({
       ...formValue,
       serviceId: serviceId,
     };
-    UserService.editServiceDetails(objToPost).then(
+    editServiceDetails(objToPost).then(
       (response) => {
         setInfo(response.data);
         closeModal();

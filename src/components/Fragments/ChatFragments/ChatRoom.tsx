@@ -12,11 +12,11 @@ import { useInView } from "react-intersection-observer";
 import ChatBox from "./ChatBox";
 import ChatMessage from "./ChatMessage";
 import { IconArrowLeft, IconChevronDown } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import ChatUnselected from "./ChatUnselected";
 import { useSelector } from "react-redux";
 import { useCenteralContext } from "../../../contexts/CenteralContext";
 import { notifications } from "@mantine/notifications";
+import { getChatBox } from "../../../services/UserService";
 
 const ChatRoom = ({
   chatBoxId,
@@ -49,7 +49,7 @@ const ChatRoom = ({
     const fetchChatBoxMessages = async () => {
       try {
         if (chatBoxId !== null && isSelected === true) {
-          const response = await UserService.getChatBox(chatBoxId);
+          const response = await getChatBox(chatBoxId);
           const updatedChatBox = response.data;
 
           // Update localStorage with noOfMessages

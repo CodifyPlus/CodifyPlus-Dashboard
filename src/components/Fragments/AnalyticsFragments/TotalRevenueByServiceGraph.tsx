@@ -10,9 +10,9 @@ import {
   Line,
   Cell,
 } from "recharts";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { Center, Loader } from "@mantine/core";
+import { getTotalRevenueByService } from "../../../services/AdminService";
 
 export default function TotalRevenueByServiceGraph() {
   const [chartData, setChartData] = useState([]);
@@ -20,7 +20,7 @@ export default function TotalRevenueByServiceGraph() {
   const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "brown", "pink"];
 
   useEffect(() => {
-    UserService.getTotalRevenueByService().then(
+    getTotalRevenueByService().then(
       (response) => {
         setChartData(response.data.data);
         setIsLoading(false);

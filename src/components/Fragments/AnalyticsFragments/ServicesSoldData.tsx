@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveContainer, Cell, PieChart, Pie, Tooltip } from "recharts";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { Center, Loader } from "@mantine/core";
+import { getServicesSoldData } from "../../../services/AdminService";
 
 export default function ServicesSoldData() {
   const [chartData, setChartData] = useState([]);
@@ -10,7 +10,7 @@ export default function ServicesSoldData() {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "brown", "pink"];
 
   useEffect(() => {
-    UserService.getServicesSoldData().then(
+    getServicesSoldData().then(
       (response) => {
         const dataWithId = response.data.data.map((entry, index) => ({
           name: entry.serviceName,

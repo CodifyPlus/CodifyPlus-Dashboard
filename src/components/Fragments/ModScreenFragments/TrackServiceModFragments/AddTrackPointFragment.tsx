@@ -10,9 +10,9 @@ import {
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail, IconStatusChange } from "@tabler/icons-react";
-import UserService from "../../../../services/user.service";
 import { DateTimePicker } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
+import { addTrackMod } from "../../../../services/UserService";
 
 interface noteProps {
   data: {
@@ -45,7 +45,7 @@ export function AddTrackPointFragmentMod({ data }: noteProps) {
       startedAt: formValue.startedAt,
       serviceId: data.serviceId,
     };
-    UserService.addTrackMod(objToPost).then(
+    addTrackMod(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         data.closeModal();

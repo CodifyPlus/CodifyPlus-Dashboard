@@ -10,7 +10,6 @@ import {
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import React, { useState } from "react";
-import UserService from "../../services/user.service";
 import { useForm } from "@mantine/form";
 
 export default function ForgotPassword() {

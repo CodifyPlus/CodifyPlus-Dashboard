@@ -2,10 +2,12 @@ import { Grid, Container, Text, Paper, Loader, Center } from "@mantine/core";
 import { ServiceStats } from "../Fragments/DashboardHomeFragments/ServiceStats";
 import { ServicesList } from "../Fragments/DashboardHomeFragments/ServicesList";
 import { useEffect, useState } from "react";
-import UserService from "../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { handleLogout } from "../../common/HandleLogout";
+import { getModStats } from "../../services/ModService";
+import { getAdminStats } from "../../services/AdminService";
+import { getUserStats } from "../../services/UserService";
 
 export default function DashboardHome() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -49,11 +51,11 @@ export default function DashboardHome() {
     let apiCall;
 
     if (userRole === "MODERATOR") {
-      apiCall = UserService.getModStats;
+      apiCall = getModStats;
     } else if (userRole === "ADMIN") {
-      apiCall = UserService.getAdminStats;
+      apiCall = getAdminStats;
     } else {
-      apiCall = UserService.getUserStats;
+      apiCall = getUserStats;
     }
 
     apiCall()

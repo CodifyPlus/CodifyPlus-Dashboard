@@ -15,7 +15,6 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import UserService from "../../../services/user.service";
 import moment from "moment";
 import { notifications } from "@mantine/notifications";
 import {
@@ -30,12 +29,17 @@ import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { SendNotificationFragment } from "../../Fragments/AllUsersFragments/SendNotificationFragment";
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
+import {
+  changeUserRole,
+  deleteUser,
+  getAllUsers,
+} from "../../../services/AdminService";
 
 const rolesData = ["USER", "MODERATOR", "ADMIN"];
 
 export default function AllUsers() {
   const changeRole = (userId: string, newRole: string) => {
-    UserService.changeUserRole({ userId, newRole }).then(
+    changeUserRole({ userId, newRole }).then(
       (response) => {},
       (error) => {
         if (error) {
@@ -83,7 +87,7 @@ export default function AllUsers() {
   };
 
   const handleDelete = (userId: string) => {
-    UserService.deleteUser({ userId }).then(
+    deleteUser({ userId }).then(
       (response) => {
         setStateUpdate(!stateUpdate);
       },
@@ -102,7 +106,7 @@ export default function AllUsers() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getAllUsers({
+    getAllUsers({
       page: currentPage,
       limit: 10,
       search: debouncedSearch,

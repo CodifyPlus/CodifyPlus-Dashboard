@@ -16,9 +16,9 @@ import {
   IconCalendarX,
   IconClockStop,
 } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import { useState } from "react";
 import { notifications } from "@mantine/notifications";
+import { markAsCompleted, markOnHold, toggleTimelineDatesVisibility } from "../../../services/AdminService";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -89,7 +89,7 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
     const objToPost = {
       serviceId: data.serviceId,
     };
-    UserService.markAsCompleted(objToPost).then(
+    markAsCompleted(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         setLoadingOverlayIsVisible(false);
@@ -112,7 +112,7 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
     const objToPost = {
       serviceId: data.serviceId,
     };
-    UserService.markOnHold(objToPost).then(
+    markOnHold(objToPost).then(
       (response) => {
         data.setInfo(response.data);
         setLoadingOverlayIsVisible(false);
@@ -134,7 +134,7 @@ export function ServiceControlsFragment({ data }: serviceControlFragment) {
     const objToPost = {
       serviceId: data.serviceId,
     };
-    UserService.toggleTimelineDatesVisibility(objToPost).then(
+    toggleTimelineDatesVisibility(objToPost).then(
       (response) => {
         data.setInfo(response.data);
       },

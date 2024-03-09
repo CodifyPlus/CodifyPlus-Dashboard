@@ -8,11 +8,13 @@ import {
   Center,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import UserService from "../../services/user.service";
 import { AllServicesListFragment } from "../Fragments/AllServicesFragments/AllServicesListFragment";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { getUserStats } from "../../services/UserService";
+import { getAdminStats } from "../../services/AdminService";
+import { getModStats } from "../../services/ModService";
 
 export default function AllServices() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -55,11 +57,11 @@ export default function AllServices() {
     let apiCall;
 
     if (userRole === "MODERATOR") {
-      apiCall = UserService.getModStats;
+      apiCall = getModStats;
     } else if (userRole === "ADMIN") {
-      apiCall = UserService.getAdminStats;
+      apiCall = getAdminStats;
     } else {
-      apiCall = UserService.getUserStats;
+      apiCall = getUserStats;
     }
 
     apiCall()

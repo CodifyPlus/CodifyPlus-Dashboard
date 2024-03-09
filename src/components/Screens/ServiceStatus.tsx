@@ -11,12 +11,12 @@ import {
   Loader,
   Center,
 } from "@mantine/core";
-import UserService from "../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
 import { ServiceStatusTimeline } from "../Fragments/ServiceStatusFragments/ServiceStatusTimeline";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { getServiceInfo } from "../../services/UserService";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -70,7 +70,7 @@ export default function ServiceStatus() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getServiceInfo(serviceId).then(
+    getServiceInfo(serviceId).then(
       (response) => {
         setInfo(response.data);
         setIsLoading(false);

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import RichTextComponent from "../../../../common/RichTextComponent";
-import { addNoteMod } from "../../../../services/UserService";
+import { addNoteMod } from "../../../../services/ModService";
 
 interface noteProps {
   data: {

@@ -8,13 +8,13 @@ import {
   Modal,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { IconMessages, IconSettingsBolt, IconTrash } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import { AddTemplateModal } from "../../Fragments/ServiceTemplatesFragments/AddTemplateModal";
+import { deleteTemplate, getAllTemplates } from "../../../services/AdminService";
 
 export default function ServiceTemplates() {
   const [templates, setTemplates] = useState([
@@ -33,7 +33,7 @@ export default function ServiceTemplates() {
   ] = useDisclosure(false);
 
   const handleDelete = (templateId: string) => {
-    UserService.deleteTemplate({ templateId }).then(
+    deleteTemplate({ templateId }).then(
       (response) => {
         setStateUpdate(!stateUpdate);
       },
@@ -52,7 +52,7 @@ export default function ServiceTemplates() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getAllTemplates().then(
+    getAllTemplates().then(
       (response) => {
         setTemplates(response.data);
         setIsLoading(false);

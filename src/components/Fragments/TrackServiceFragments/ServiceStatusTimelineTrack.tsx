@@ -5,11 +5,11 @@ import {
   IconMapPinCheck,
   IconPencil,
 } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import { EditTrackPointFragment } from "./EditTrackPointFragment";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { notifications } from "@mantine/notifications";
+import { approveTrack, editTrackStatus } from "../../../services/AdminService";
 
 interface dataProps {
   data: {
@@ -46,7 +46,7 @@ export function ServiceStatusTimelineTrack({
       pathwayId: id,
       serviceId: serviceId,
     };
-    UserService.editTrackStatus(objToPost).then(
+    editTrackStatus(objToPost).then(
       (response) => {
         setInfo(response.data);
       },
@@ -67,7 +67,7 @@ export function ServiceStatusTimelineTrack({
       pathwayId: id,
       serviceId: serviceId,
     };
-    UserService.approveTrack(objToPost).then(
+    approveTrack(objToPost).then(
       (response) => {
         setInfo(response.data);
       },

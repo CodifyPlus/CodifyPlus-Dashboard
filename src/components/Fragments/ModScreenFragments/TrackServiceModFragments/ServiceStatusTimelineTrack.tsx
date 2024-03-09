@@ -1,7 +1,7 @@
 import { Timeline, Text, ActionIcon } from "@mantine/core";
 import { Icon3dCubeSphere, IconMapPinCheck } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
-import { editTrackStatusMod } from "../../../../services/UserService";
+import { editTrackStatusMod } from "../../../../services/ModService";
 
 interface dataProps {
   data: {

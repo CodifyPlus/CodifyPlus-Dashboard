@@ -1,9 +1,9 @@
 import { TextInput, Container, Button, Textarea } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import UserService from "../../../services/user.service";
 import { DateTimePicker } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
+import { editTrack } from "../../../services/AdminService";
 
 export function EditTrackPointFragment({
   setInfo,
@@ -32,7 +32,7 @@ export function EditTrackPointFragment({
       serviceId: serviceId,
       pathwayId: pathwayId,
     };
-    UserService.editTrack(objToPost).then(
+    editTrack(objToPost).then(
       (response) => {
         setInfo(response.data);
         closeModal();

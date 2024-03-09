@@ -17,11 +17,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UserInfoCard } from "../Fragments/ProfileFragments/UserInfoCard";
 import { useForm } from "@mantine/form";
-import UserService from "../../services/user.service";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import OneSignal from "react-onesignal";
 import { ProfileThemeChangeToggle } from "../Fragments/DarkModeButton/ProfileThemeChangeToggle";
+import { getUserStats, updateProfile } from "../../services/UserService";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +58,7 @@ function Profile() {
   });
 
   const handleSubmit = (formValue: any) => {
-    UserService.updateProfile(formValue).then(
+    updateProfile(formValue).then(
       (response) => {
         setFormData({
           fullname: response.data.fullname,
@@ -83,7 +83,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    UserService.getUserStats().then(
+    getUserStats().then(
       (response) => {
         const { fullname, email, phone } = response.data;
         setFormData({ fullname, email, phone });

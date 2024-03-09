@@ -14,7 +14,6 @@ import {
   ActionIcon,
   Group,
 } from "@mantine/core";
-import UserService from "../../../services/user.service";
 import { ServiceStatusInfoTrackService } from "../../Fragments/TrackServiceFragments/ServiceStatusInfoTrackService";
 import { ServiceControlsFragment } from "../../Fragments/TrackServiceFragments/ServiceControlsFragment";
 import { useDisclosure } from "@mantine/hooks";
@@ -26,6 +25,8 @@ import { Navigate } from "react-router-dom";
 import { IconCheck, IconMailBolt } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import EditServiceFragment from "../../Fragments/TrackServiceFragments/EditServiceFragment";
+import { approveNote, sendNoteEmail } from "../../../services/AdminService";
+import { getServiceInfo } from "../../../services/UserService";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -95,7 +96,7 @@ export default function TrackService() {
       noteId: id,
       serviceId: serviceId,
     };
-    UserService.approveNote(objToPost).then(
+    approveNote(objToPost).then(
       (response) => {
         setInfo(response.data);
       },
@@ -116,7 +117,7 @@ export default function TrackService() {
       noteId: id,
       serviceId: serviceId,
     };
-    UserService.sendNoteEmail(objToPost).then(
+    sendNoteEmail(objToPost).then(
       (response) => {
         notifications.show({
           title: `Email sent!`,
@@ -138,7 +139,7 @@ export default function TrackService() {
   };
 
   useEffect(() => {
-    UserService.getServiceInfo(serviceId).then(
+    getServiceInfo(serviceId).then(
       (response) => {
         setInfo(response.data);
         setIsLoading(false);

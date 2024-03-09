@@ -14,8 +14,12 @@ import {
   IconMessage2Pin,
   IconPackageExport,
 } from "@tabler/icons-react";
-import UserService from "../../../services/user.service";
 import { notifications } from "@mantine/notifications";
+import {
+  exportChats,
+  exportServices,
+  exportUsers,
+} from "../../../services/AdminService";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -50,7 +54,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const handleExportUsers = () => {
-  UserService.exportUsers().then(
+  exportUsers().then(
     (response) => {
       // Trigger a download by creating an invisible link and clicking it
       const blob = new Blob([response.data], { type: "text/csv" });
@@ -76,7 +80,7 @@ const handleExportUsers = () => {
 };
 
 const handleExportServices = () => {
-  UserService.exportServices().then(
+  exportServices().then(
     (response) => {
       // Trigger a download by creating an invisible link and clicking it
       const blob = new Blob([response.data], { type: "text/csv" });
@@ -102,7 +106,7 @@ const handleExportServices = () => {
 };
 
 const handleExportChats = () => {
-  UserService.exportChats().then(
+  exportChats().then(
     (response) => {
       // Trigger a download by creating an invisible link and clicking it
       const blob = new Blob([response.data], { type: "text/csv" });

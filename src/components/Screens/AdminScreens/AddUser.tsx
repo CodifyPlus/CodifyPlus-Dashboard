@@ -16,10 +16,10 @@ import { useForm } from "@mantine/form";
 import { IconMail } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import UserDetailsModal from "../../Fragments/AddUserFragments/UserDetailsModal";
-import UserService from "../../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { addNewUser } from "../../../services/AdminService";
 
 export default function AddUser() {
   const [successful, setSuccessful] = useState(false);
@@ -45,7 +45,7 @@ export default function AddUser() {
   const handleRegister = (formValue: any) => {
     setFormData(formValue);
     setSuccessful(false);
-    UserService.addNewUser(formValue).then(
+    addNewUser(formValue).then(
       (response) => {
         setSuccessful(true);
       },

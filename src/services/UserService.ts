@@ -6,10 +6,6 @@ const getUserStats = () => {
   return axios.get(API_URL + "getUserStats", { headers: authHeader() });
 };
 
-const getModStats = () => {
-  return axios.get(API_URL + "getModStats", { headers: authHeader() });
-};
-
 const getServiceInfo = (serviceId) => {
   return axios.get(API_URL + "getServiceInfo", {
     headers: authHeader(),
@@ -52,34 +48,6 @@ const changePassword = (updatedPasswordData) => {
   });
 };
 
-// Mod API Endpoints
-const getAllServicesMod = (username) => {
-  return axios.get(API_URL + "getAllServicesMod", {
-    headers: authHeader(),
-    params: {
-      username: username,
-    },
-  });
-};
-
-const editTrackStatusMod = (updatedTrackPoint) => {
-  return axios.post(API_URL + "editTrackStatusMod", updatedTrackPoint, {
-    headers: authHeader(),
-  });
-};
-
-const addTrackMod = (newTrackPointData) => {
-  return axios.post(API_URL + "addTrackMod", newTrackPointData, {
-    headers: authHeader(),
-  });
-};
-
-const addNoteMod = (newNoteData) => {
-  return axios.post(API_URL + "addNoteMod", newNoteData, {
-    headers: authHeader(),
-  });
-};
-
 const getSubscribedChatBoxes = () => {
   return axios.get(API_URL + "getSubscribedChatBoxes", {
     headers: authHeader(),
@@ -105,14 +73,9 @@ export {
   getAllNotifications,
   updateProfile,
   changePassword,
-  getAllServicesMod,
-  editTrackStatusMod,
-  addTrackMod,
-  addNoteMod,
   getSubscribedChatBoxes,
   getChatBox,
   sendMessage,
-  getModStats,
   forgotPassword,
   resetPassword,
 };

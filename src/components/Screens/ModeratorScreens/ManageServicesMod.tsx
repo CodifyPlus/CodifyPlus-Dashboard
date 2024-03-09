@@ -10,7 +10,6 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import UserService from "../../../services/user.service";
 import {
   IconEye,
   IconMapPin,
@@ -20,6 +19,7 @@ import {
 import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
+import { getAllServicesMod } from "../../../services/ModService";
 
 export default function ManageServicesMod() {
   const [services, setServices] = useState([
@@ -68,7 +68,7 @@ export default function ManageServicesMod() {
   }, [search]);
   const { user: currentUser } = useSelector((state: any) => state.auth);
   useEffect(() => {
-    UserService.getAllServicesMod(currentUser.username).then(
+    getAllServicesMod(currentUser.username).then(
       (response) => {
         const allServices = response.data;
         setServices(allServices);

@@ -10,9 +10,9 @@ import {
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import UserService from "../../services/user.service";
 import { useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { resetPassword } from "../../services/UserService";
 
 export default function ResetPassword() {
   const { token } = useParams();
@@ -39,7 +39,7 @@ export default function ResetPassword() {
   const handleChange = (formValue: any) => {
     setLoadingOverlayIsVisible(true);
     setSuccessful(false);
-    UserService.resetPassword({ ...formValue, token }).then(
+    resetPassword({ ...formValue, token }).then(
       (response) => {
         setLoadingOverlayIsVisible(false);
         setSuccessful(true);

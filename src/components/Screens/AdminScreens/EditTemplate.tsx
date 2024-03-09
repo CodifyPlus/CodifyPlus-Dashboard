@@ -8,7 +8,6 @@ import {
   Loader,
   Center,
 } from "@mantine/core";
-import UserService from "../../../services/user.service";
 import { useDisclosure } from "@mantine/hooks";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -16,6 +15,7 @@ import { notifications } from "@mantine/notifications";
 import { AddTemplatePoint } from "../../Fragments/EditTemplateFragments/AddTemplatePoint";
 import { TemplateTrack } from "../../Fragments/EditTemplateFragments/TemplateTrack";
 import { TemplateControls } from "../../Fragments/EditTemplateFragments/TemplateControls";
+import { getTemplateInfo } from "../../../services/AdminService";
 
 export default function EditTemplate() {
   const [opened_addTrack, { open: open_addTrack, close: close_addTrack }] =
@@ -39,7 +39,7 @@ export default function EditTemplate() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getTemplateInfo(templateId).then(
+    getTemplateInfo(templateId).then(
       (response) => {
         setInfo(response.data);
         setIsLoading(false);

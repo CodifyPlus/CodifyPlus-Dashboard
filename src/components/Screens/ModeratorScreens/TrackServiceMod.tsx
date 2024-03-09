@@ -12,7 +12,6 @@ import {
   Loader,
   Center,
 } from "@mantine/core";
-import UserService from "../../../services/user.service";
 import { useDisclosure } from "@mantine/hooks";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -22,6 +21,7 @@ import { ServiceStatusTimelineTrackMod } from "../../Fragments/ModScreenFragment
 import { ServiceStatusInfoTrackServiceMod } from "../../Fragments/ModScreenFragments/TrackServiceModFragments/ServiceStatusInfoTrackService";
 import { ServiceControlsFragmentMod } from "../../Fragments/ModScreenFragments/TrackServiceModFragments/ServiceControlsFragment";
 import { notifications } from "@mantine/notifications";
+import { getServiceInfo } from "../../../services/UserService";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -81,7 +81,7 @@ export default function TrackServiceMod() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    UserService.getServiceInfo(serviceId).then(
+    getServiceInfo(serviceId).then(
       (response) => {
         setInfo(response.data);
         setIsLoading(false);

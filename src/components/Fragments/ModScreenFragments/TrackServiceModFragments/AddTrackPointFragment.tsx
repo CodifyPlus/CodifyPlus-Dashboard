@@ -12,7 +12,7 @@ import { useForm } from "@mantine/form";
 import { IconMail, IconStatusChange } from "@tabler/icons-react";
 import { DateTimePicker } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
-import { addTrackMod } from "../../../../services/UserService";
+import { addTrackMod } from "../../../../services/ModService";
 
 interface noteProps {
   data: {

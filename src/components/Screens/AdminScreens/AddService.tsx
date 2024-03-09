@@ -15,11 +15,16 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import { IconMail } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import UserService from "../../../services/user.service";
 import ServiceDetalsModal from "../../Fragments/AddServiceFragments/ServiceDetailsModal";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import {
+  addNewService,
+  getAllModerators,
+  getAllUsernames,
+  getTemplateNames,
+} from "../../../services/AdminService";
 
 export default function AddService() {
   const [usernames, setUsernames] = useState([
@@ -51,7 +56,7 @@ export default function AddService() {
   ]);
 
   useEffect(() => {
-    UserService.getAllUsernames().then(
+    getAllUsernames().then(
       (response) => {
         setUsernames(response.data);
       },
@@ -65,7 +70,7 @@ export default function AddService() {
         }
       }
     );
-    UserService.getTemplateNames().then(
+    getTemplateNames().then(
       (response) => {
         setTemplates(response.data);
         setNames(response.data);
@@ -80,7 +85,7 @@ export default function AddService() {
         }
       }
     );
-    UserService.getAllModerators().then(
+    getAllModerators().then(
       (response) => {
         setModerators(response.data);
       },
@@ -116,7 +121,7 @@ export default function AddService() {
 
   const handleRegister = (formValue: any) => {
     setSuccessful(false);
-    UserService.addNewService(formValue).then(
+    addNewService(formValue).then(
       (response) => {
         setSuccessful(true);
         setNewServiceId(response.data);

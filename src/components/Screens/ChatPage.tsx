@@ -11,10 +11,11 @@ import {
 import { IconSearch, IconUser } from "@tabler/icons-react";
 import ChatRoom from "../Fragments/ChatFragments/ChatRoom";
 import { useEffect, useState } from "react";
-import UserService from "../../services/user.service";
 import { useSelector } from "react-redux";
 import { useCenteralContext } from "../../contexts/CenteralContext";
 import { notifications } from "@mantine/notifications";
+import { getSubscribedChatBoxes } from "../../services/UserService";
+import { adminGetSubscribedChatBoxes } from "../../services/AdminService";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -146,9 +147,9 @@ export default function ChatPage() {
         let response;
 
         if (currentUser.role !== "ADMIN") {
-          response = await UserService.getSubscribedChatBoxes();
+          response = await getSubscribedChatBoxes();
         } else {
-          response = await UserService.adminGetSubscribedChatBoxes();
+          response = await adminGetSubscribedChatBoxes();
         }
 
         // Fetch chatBoxes from localStorage

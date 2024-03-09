@@ -8,11 +8,11 @@ import {
   Center,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import UserService from "../../../services/user.service";
 import { AllServicesListFragment } from "../../Fragments/AllServicesFragments/AllServicesListFragment";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { getUserStatsForAdmin } from "../../../services/AdminService";
 
 export default function AllUserServices() {
   const { user: currentUser } = useSelector((state: any) => state.auth);
@@ -52,7 +52,7 @@ export default function AllUserServices() {
   useEffect(() => {
     setIsLoading(true);
 
-    let apiCall = UserService.getUserStatsForAdmin;
+    let apiCall = getUserStatsForAdmin;
 
     apiCall(userId)
       .then((response) => {

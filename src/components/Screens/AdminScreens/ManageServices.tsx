@@ -12,7 +12,6 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import UserService from "../../../services/user.service";
 import {
   IconEye,
   IconMapPin,
@@ -25,6 +24,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { useDebouncedValue } from "@mantine/hooks";
+import { deleteService, getAllServices } from "../../../services/AdminService";
 
 export default function ManageServices() {
   const [services, setServices] = useState([
@@ -59,7 +59,7 @@ export default function ManageServices() {
   };
 
   const handleDelete = (serviceId: string) => {
-    UserService.deleteService({ serviceId }).then(
+    deleteService({ serviceId }).then(
       (response) => {
         setStateUpdate(!stateUpdate);
       },
@@ -80,7 +80,7 @@ export default function ManageServices() {
   };
 
   useEffect(() => {
-    UserService.getAllServices({
+    getAllServices({
       page: currentPage,
       limit: 10,
       search: debouncedSearch,

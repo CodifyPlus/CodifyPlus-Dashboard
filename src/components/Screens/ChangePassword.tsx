@@ -8,10 +8,10 @@ import {
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import UserService from "../../services/user.service";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { changePassword } from "../../services/UserService";
 
 export default function ChangePassword() {
   const [successful, setSuccessful] = useState(false);
@@ -25,7 +25,7 @@ export default function ChangePassword() {
 
   const handleChange = (formValue: any) => {
     setSuccessful(false);
-    UserService.changePassword(formValue).then(
+    changePassword(formValue).then(
       (response) => {
         setSuccessful(true);
       },

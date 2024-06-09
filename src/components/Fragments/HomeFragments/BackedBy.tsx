@@ -1,7 +1,7 @@
 import { Center, Container, Grid, Image, Title, createStyles, rem, useMantineTheme } from "@mantine/core";
 import BackedByMicrosoft from "./BackedByLogos/MicrosoftForStartups.webp";
-import StartupKroLight from "./BackedByLogos/StartupKro.webp";
-import StartupKroDark from "./BackedByLogos/StartupKroDark.webp";
+import CodifyPlusLight from "../../../assets/CodifyPlusLogoDarkMode.png";
+import CodifyPlusDark from "../../../assets/CodifyPlusLogoLightMode.png";
 import StartupIndia from "./BackedByLogos/StartupIndia.webp";
 import MakeInIndia from "./BackedByLogos/MakeInIndia.webp";
 
@@ -38,7 +38,7 @@ export function BackedBy() {
         </Grid.Col>
         <Grid.Col span={3}>
           <Center>
-            <Image width={100} height={40} src={colorScheme === 'dark' ? StartupKroLight : StartupKroDark}></Image>
+            <Image width={150} height={30} src={colorScheme === 'dark' ? CodifyPlusLight : CodifyPlusDark}></Image>
           </Center>
         </Grid.Col>
         <Grid.Col span={3}>

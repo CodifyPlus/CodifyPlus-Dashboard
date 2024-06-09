@@ -114,7 +114,7 @@ export function FeaturesSection({
       <Text className={classes.supTitle}>{supTitle}</Text>
 
       <Title className={classes.title} order={2}>
-        CodifyPlus Services are for{" "}
+        StartupKro Services are for{" "}
         <span className={classes.highlight}>everyone</span>
       </Title>
 

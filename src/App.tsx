@@ -175,7 +175,7 @@ export async function runOneSignal() {
     allowLocalhostAsSecureOrigin: true,
   });
   OneSignal.Notifications.setDefaultUrl(
-    "https://dashboard.codifyplus.com/dashboard/notifications"
+    "https://dashboard.startupkro.com/dashboard/notifications"
   );
   // OneSignal.Slidedown.promptPush();
 }

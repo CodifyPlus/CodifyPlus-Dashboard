@@ -1,8 +1,8 @@
-# How to contribute to CodifyPlus Dashboard
+# How to contribute to StartupKro Dashboard
 
 We'd love your help!
 
-CodifyPlus Dashboard is [Apache 2.0 licensed](LICENSE) and accepts contributions via GitHub pull requests. This document outlines some of the conventions on development workflow, commit message formatting, contact points and other resources to make it easier to get your contribution accepted.
+StartupKro Dashboard is [Apache 2.0 licensed](LICENSE) and accepts contributions via GitHub pull requests. This document outlines some of the conventions on development workflow, commit message formatting, contact points and other resources to make it easier to get your contribution accepted.
 
 We gratefully welcome improvements to documentation as well as to code.
 

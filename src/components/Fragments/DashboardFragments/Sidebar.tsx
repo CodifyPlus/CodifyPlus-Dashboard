@@ -18,7 +18,6 @@ import {
   IconCoin,
   IconUserBolt,
   IconKey,
-  IconHomeBolt,
   IconMessage,
   IconSettings2,
   IconHomeEco,
@@ -166,13 +165,8 @@ export function Sidebar({ drawerSetOpened }: any) {
 
   const bottomRoutes = [
     {
-      link: "https://startupkro.com/",
-      label: "Visit Start-up Kro",
-      icon: IconHomeBolt,
-    },
-    {
-      link: "https://codifyplus.com/",
-      label: "Visit CodifyPlus",
+      link: "https://StartupKro.com/",
+      label: "Visit StartupKro",
       icon: IconHomeEco,
     },
     { link: "/login", label: "Logout", icon: IconLogout },

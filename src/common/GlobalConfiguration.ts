@@ -1,8 +1,8 @@
-import DarkPNG from "../assets/CodifyPlusLogoDarkMode.png";
-import LightPNG from "../assets/CodifyPlusLogoLightMode.png";
+import DarkPNG from "../assets/StartupKro.webp";
+import LightPNG from "../assets/StartupKroDark.webp";
 
 export const GlobalConfiguration = {
-  appName: "CodifyPlus Dashboard",
+  appName: "StartupKro Dashboard",
   appSlogan: "Business Accelerator and Toolkit",
   appLogoDark: DarkPNG,
   appLogoLight: LightPNG,

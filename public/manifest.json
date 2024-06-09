@@ -1,6 +1,6 @@
 {
-  "short_name": "ManageKro",
-  "name": "ManageKro by StartupKro",
+  "short_name": "StartupKro",
+  "name": "StartupKro",
   "icons": [
     {
       "src": "favicon.ico",
@@ -22,8 +22,8 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#000000",
-  "id": "codifyplusdashboard",
-  "description": "Manage your services on the go with ManageKro by StartupKro.",
+  "id": "startupkrodashboard",
+  "description": "Manage your services on the go with StartupKro's Mobile App.",
   "categories": [
     "business",
     "finance",

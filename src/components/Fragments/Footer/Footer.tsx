@@ -134,7 +134,7 @@ export default function Footer({ data }: FooterLinksProps) {
       </Container>
       <Container className={classes.afterFooter}>
         <Text color="dimmed" size="sm">
-          © 2023 CodifyPlus.com | All rights reserved.
+          © 2024 StartupKro.com | All rights reserved.
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>

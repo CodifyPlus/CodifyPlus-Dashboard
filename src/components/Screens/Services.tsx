@@ -1,5 +1,4 @@
 import { Container } from "@mantine/core";
-import React from "react";
 import { FeaturesSection } from "../Fragments/ServicesFragments/FeaturesSection";
 
 const featuredData = {
@@ -18,7 +17,7 @@ const featuredData = {
       image: "https://ui.mantine.dev/_next/static/media/lawyers.3ddb0c33.svg",
       title: "Sole Proprietorship",
       description:
-        "Say goodbye to legal complexities with CodifyPlus's tax and compliance services",
+        "Say goodbye to legal complexities with StartupKro's tax and compliance services",
       link: "https://startupkro.com/sole-proprietorship-registration/",
     },
     {
@@ -26,28 +25,28 @@ const featuredData = {
         "https://ui.mantine.dev/_next/static/media/accountants.ba1b4633.svg",
       title: "Limited Liability Partnership",
       description:
-        "Protect your brand with CodifyPlus's trademark and IP services",
+        "Protect your brand with StartupKro's trademark and IP services",
       link: "https://startupkro.com/limited-liability-partnership-llp/",
     },
     {
       image: "https://ui.mantine.dev/_next/static/media/others.0a9c7795.svg",
       title: "Documentation",
       description:
-        "Say goodbye to paperwork with CodifyPlus's documentation services",
+        "Say goodbye to paperwork with StartupKro's documentation services",
       link: "web-development",
     },
     {
       image: "https://ui.mantine.dev/_next/static/media/auditors.32124e83.svg",
       title: "Fundraising",
       description:
-        "Get your business funded with CodifyPlus's fundraising solutions",
+        "Get your business funded with StartupKro's fundraising solutions",
       link: "web-development",
     },
     {
       image: "https://ui.mantine.dev/_next/static/media/lawyers.3ddb0c33.svg",
       title: "NGO",
       description:
-        "Realize your social vision with CodifyPlus's expert guidance",
+        "Realize your social vision with StartupKro's expert guidance",
       link: "web-development",
     },
     {
@@ -55,14 +54,14 @@ const featuredData = {
         "https://ui.mantine.dev/_next/static/media/accountants.ba1b4633.svg",
       title: "Property & Personal",
       description:
-        "Secure your property and personal interests with CodifyPlus's services",
+        "Secure your property and personal interests with StartupKro's services",
       link: "web-development",
     },
     {
       image: "https://ui.mantine.dev/_next/static/media/others.0a9c7795.svg",
       title: "Web Development",
       description:
-        "Get a stunning website that meets all your business needs with CodifyPlus",
+        "Get a stunning website that meets all your business needs with StartupKro",
       link: "web-development",
     },
     {
@@ -70,13 +69,13 @@ const featuredData = {
         "https://ui.mantine.dev/_next/static/media/accountants.ba1b4633.svg",
       title: "Digital Marketing",
       description:
-        "Get ahead of your competition with CodifyPlus's expert guidance",
+        "Get ahead of your competition with StartupKro's expert guidance",
       link: "web-development",
     },
     {
       image: "https://ui.mantine.dev/_next/static/media/others.0a9c7795.svg",
       title: "Graphic and Branding",
-      description: "Get visually appealing branding solutions with CodifyPlus",
+      description: "Get visually appealing branding solutions with StartupKro",
       link: "web-development",
     },
     {

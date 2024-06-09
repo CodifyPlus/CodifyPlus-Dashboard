@@ -58,8 +58,8 @@ export default function Register() {
         /^[a-zA-Z0-9]+$/.test(value)
           ? null
           : "The username must be unique and should not contain spaces or symbols!",
-      // eslint-disable-next-line no-useless-escape
       password: (value) =>
+        // eslint-disable-next-line no-useless-escape
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
           value
         )
@@ -112,7 +112,7 @@ export default function Register() {
               fontWeight: 900,
             })}
           >
-            Welcome to CodifyPlus CRM!
+            Welcome to StartupKro CRM!
           </Title>
           <Text color="dimmed" size="sm" align="center" mt={5}>
             Already have an account?{" "}
